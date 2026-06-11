@@ -1,0 +1,45 @@
+name: Update calls dashboard
+
+on:
+  workflow_dispatch:
+    inputs:
+      html_content:
+        description: 'Full index.html content (base64 encoded)'
+        required: true
+        type: string
+      commit_message:
+        description: 'Commit message'
+        required: false
+        default: 'chore: update calls dashboard'
+        type: string
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Decode and write index.html
+        run: |
+          echo "${{ github.event.inputs.html_content }}" | base64 --decode > index.html
+
+      - name: Verify file was written
+        run: |
+          if [ ! -s index.html ]; then
+            echo "index.html is empty or missing — aborting"
+            exit 1
+          fi
+          echo "index.html written ($(wc -c < index.html) bytes)"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "${{ github.event.inputs.commit_message }}"
+          git push
