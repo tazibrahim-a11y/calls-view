@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calls View</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f7f7f5;
+    --surface: #ffffff;
+    --border: #e4e4e0;
+    --border-soft: #efefec;
+    --text-primary: #1a1a18;
+    --text-secondary: #6b6b66;
+    --text-tertiary: #9b9b96;
+    --accent: #1a6b4a;
+    --accent-bg: #edf7f2;
+    --warn: #92580a;
+    --warn-bg: #fef3e2;
+    --danger: #991f1f;
+    --danger-bg: #fdf0f0;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    height: 48px;
+  }
+  .nav-logo {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -.2px;
+    color: var(--text-primary);
+    margin-right: 2rem;
+    white-space: nowrap;
+  }
+  .nav-tabs { display: flex; gap: 0; }
+  .nav-tab {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    padding: 0 1rem;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color .15s, border-color .15s;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .nav-tab:hover { color: var(--text-primary); }
+  .nav-tab.active { color: var(--text-primary); border-bottom-color: var(--accent); }
+
+  /* ── Sections ── */
+  .section { display: none; padding: 2rem; max-width: 1100px; margin: 0 auto; }
+  .section.active { display: block; }
+
+  /* ── Placeholder sections ── */
+  .placeholder {
+    border: 1.5px dashed var(--border);
+    border-radius: 10px;
+    padding: 3rem 2rem;
+    text-align: center;
+    color: var(--text-tertiary);
+    margin-top: 1.5rem;
+  }
+  .placeholder p { font-size: 13px; margin-top: .4rem; }
+
+  /* ── Filters ── */
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .filter-group { display: flex; align-items: center; gap: 6px; }
+  .filter-group label { font-size: 11px; font-weight: 500; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .4px; white-space: nowrap; }
+  .filters select, .filters input[type=date] {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-primary);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 8px;
+    height: 30px;
+    outline: none;
+    cursor: pointer;
+  }
+  .filters select:focus, .filters input[type=date]:focus { border-color: var(--accent); }
+  .filter-sep { width: 1px; height: 20px; background: var(--border); margin: 0 4px; }
+
+  /* ── KPIs ── */
+  .kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+  .kpi {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: .9rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .kpi-label { font-size: 11px; font-weight: 500; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .4px; }
+  .kpi-value { font-size: 24px; font-weight: 600; letter-spacing: -.5px; color: var(--text-primary); font-family: var(--mono); }
+  .kpi-value.green { color: var(--accent); }
+  .kpi-value.amber { color: var(--warn); }
+  .kpi-value.red { color: var(--danger); }
+
+  /* ── Charts ── */
+  .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+  }
+  .chart-card.wide { grid-column: 1 / -1; }
+  .chart-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--text-tertiary);
+    margin-bottom: 10px;
+  }
+
+  /* ── Insights ── */
+  .insights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .insight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+  }
+  .insight-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 10px;
+  }
+  .insight-title.green { color: var(--accent); }
+  .insight-title.red { color: var(--danger); }
+  .insight-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .insight-row:last-child { border-bottom: none; }
+  .badge {
+    flex-shrink: 0;
+    font-size: 10px;
+    font-weight: 600;
+    font-family: var(--mono);
+    padding: 1px 6px;
+    border-radius: 20px;
+    margin-top: 1px;
+  }
+  .badge.green { background: var(--accent-bg); color: var(--accent); }
+  .badge.red { background: var(--danger-bg); color: var(--danger); }
+
+  /* ── Tables ── */
+  .table-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .table-header {
+    padding: .75rem 1.25rem;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--text-tertiary);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    border-bottom: 1px solid var(--border-soft);
+    white-space: nowrap;
+    background: var(--bg);
+  }
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--text-primary);
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg); }
+  .td-muted { color: var(--text-tertiary); font-family: var(--mono); font-size: 11px; }
+  .td-score { font-family: var(--mono); font-weight: 600; font-size: 13px; }
+  .td-score.green { color: var(--accent); }
+  .td-score.amber { color: var(--warn); }
+  .td-score.red { color: var(--danger); }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .pill-green { background: var(--accent-bg); color: var(--accent); }
+  .pill-red { background: var(--danger-bg); color: var(--danger); }
+  .pill-amber { background: var(--warn-bg); color: var(--warn); }
+  .pill-gray { background: var(--border-soft); color: var(--text-secondary); }
+
+  .bar-wrap { width: 80px; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; display: inline-block; vertical-align: middle; }
+  .bar-fill { height: 5px; border-radius: 3px; }
+
+  .week-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-family: var(--mono);
+    margin-bottom: 1.5rem;
+    padding: .5rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+  .section-divider {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--text-tertiary);
+    margin: 1.5rem 0 .75rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1rem; overflow-x: auto; }
+    .section { padding: 1rem; }
+    .kpis { grid-template-columns: repeat(2, 1fr); }
+    .charts-row { grid-template-columns: 1fr; }
+    .insights-grid { grid-template-columns: 1fr; }
+    .chart-card.wide { grid-column: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">📞 Calls View</span>
+  <div class="nav-tabs">
+    <div class="nav-tab active" data-tab="sourcing">Sourcing calls</div>
+    <div class="nav-tab" data-tab="acquisition">Acquisition calls</div>
+    <div class="nav-tab" data-tab="management">Management calls</div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════ SOURCING ═══════════════════════════════════════════ -->
+<section id="tab-sourcing" class="section active" aria-label="Sourcing calls dashboard">
+
+  <div class="week-label" id="week-label">Week of 2026-06-04 → 2026-06-11</div>
+
+  <div class="filters">
+    <div class="filter-group">
+      <label>From</label>
+      <input type="date" id="f-from" value="2026-05-01">
+    </div>
+    <div class="filter-group">
+      <label>To</label>
+      <input type="date" id="f-to" value="2026-06-11">
+    </div>
+    <div class="filter-sep"></div>
+    <div class="filter-group">
+      <label>Country</label>
+      <select id="f-country">
+        <option value="all">All countries</option>
+        <option value="UK">UK</option>
+        <option value="DE">DE</option>
+        <option value="AT">AT</option>
+        <option value="NL">NL</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Rep</label>
+      <select id="f-rep"><option value="all">All reps</option></select>
+    </div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-label">Score distribution</div>
+      <div style="position:relative;height:160px"><canvas id="distChart" role="img" aria-label="Score distribution chart">Distribution of call scores across bands.</canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-label">Avg score per criterion</div>
+      <div style="position:relative;height:160px"><canvas id="critChart" role="img" aria-label="Average score per scorecard criterion">Criterion averages.</canvas></div>
+    </div>
+  </div>
+
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-label">Next step outcomes</div>
+      <div style="position:relative;height:160px"><canvas id="outChart" role="img" aria-label="Outcomes breakdown">Outcome types breakdown.</canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-label">Weekly score trend</div>
+      <div style="position:relative;height:160px"><canvas id="trendChart" role="img" aria-label="Weekly average score trend">Weekly trend.</canvas></div>
+    </div>
+  </div>
+
+  <div class="chart-card wide" style="margin-bottom:12px">
+    <div class="chart-label">Avg score by outcome — does quality predict conversion?</div>
+    <div style="position:relative;height:140px"><canvas id="corrChart" role="img" aria-label="Average score by outcome type">Score by outcome.</canvas></div>
+  </div>
+
+  <div class="section-divider">Insights</div>
+  <div class="insights-grid" id="insights-grid"></div>
+
+  <div class="section-divider">Rep rankings <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">— by call count</span></div>
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Rep</th><th>Country</th><th>Calls</th>
+          <th>Avg score</th><th>Strength</th><th>Weakness</th>
+          <th>Open</th><th>Qualify</th><th>Objection</th><th>Meeting</th>
+        </tr>
+      </thead>
+      <tbody id="rep-body"></tbody>
+    </table>
+  </div>
+
+  <div class="section-divider">All calls <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">— sorted by score</span></div>
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Call</th><th>Rep</th><th>Date</th><th>Dur</th>
+          <th>Open</th><th>Qual</th><th>Obj</th><th>Mtg</th>
+          <th>Score</th><th>Outcome</th><th></th><th style="width:80px"></th>
+        </tr>
+      </thead>
+      <tbody id="calls-body"></tbody>
+    </table>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════ ACQUISITION ═══════════════════════════════════════════ -->
+<section id="tab-acquisition" class="section" aria-label="Acquisition calls">
+  <div class="placeholder">
+    <strong>Acquisition calls</strong>
+    <p>Analysis coming soon. Run the weekly acquisition analysis to populate this section.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ MANAGEMENT ═══════════════════════════════════════════ -->
+<section id="tab-management" class="section" aria-label="Management calls">
+  <div class="placeholder">
+    <strong>Management calls</strong>
+    <p>Analysis coming soon. Run the weekly management analysis to populate this section.</p>
+  </div>
+</section>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   DATA — update this block each time you run the weekly analysis
+   ══════════════════════════════════════════════════════════════ */
+const WEEK = '2026-06-04 → 2026-06-11';
+const ALL = [
+  {title:"CCA // Moss intro",rep:"Jara",country:"UK",date:"2026-06-09",dur:"21m",O:4,Q:5,H:3,M:3,score:3.8,outcome:"demo_booked",well:"Explained platform benefits tailored to client pain points.",wrong:"Key decision makers not briefed before the call."},
+  {title:"Wußler & Schmid",rep:"Nicola",country:"DE",date:"2026-06-08",dur:"15m",O:4,Q:5,H:4,M:3,score:4.0,outcome:"follow_up_call_booked",well:"Explained user roles and card assignment clearly.",wrong:"Did not clarify discount eligibility for referred clients."},
+  {title:"APA <> Moss",rep:"Ezer",country:"UK",date:"2026-06-08",dur:"20m",O:4,Q:5,H:3,M:5,score:4.4,outcome:"follow_up_call_booked",well:"Clearly articulated Moss ICP fit and value proposition.",wrong:"Could have asked for specific member referrals on the call."},
+  {title:"Ronnie Patel",rep:"Ezer",country:"UK",date:"2026-06-05",dur:"3m",O:2,Q:3,H:5,M:1,score:2.6,outcome:"referred_to_contact",well:"Quickly accepted referral to the right contact.",wrong:"Did not ask for context on Adeline's priorities."},
+  {title:"Naman Gupta",rep:"Alex",country:"UK",date:"2026-06-05",dur:"2m",O:3,Q:2,H:4,M:1,score:2.3,outcome:"disqualified",well:"Clearly explained Moss value proposition.",wrong:"Did not probe for alternative pain points or future needs."},
+  {title:"Rina Trivedi",rep:"Alex",country:"UK",date:"2026-06-05",dur:"2m",O:2,Q:4,H:3,M:1,score:2.5,outcome:"disqualified",well:"Clarified prospect's business and needs quickly.",wrong:"Did not research prospect's industry before calling."},
+  {title:"BizAway intro",rep:"Jara",country:"UK",date:"2026-06-04",dur:"29m",O:5,Q:5,H:5,M:3,score:4.4,outcome:"info_sent_no_meeting",well:"Identified mutual ICP and market fit clearly.",wrong:"Did not secure a concrete follow-up meeting date."},
+  {title:"Ideas Community",rep:"Alex",country:"UK",date:"2026-06-03",dur:"21m",O:4,Q:5,H:3,M:3,score:3.8,outcome:"info_sent_no_meeting",well:"Asked detailed questions about partnership and data segmentation.",wrong:"Did not book a concrete follow-up meeting during the call."},
+  {title:"Aalia Rangrez",rep:"Ezer",country:"UK",date:"2026-06-01",dur:"7m",O:3,Q:5,H:5,M:1,score:3.4,outcome:"info_sent_no_meeting",well:"Clarified Moss offering and listened to prospect's needs.",wrong:"Did not probe deeper for potential future pain points."},
+  {title:"PCS Global",rep:"Alex",country:"UK",date:"2026-05-28",dur:"8m",O:2,Q:5,H:3,M:1,score:2.8,outcome:"follow_up_call_booked",well:"Asked detailed questions about client needs and structure.",wrong:"Should have confirmed next steps before technical issues ended call."},
+  {title:"Zee Razaq",rep:"Ezer",country:"UK",date:"2026-05-28",dur:"2m",O:2,Q:2,H:5,M:1,score:2.3,outcome:"info_sent_no_meeting",well:"Asked what was most relevant for the prospect.",wrong:"Did not secure a meeting or call for follow-up."},
+  {title:"Mark Samuel",rep:"Ezer",country:"UK",date:"2026-05-28",dur:"5m",O:3,Q:5,H:5,M:1,score:3.4,outcome:"disqualified",well:"Quickly identified prospect's region and needs.",wrong:"Did not explore if prospect had a UK expansion timeline."},
+  {title:"Cindy Beckel",rep:"Jara",country:"DE",date:"2026-05-28",dur:"3m",O:4,Q:5,H:3,M:5,score:4.4,outcome:"discovery_booked",well:"Quickly scheduled a follow-up meeting with the prospect.",wrong:null},
+  {title:"Ines Harmuth",rep:"Markus",country:"DE",date:"2026-05-28",dur:"10m",O:5,Q:5,H:5,M:3,score:4.4,outcome:"info_sent_no_meeting",well:"Referenced relevant existing partnerships and value proposition.",wrong:"Did not secure a concrete meeting date during the call."},
+  {title:"Sam Jama",rep:"Ezer",country:"UK",date:"2026-05-27",dur:"1m",O:3,Q:2,H:5,M:5,score:3.7,outcome:"discovery_booked",well:"Confirmed a follow-up meeting time with the prospect.",wrong:"Did not clarify prospect's goals sufficiently on the call."},
+  {title:"Ramona Oana (Alex)",rep:"Alex",country:"UK",date:"2026-05-27",dur:"10m",O:3,Q:5,H:3,M:3,score:3.6,outcome:"info_sent_no_meeting",well:"Listened to prospect's needs and offered demo options.",wrong:"Should have booked a live demo call directly."},
+  {title:"Marie Speakman (May26)",rep:"Ezer",country:"UK",date:"2026-05-26",dur:"4m",O:2,Q:4,H:5,M:1,score:2.9,outcome:"no_next_step",well:"Listened and respected prospect's approach.",wrong:"Did not uncover a specific pain point or next step."},
+  {title:"Jan Dittmann",rep:"Aurel",country:"DE",date:"2026-05-26",dur:"1m",O:3,Q:1,H:4,M:3,score:2.6,outcome:"follow_up_call_booked",well:"Clarified the purpose of the call clearly.",wrong:"Did not confirm a specific time for the follow-up."},
+  {title:"Oliver Breitfeld",rep:"Aurel",country:"DE",date:"2026-05-26",dur:"4m",O:2,Q:4,H:5,M:1,score:2.9,outcome:"disqualified",well:"Kept conversation friendly and offered future contact.",wrong:"Did not probe for broader needs or potential referrals."},
+  {title:"Ramona Oana (Ezer)",rep:"Ezer",country:"UK",date:"2026-05-22",dur:"15m",O:4,Q:5,H:3,M:5,score:4.4,outcome:"demo_booked",well:"Booked a demo and confirmed client needs for the meeting.",wrong:"Could have clarified current spend management tools."},
+  {title:"Marie Speakman (May22)",rep:"Ezer",country:"UK",date:"2026-05-22",dur:"5m",O:2,Q:5,H:5,M:3,score:3.8,outcome:"info_sent_no_meeting",well:"Built rapport and tailored pitch to prospect's interests.",wrong:"Did not secure a follow-up call or meeting."},
+  {title:"Rayhan Aleem",rep:"Ezer",country:"UK",date:"2026-05-22",dur:"2m",O:3,Q:4,H:3,M:1,score:2.7,outcome:"info_sent_no_meeting",well:"Built rapport and respected prospect's time.",wrong:"Did not probe for UAE-specific needs or pain points."},
+  {title:"Kennenlernen tax-automate",rep:"Aurel",country:"DE",date:"2026-05-22",dur:"24m",O:4,Q:5,H:3,M:5,score:4.4,outcome:"demo_booked",well:"Clear product walkthrough tailored to prospect's profile.",wrong:"Could have asked more about future client growth plans."},
+  {title:"Alfred Thorpe",rep:"Ezer",country:"UK",date:"2026-05-21",dur:"7m",O:4,Q:5,H:3,M:1,score:3.2,outcome:"referred_to_contact",well:"Built rapport and asked for a relevant referral.",wrong:"Did not attempt to book a meeting with the main contact."},
+  {title:"Tahsin Haque",rep:"Ezer",country:"UK",date:"2026-05-19",dur:"4m",O:4,Q:5,H:5,M:3,score:4.2,outcome:"referred_to_contact",well:"Identified and requested relevant internal contact.",wrong:"Did not probe for current spend management tool usage."},
+  {title:"Srinidhi Shekar",rep:"Ezer",country:"UK",date:"2026-05-19",dur:"3m",O:4,Q:2,H:5,M:1,score:2.7,outcome:"info_sent_no_meeting",well:"Asked what information would be most useful in the email.",wrong:"Did not secure a follow-up meeting or call."},
+  {title:"Thomas Kersting",rep:"Aurel",country:"DE",date:"2026-05-21",dur:"4m",O:5,Q:5,H:5,M:1,score:3.8,outcome:"info_sent_no_meeting",well:"Explained partnership benefits and value clearly.",wrong:"Did not uncover a pain point to drive urgency."},
+  {title:"Corine Denekamp",rep:"Niels",country:"NL",date:"2026-05-19",dur:"12m",O:5,Q:5,H:5,M:5,score:5.0,outcome:"discovery_booked",well:"Identified and addressed prospect's main pain point clearly.",wrong:null},
+  {title:"Lenthe Steeman",rep:"Niels",country:"NL",date:"2026-05-18",dur:"3m",O:4,Q:5,H:3,M:1,score:3.2,outcome:"referred_to_contact",well:"Clearly explained why the lead was referred.",wrong:"Could have asked more about the other BV."},
+];
+
+/* ══════════════════════════════════════════════════════════════
+   Config
+   ══════════════════════════════════════════════════════════════ */
+const OUT_LABELS = {
+  demo_booked:"Demo booked", discovery_booked:"Discovery booked",
+  follow_up_call_booked:"Follow-up booked", referred_to_contact:"Referred",
+  info_sent_no_meeting:"Info sent", disqualified:"Disqualified", no_next_step:"No next step"
+};
+const OUT_COLORS = {
+  demo_booked:"#0f6b4a", discovery_booked:"#1a9e70", follow_up_call_booked:"#5dcaa5",
+  referred_to_contact:"#c07a14", info_sent_no_meeting:"#92580a",
+  disqualified:"#b91c1c", no_next_step:"#7f1d1d"
+};
+const WELL_BUCKETS = [
+  {label:"Strong qualification / discovery",kw:["qualified","qualifying","detailed questions","client needs","ICP","pain point clearly","explored"]},
+  {label:"Meeting or referral secured",kw:["booked","scheduled","meeting","referral","follow-up","confirmed"]},
+  {label:"Clear value proposition delivery",kw:["articulated","explained","value proposition","ICP fit","benefits","tailored","relevant"]},
+  {label:"Good objection handling",kw:["objection","pushback","handled","accepted","confident"]},
+  {label:"Rapport and listening",kw:["rapport","listened","respected","built rapport"]},
+];
+const WRONG_BUCKETS = [
+  {label:"Failed to book a meeting on the call",kw:["meeting","book","secure","follow-up","call for follow","demo call directly","concrete","date"]},
+  {label:"Weak or no qualification",kw:["qualify","qualification","probe","pain points","needs","research","explore"]},
+  {label:"No next step confirmed",kw:["next step","confirm","specific time","before calling"]},
+  {label:"Missing pre-call research",kw:["research","brief","industry","priorities","prepared"]},
+  {label:"Urgency not created",kw:["urgency","pain point to drive","growth plans","timeline","expansion"]},
+];
+
+function bucket(text, buckets) {
+  if (!text) return null;
+  const t = text.toLowerCase();
+  for (const b of buckets) { if (b.kw.some(k => t.includes(k))) return b.label; }
+  return "Other";
+}
+function sc(v) { return v >= 4 ? '#0f6b4a' : v >= 3 ? '#92580a' : '#b91c1c'; }
+function bc(v) { return v >= 4 ? '#1a9e70' : v >= 3 ? '#c07a14' : '#ef4444'; }
+function cls(v) { return v >= 4 ? 'green' : v >= 3 ? 'amber' : 'red'; }
+function avg(arr) { return arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : 0; }
+function getWeek(d) {
+  const dt = new Date(d), day = dt.getDay(), diff = dt.getDate()-day+(day===0?-6:1);
+  return new Date(dt.setDate(diff)).toISOString().slice(0,10);
+}
+
+let distC, critC, outC, trendC, corrC;
+
+function getFiltered() {
+  const from = document.getElementById('f-from').value;
+  const to   = document.getElementById('f-to').value;
+  const ctry = document.getElementById('f-country').value;
+  const rep  = document.getElementById('f-rep').value;
+  return ALL.filter(c => {
+    if (from && c.date < from) return false;
+    if (to   && c.date > to)   return false;
+    if (ctry !== 'all' && c.country !== ctry) return false;
+    if (rep  !== 'all' && c.rep !== rep)      return false;
+    return true;
+  });
+}
+
+function render() {
+  const data = getFiltered();
+  document.getElementById('week-label').textContent = `Week of ${WEEK}`;
+
+  if (!data.length) {
+    document.getElementById('kpis').innerHTML = '<p style="color:#9b9b96;font-size:13px">No calls match the selected filters.</p>';
+    ['calls-body','rep-body','insights-grid'].forEach(id => document.getElementById(id).innerHTML = '');
+    return;
+  }
+
+  const avgScore = avg(data.map(c=>c.score));
+  const hi = data.filter(c=>c.score>=4).length;
+  const lo = data.filter(c=>c.score<3).length;
+  const mtg = data.filter(c=>['demo_booked','discovery_booked','follow_up_call_booked'].includes(c.outcome)).length;
+
+  document.getElementById('kpis').innerHTML = `
+    <div class="kpi"><div class="kpi-label">Calls</div><div class="kpi-value">${data.length}</div></div>
+    <div class="kpi"><div class="kpi-label">Avg score</div><div class="kpi-value ${cls(avgScore)}">${avgScore.toFixed(1)}</div></div>
+    <div class="kpi"><div class="kpi-label">Scored ≥4.0</div><div class="kpi-value green">${hi}</div></div>
+    <div class="kpi"><div class="kpi-label">Meetings booked</div><div class="kpi-value green">${mtg}</div></div>
+    <div class="kpi"><div class="kpi-label">Needs attention</div><div class="kpi-value ${lo>0?'red':'green'}">${lo}</div></div>
+  `;
+
+  // Distribution
+  const bands = [0,0,0,0,0];
+  data.forEach(c => {
+    if(c.score<2)bands[0]++; else if(c.score<3)bands[1]++;
+    else if(c.score<4)bands[2]++; else if(c.score<5)bands[3]++; else bands[4]++;
+  });
+  const dOpts = { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+    scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}},
+            x:{ticks:{font:{size:10}},grid:{display:false}}} };
+  const dd = { labels:['<2','2–3','3–4','4–5','5'],
+    datasets:[{data:bands, backgroundColor:['#ef4444','#fca5a5','#c07a14','#5dcaa5','#0f6b4a'], borderWidth:0, borderRadius:4}] };
+  if(distC){distC.data=dd;distC.update();}
+  else distC = new Chart(document.getElementById('distChart'), {type:'bar', data:dd, options:dOpts});
+
+  // Criteria
+  const cVals = [avg(data.map(c=>c.O)), avg(data.map(c=>c.Q)), avg(data.map(c=>c.H)), avg(data.map(c=>c.M))].map(v=>parseFloat(v.toFixed(1)));
+  const cd = { labels:['Opening (w2)','Qualification (w3)','Objection (w2)','Meeting (w3)'],
+    datasets:[{data:cVals, backgroundColor:['#378add','#1a9e70','#c07a14','#d85a30'], borderWidth:0, borderRadius:4}] };
+  const cOpts = { responsive:true, maintainAspectRatio:false, indexAxis:'y', plugins:{legend:{display:false}},
+    scales:{x:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}},
+            y:{ticks:{font:{size:10}},grid:{display:false}}} };
+  if(critC){critC.data=cd;critC.update();}
+  else critC = new Chart(document.getElementById('critChart'), {type:'bar', data:cd, options:cOpts});
+
+  // Outcomes
+  const oc={};data.forEach(c=>{oc[c.outcome]=(oc[c.outcome]||0)+1;});
+  const ok=Object.keys(oc).sort((a,b)=>oc[b]-oc[a]);
+  const od={labels:ok.map(k=>OUT_LABELS[k]||k), datasets:[{data:ok.map(k=>oc[k]), backgroundColor:ok.map(k=>OUT_COLORS[k]||'#9b9b96'), borderWidth:0, borderRadius:4}]};
+  const oOpts={responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},
+    scales:{x:{beginAtZero:true,ticks:{stepSize:1,font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}},
+            y:{ticks:{font:{size:10}},grid:{display:false}}}};
+  if(outC){outC.data=od;outC.update();}
+  else outC=new Chart(document.getElementById('outChart'),{type:'bar',data:od,options:oOpts});
+
+  // Weekly trend
+  const wk={};
+  data.forEach(c=>{const w=getWeek(c.date);if(!wk[w])wk[w]=[];wk[w].push(c.score);});
+  const weeks=Object.keys(wk).sort();
+  const td={labels:weeks.map(w=>w.slice(5)),
+    datasets:[{label:'Avg',data:weeks.map(w=>parseFloat(avg(wk[w]).toFixed(1))),
+      borderColor:'#1a6b4a',backgroundColor:'rgba(26,107,74,0.08)',tension:.35,fill:true,pointRadius:4,pointBackgroundColor:'#1a6b4a',borderWidth:2}]};
+  const tOpts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{y:{min:1,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}},
+            x:{ticks:{font:{size:10}},grid:{display:false}}}};
+  if(trendC){trendC.data=td;trendC.update();}
+  else trendC=new Chart(document.getElementById('trendChart'),{type:'line',data:td,options:tOpts});
+
+  // Score by outcome
+  const oa={};data.forEach(c=>{if(!oa[c.outcome])oa[c.outcome]=[];oa[c.outcome].push(c.score);});
+  const order=['demo_booked','discovery_booked','follow_up_call_booked','referred_to_contact','info_sent_no_meeting','disqualified','no_next_step'];
+  const fk=order.filter(k=>oa[k]);
+  const corrD={labels:fk.map(k=>OUT_LABELS[k]),
+    datasets:[{data:fk.map(k=>parseFloat(avg(oa[k]).toFixed(1))),backgroundColor:fk.map(k=>OUT_COLORS[k]),borderWidth:0,borderRadius:4}]};
+  const corrOpts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{y:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}},
+            x:{ticks:{font:{size:10}},grid:{display:false}}}};
+  if(corrC){corrC.data=corrD;corrC.update();}
+  else corrC=new Chart(document.getElementById('corrChart'),{type:'bar',data:corrD,options:corrOpts});
+
+  // Insights
+  const wm={},rm={};
+  data.forEach(c=>{
+    const wb=bucket(c.well,WELL_BUCKETS);if(wb)wm[wb]=(wm[wb]||0)+1;
+    const rb=bucket(c.wrong,WRONG_BUCKETS);if(rb)rm[rb]=(rm[rb]||0)+1;
+  });
+  document.getElementById('insights-grid').innerHTML=`
+    <div class="insight-card">
+      <div class="insight-title green">What went well</div>
+      ${Object.entries(wm).sort((a,b)=>b[1]-a[1]).map(([t,n])=>`<div class="insight-row"><span class="badge green">${n}x</span>${t}</div>`).join('')}
+    </div>
+    <div class="insight-card">
+      <div class="insight-title red">What went wrong</div>
+      ${Object.entries(rm).sort((a,b)=>b[1]-a[1]).map(([t,n])=>`<div class="insight-row"><span class="badge red">${n}x</span>${t}</div>`).join('')}
+    </div>
+  `;
+
+  // Rep rankings — sorted by call count
+  const reps={};
+  data.forEach(c=>{
+    if(!reps[c.rep])reps[c.rep]={n:0,s:0,O:0,Q:0,H:0,M:0,country:c.country};
+    reps[c.rep].n++;reps[c.rep].s+=c.score;reps[c.rep].O+=c.O;reps[c.rep].Q+=c.Q;reps[c.rep].H+=c.H;reps[c.rep].M+=c.M;
+  });
+  const repSorted=Object.entries(reps).sort((a,b)=>b[1].n-a[1].n);
+  const crit=['Opening','Qualification','Objection','Meeting'];
+  document.getElementById('rep-body').innerHTML=repSorted.map(([name,d],i)=>{
+    const a=(d.s/d.n),aO=d.O/d.n,aQ=d.Q/d.n,aH=d.H/d.n,aM=d.M/d.n;
+    const vals=[aO,aQ,aH,aM];
+    const str=crit[vals.indexOf(Math.max(...vals))];
+    const weak=crit[vals.indexOf(Math.min(...vals))];
+    return `<tr>
+      <td class="td-muted">${i+1}</td>
+      <td style="font-weight:600">${name}</td>
+      <td class="td-muted">${d.country}</td>
+      <td style="font-weight:600">${d.n}</td>
+      <td><span class="td-score ${cls(a)}">${a.toFixed(1)}</span></td>
+      <td><span class="pill pill-green">${str}</span></td>
+      <td><span class="pill pill-red">${weak}</span></td>
+      <td style="color:${sc(aO)};font-family:var(--mono);font-size:12px">${aO.toFixed(1)}</td>
+      <td style="color:${sc(aQ)};font-family:var(--mono);font-size:12px">${aQ.toFixed(1)}</td>
+      <td style="color:${sc(aH)};font-family:var(--mono);font-size:12px">${aH.toFixed(1)}</td>
+      <td style="color:${sc(aM)};font-family:var(--mono);font-size:12px">${aM.toFixed(1)}</td>
+    </tr>`;
+  }).join('');
+
+  // All calls sorted by score
+  const sorted=[...data].sort((a,b)=>b.score-a.score);
+  document.getElementById('calls-body').innerHTML=sorted.map(c=>{
+    const pct=(c.score/5*100).toFixed(0);
+    const attn=c.score<3?`<span class="pill pill-red">Review</span>`:'';
+    const short=parseInt(c.dur)<=2&&c.score>=3.5?`<span class="pill pill-amber">Short</span>`:'';
+    const outPill=`<span class="pill" style="background:${OUT_COLORS[c.outcome]}22;color:${OUT_COLORS[c.outcome]}">${OUT_LABELS[c.outcome]||c.outcome}</span>`;
+    return `<tr>
+      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500">${c.title}</td>
+      <td class="td-muted">${c.rep}</td>
+      <td class="td-muted">${c.date.slice(5)}</td>
+      <td class="td-muted">${c.dur}</td>
+      <td style="color:${sc(c.O)};font-family:var(--mono);font-size:12px">${c.O}</td>
+      <td style="color:${sc(c.Q)};font-family:var(--mono);font-size:12px">${c.Q}</td>
+      <td style="color:${sc(c.H)};font-family:var(--mono);font-size:12px">${c.H}</td>
+      <td style="color:${sc(c.M)};font-family:var(--mono);font-size:12px">${c.M}</td>
+      <td><span class="td-score ${cls(c.score)}">${c.score.toFixed(1)}</span></td>
+      <td>${outPill}</td>
+      <td>${attn}${short}</td>
+      <td><div class="bar-wrap"><div class="bar-fill" style="width:${pct}%;background:${bc(c.score)}"></div></div></td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Tab navigation ──
+document.querySelectorAll('.nav-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ── Filter listeners ──
+const reps=[...new Set(ALL.map(c=>c.rep))].sort();
+const sel=document.getElementById('f-rep');
+reps.forEach(r=>{const o=document.createElement('option');o.value=r;o.textContent=r;sel.appendChild(o);});
+['f-from','f-to','f-country','f-rep'].forEach(id=>document.getElementById(id).addEventListener('change',render));
+
+render();
+</script>
+</body>
+</html>
