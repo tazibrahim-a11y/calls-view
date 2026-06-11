@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       html_content:
-        description: 'Full index.html content (base64 encoded)'
+        description: 'Full index.html content (base64-encoded gzip)'
         required: true
         type: string
       commit_message:
@@ -22,10 +22,12 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAGES_TOKEN }}
 
-      - name: Decode and write index.html
+      - name: Decode and decompress index.html
         run: |
-          echo "${{ github.event.inputs.html_content }}" | base64 --decode > index.html
+          echo "${{ github.event.inputs.html_content }}" | base64 --decode | gunzip > index.html
 
       - name: Verify file was written
         run: |
