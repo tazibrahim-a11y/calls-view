@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moss Partnerships — Coach</title>
+<title>Moss Partnerships Coach</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,16 +12,17 @@
 :root{
   --bg:#f0ede8;--surface:#faf8f5;--border:#ddd9d2;--border-soft:#e8e4de;
   --text-primary:#2c2820;--text-secondary:#6b6358;--text-tertiary:#9e968c;
-  --accent:#2d6a4f;--accent-bg:#e8f4ed;--accent-light:#52b788;
+  --accent:#2d6a4f;--accent-bg:#e8f4ed;
   --warn:#8a5c0a;--warn-bg:#fdf2dc;
   --danger:#8b2e2e;--danger-bg:#fdeaea;
+  --tl:#2c5f7a;--tl-bg:#e6f3f8;
   --mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;
 }
 body{font-family:var(--sans);background:var(--bg);color:var(--text-primary);height:100dvh;display:flex;flex-direction:column;overflow:hidden}
 header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.5rem;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .header-left{display:flex;align-items:center;gap:10px}
 .rep-avatar{width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.rep-avatar.tl{background:#2c5f7a}
+.rep-avatar.tl{background:var(--tl)}
 .rep-name{font-size:14px;font-weight:600}
 .rep-role{font-size:11px;color:var(--text-tertiary)}
 .header-right{display:flex;align-items:center;gap:8px}
@@ -41,12 +42,12 @@ header{background:var(--surface);border-bottom:1px solid var(--border);padding:0
 .message.assistant{align-self:flex-start}
 .msg-avatar{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;margin-top:2px}
 .message.user .msg-avatar{background:var(--accent);color:#fff}
-.message.user .msg-avatar.tl{background:#2c5f7a}
+.message.user.tl-user .msg-avatar{background:var(--tl)}
 .message.assistant .msg-avatar{background:var(--border);color:var(--text-secondary);font-size:10px}
 .msg-bubble{padding:.75rem 1rem;border-radius:12px;font-size:13px;line-height:1.6;max-width:580px}
 .message.user .msg-bubble{background:var(--accent);color:#fff;border-bottom-right-radius:3px}
-.message.user.tl-user .msg-bubble{background:#2c5f7a}
-.message.assistant .msg-bubble{background:var(--ai-bubble, var(--surface));border:1px solid var(--border);color:var(--text-primary);border-bottom-left-radius:3px}
+.message.user.tl-user .msg-bubble{background:var(--tl)}
+.message.assistant .msg-bubble{background:var(--surface);border:1px solid var(--border);color:var(--text-primary);border-bottom-left-radius:3px}
 .msg-bubble p{margin-bottom:.5rem}.msg-bubble p:last-child{margin-bottom:0}
 .msg-bubble strong{font-weight:600}
 .msg-bubble ul{margin:.4rem 0 .4rem 1.1rem}.msg-bubble li{margin-bottom:.2rem}
@@ -78,8 +79,8 @@ button.send svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2;stro
     </div>
   </div>
   <div class="header-right">
-    <span class="period-badge">Jun 1–11, 2026</span>
-    <a class="dash-link" href="https://tazibrahim-a11y.github.io/calls-view/" target="_blank">View dashboard →</a>
+    <span class="period-badge">Jun 1-11, 2026</span>
+    <a class="dash-link" href="https://tazibrahim-a11y.github.io/calls-view/" target="_blank">View dashboard</a>
   </div>
 </header>
 <div class="stats-bar" id="stats-bar"></div>
@@ -87,7 +88,7 @@ button.send svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2;stro
 <div class="suggestions" id="suggestions"></div>
 <div class="input-area">
   <div class="input-row">
-    <textarea id="input" placeholder="Ask about your calls, next steps, pipeline…" rows="1"></textarea>
+    <textarea id="input" placeholder="Ask about your calls, next steps, upcoming calls, pipeline..." rows="1"></textarea>
     <button class="send" id="send-btn" disabled>
       <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
     </button>
@@ -97,332 +98,367 @@ button.send svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2;stro
 <script>
 const REPS = {
   jara: {
-    name:"Jara Bockx",initials:"JB",role:"Senior Partnerships Manager",market:"UK / DE",isTL:false,
-    calls:13,avg_score:4.1,
-    best_call:"IBB Ventures (Discovery, 4.9)",worst_call:"Poool x Moss (Management, 3.3)",
+    name:"Jara Bockx", initials:"JB", role:"Senior Partnerships Manager", market:"UK / DE", isTL:false,
+    calls:13, avg_score:4.1, pc_avg:3.2,
+    best_call:"IBB Ventures (Discovery, 4.9 — pre-call 4)", worst_call:"Poool x Moss (Management, 3.2)",
     sourcing:[
-      {title:"BizAway intro",score:4.5,outcome:"Follow-up booked",gap:"No specific meeting time confirmed"},
-      {title:"CCA // Moss intro",score:3.7,outcome:"Demo booked",gap:"No specific demo time confirmed"},
+      {t:"BizAway intro",s:4.5,out:"Follow-up booked",gap:"No specific meeting time confirmed"},
+      {t:"CCA // Moss intro",s:3.7,out:"Demo booked",gap:"No specific demo time confirmed"}
     ],
     discovery:[
-      {title:"IBB Ventures x Moss",score:4.9,outcome:"Follow-up booked",gap:"Competitor mentioned"},
-      {title:"Bitesize x Moss",score:4.3,outcome:"Demo booked",gap:"Some uncertainty on features"},
-      {title:"Org // Moss intro",score:3.3,outcome:"Follow-up booked",gap:"No DM confirmed, unclear client expense needs"},
+      {t:"IBB Ventures",s:4.8,pc:4,out:"Follow-up booked",gap:"Competitor mentioned"},
+      {t:"Bitesize x Moss",s:4.1,pc:3,out:"Demo booked",gap:"No explicit agenda — some uncertainty on features"},
+      {t:"Org // Moss intro",s:3.1,pc:2,out:"Follow-up booked",gap:"No agenda set. No DM confirmed, outcome did not match"}
     ],
     demo:[
-      {title:"Supy x Moss",score:4.3,outcome:"Follow-up booked",gap:"Integration details unclear, petty cash unresolved"},
+      {t:"Supy x Moss",s:4.1,pc:3,out:"Follow-up booked",gap:"No explicit agenda. Integration details unclear"}
     ],
     management:[
-      {title:"Arthur Liebrecht",score:4.5,gap:"No explicit deal timeline"},
-      {title:"score business x Moss",score:4.5,gap:"No explicit customer commitment captured"},
-      {title:"WOW Company x Moss",score:4.5,gap:"No explicit close on all blockers"},
-      {title:"One Company x Moss",score:4.3,gap:null},
-      {title:"WS x Moss",score:4.1,gap:"Blockers not deeply explored"},
-      {title:"ESER Capital",score:3.9,gap:"No explicit competitor, some data missing"},
-      {title:"Poool x Moss",score:3.3,gap:"No new pipeline, slow customer response"},
+      {t:"Arthur Liebrecht",s:4.4,pc:4,gap:"No explicit deal timeline"},
+      {t:"score business x Moss",s:4.4,pc:4,gap:"No explicit customer commitment captured"},
+      {t:"WOW Company x Moss",s:4.2,pc:3,gap:"No agenda set. No explicit close on all blockers"},
+      {t:"One Company x Moss",s:4.2,pc:4,gap:null},
+      {t:"WS x Moss",s:3.9,pc:3,gap:"No agenda. Blockers not deeply explored"},
+      {t:"ESER Capital",s:3.8,pc:3,gap:"No pre-call objective. Some data missing"},
+      {t:"Poool x Moss",s:3.2,pc:3,gap:"No new pipeline, slow customer response"}
     ],
     next_steps:[
-      {partner:"IBB Ventures",action:"Send lunch meeting slots to Cindy",overdue:true},
-      {partner:"CCA",action:"Prep and send demo — Rupert to confirm time",overdue:false},
-      {partner:"BizAway",action:"Send API docs and share SFTP integration roadmap lessons",overdue:false},
-      {partner:"Bitesize",action:"Send freemium account link; check prepayment and credit note handling",overdue:false},
-      {partner:"Supy",action:"Send summary; ask partner manager about DATEV response timeline",overdue:false},
-      {partner:"score business",action:"Send API docs, tracking team landing page, confirm Jun 22 14:00",overdue:false},
-      {partner:"ESER Capital",action:"Send summary of discussion for Latif",overdue:false},
-      {partner:"WOW Company",action:"Platform walkthrough at lunch & learn; cross-reference WS event attendee list",overdue:false},
-      {partner:"One Company",action:"Send invoice to finance; confirm API write access timeline",overdue:false},
-      {partner:"Poool",action:"Send calendar link for joint meeting with Clemens and Markus",overdue:false},
-      {partner:"Arthur Liebrecht",action:"Send summary of discussion for Arthur to review",overdue:false},
+      {p:"IBB Ventures",a:"Send lunch meeting slots to Cindy",od:true},
+      {p:"CCA",a:"Prep and send demo — Rupert to confirm time",od:false},
+      {p:"BizAway",a:"Send API docs and SFTP integration roadmap",od:false},
+      {p:"Bitesize",a:"Send freemium link; check prepayment handling",od:false},
+      {p:"Supy",a:"Send summary; DATEV response timeline",od:false},
+      {p:"score business",a:"Send API docs; confirm Jun 22 14:00",od:false},
+      {p:"ESER Capital",a:"Send summary for Latif",od:false},
+      {p:"WOW Company",a:"Lunch and learn platform walkthrough",od:false},
+      {p:"One Company",a:"Send invoice; confirm API write access timeline",od:false},
+      {p:"Poool",a:"Send calendar link for Clemens/Markus meeting",od:false},
+      {p:"Arthur Liebrecht",a:"Send discussion summary",od:false}
+    ],
+    upcoming:[
+      {call:"Ryan / Jara (Sansa Solutions)",date:"Fri Jun 12, 11:45am",type:"prospect-sourcing",flag:"missing",note:"No agenda — set ICP qualification objective before joining"},
+      {call:"AAB // Moss",date:"Fri Jun 12, 2:15pm",type:"prospect-discovery",flag:"missing",note:"No agenda — define what qualified looks like before joining"},
+      {call:"Niedling & Partner Monthly",date:"Mon Jun 15, 10:30am",type:"partner-management",flag:"warn",note:"Monthly recurring. MAP missing last call. Add MAP as first agenda item."},
+      {call:"Moss Demo & Naechste Schritte",date:"Mon Jun 15, 2pm",type:"prospect-demo",flag:"missing",note:"No agenda. Define use case and commitment ask before joining."},
+      {call:"Poool GTM",date:"Mon Jun 15, 4pm",type:"partner-management",flag:"missing",note:"Scored 3.2 last time — no new pipeline. Set specific objective: which client will they refer?"}
     ],
     coaching:{
-      focus:"Meeting lock rate on sourcing — 2 of 2 calls ended without a confirmed time. IBB Ventures lunch overdue.",
-      strength:"Pipeline depth in management calls. Best management caller on the team.",
-      map_gap:"MAP review missing or weak on 3 of 7 management calls.",
+      focus:"Pre-call clarity below 3 on most management calls. IBB Ventures lunch overdue.",
+      strength:"Most active rep. Best management pipeline depth on the team.",
+      map_gap:"MAP scored below 3 on 3 of 7 management calls.",
+      pc_insight:"Calls with pre-call clarity 4+ (IBB Ventures, Arthur Liebrecht, score business) consistently produced better outcomes. Calls at 2-3 had unclear objectives and outcomes that did not fully match."
     },
-    pipeline:{
-      market:"UK/DE",june_sqls:{DE:{actual:8,target:38},GB:{actual:1,target:10}},
-      insight:"June DE SQLs at 8/38, GB at 1/10. Management calls are the lever — MAP review and commitment signals directly drive referrals.",
-    }
+    pipeline:{market:"UK/DE",june_sqls:{DE:{actual:8,target:38},GB:{actual:1,target:10}},
+      insight:"June DE SQLs at 8/38, GB at 1/10. Your management calls are the direct lever. MAP review and pre-call clarity are the two gaps — partners are not being held to commitments and calls lack a defined referral ask."}
   },
   nicola: {
-    name:"Nicola Rohne",initials:"NR",role:"Partnerships Manager",market:"DE",isTL:false,
-    calls:8,avg_score:4.2,
-    best_call:"Argus Search (Discovery, 4.6)",worst_call:"Büsra Karadag (Management, 3.7)",
-    sourcing:[{title:"Wußler & Schmid",score:3.7,outcome:"Follow-up booked",gap:"No specific demo time confirmed"}],
+    name:"Nicola Rohne", initials:"NR", role:"Partnerships Manager", market:"DE", isTL:false,
+    calls:8, avg_score:4.1, pc_avg:2.8,
+    best_call:"Argus Search (Discovery, 4.5 — pre-call 4)", worst_call:"Buesra Karadag (Management, 3.5 — pre-call 2)",
+    sourcing:[{t:"Wussler & Schmid",s:3.7,out:"Follow-up booked",gap:"No specific demo time confirmed"}],
     discovery:[
-      {title:"Argus Search GmbH",score:4.6,outcome:"Agreement sent",gap:"No deep product pain surfaced yet"},
-      {title:"Patrick Schreiner",score:4.6,outcome:"Follow-up booked",gap:"No direct DM confirmed"},
-      {title:"Miro | Moss Ambassador",score:4.1,outcome:"Agreement sent",gap:"Customer not ready to switch from Pleo yet"},
+      {t:"Argus Search GmbH",s:4.5,pc:4,out:"Agreement sent",gap:"No deep product pain surfaced yet"},
+      {t:"Patrick Schreiner",s:4.4,pc:3,out:"Follow-up booked",gap:"No agenda set — outcome partially matched"},
+      {t:"Miro | Moss Ambassador",s:4.1,pc:4,out:"Agreement sent",gap:"Customer not ready to switch from Pleo yet"}
     ],
     demo:[],
     management:[
-      {title:"n.a. (Marjan)",score:4.3,gap:null},
-      {title:"Alina Nauen",score:4.3,gap:"Uncertainty due to scheduling conflict"},
-      {title:"Felix Schmitt",score:3.9,gap:"No explicit competitor discussion, pipeline limited"},
-      {title:"ba tax",score:3.9,gap:"No explicit pipeline or account mapping"},
-      {title:"+491776",score:3.7,gap:"No explicit competitive discussion, vagueness on MAP"},
-      {title:"Büsra Karadag",score:3.7,gap:"No explicit pipeline or MAP details shared"},
+      {t:"Alina Nauen",s:4.1,pc:3,gap:"No agenda set. Uncertainty due to scheduling conflict"},
+      {t:"n.a. (Marjan)",s:4.0,pc:3,gap:"No agenda — MAP not reviewed"},
+      {t:"Felix Schmitt",s:3.7,pc:2,gap:"No agenda. No competitor discussion, pipeline limited"},
+      {t:"ba tax",s:3.7,pc:2,gap:"No agenda. No explicit pipeline or account mapping"},
+      {t:"+491776",s:3.5,pc:2,gap:"No agenda. Vagueness on MAP"},
+      {t:"Buesra Karadag",s:3.5,pc:2,gap:"No agenda. No explicit pipeline or MAP details"}
     ],
     next_steps:[
-      {partner:"Wußler & Schmid",action:"Speak with Raphael; schedule joint setup call with Melanie",overdue:false},
-      {partner:"Argus Search",action:"Send NDA; check affiliate link",overdue:false},
-      {partner:"Miro Schmiedt",action:"Awaiting Umsatzsteuer-ID and address for contract setup",overdue:false},
-      {partner:"Patrick Schreiner",action:"Align next week once Patrick has spoken with the customer",overdue:false},
+      {p:"Wussler & Schmid",a:"Speak with Raphael; schedule setup call",od:false},
+      {p:"Argus Search",a:"Send NDA; check affiliate link",od:false},
+      {p:"Miro Schmiedt",a:"Awaiting Umsatzsteuer-ID for contract",od:false},
+      {p:"Patrick Schreiner",a:"Align next week once Patrick speaks with customer",od:false}
+    ],
+    upcoming:[
+      {call:"Roedl Weekly CheckIn",date:"Mon Jun 15, 5:15pm",type:"partner-management",flag:"warn",note:"Weekly with AE. Set agenda: MAP review first, then which client to refer next."},
+      {call:"sonnenschutz.de - B1 AG",date:"Tue Jun 16, 9am",type:"prospect-discovery",flag:"ok",note:"AE (Alexander van der Hoff) co-attending — good structure signal. Define DM and ICP objective."},
+      {call:"Pape & Co. Monthly",date:"Tue Jun 16, 9:30am",type:"partner-management",flag:"warn",note:"Monthly recurring. MAP missing last call. Add MAP + specific client ask to agenda."},
+      {call:"Done!Financials",date:"Tue Jun 16, 10:15am",type:"partner-management",flag:"missing",note:"No agenda. Define MAP review and pipeline ask before joining."},
+      {call:"Limetax // Moss",date:"Tue Jun 16, 11am",type:"prospect-sourcing",flag:"missing",note:"No agenda. Set ICP qualification objective before joining."},
+      {call:"ba tax Session",date:"Wed Jun 17, 10am",type:"partner-management",flag:"ok",note:"30+ attendees. Enablement = management. Define referral commitment ask for end of session."}
     ],
     coaching:{
-      focus:"MAP review is missing on all management calls. Start every call with: 'Last time we agreed X — has that happened?'",
-      strength:"Discovery qualification is strong — Argus Search and Patrick Schreiner both scored 4.6.",
+      focus:"MAP review and pre-call objectives missing on ALL management calls. Pre-call avg is 2.8 — lowest on the team.",
+      strength:"Discovery qualification is strong — Argus Search and Patrick Schreiner both 4.4+.",
       map_gap:"MAP scored below 3 on 4 of 6 management calls.",
+      pc_insight:"Every management call this period had a pre-call clarity score of 2 or 3. None had a defined agenda. This is directly linked to low MAP scores — you cannot review commitments if you did not set them as the agenda objective before joining."
     },
-    pipeline:{market:"DE",june_sqls:{DE:{actual:8,target:38}},insight:"DE is tracking but behind target. Your management calls need stronger MAP review to drive referrals."}
+    pipeline:{market:"DE",june_sqls:{DE:{actual:8,target:38}},
+      insight:"DE is at 8/38 SQLs. Your 6 management calls are active but MAP is the gap across all of them. Partners have not been reminded of their referral commitments. Fix pre-call clarity first — it unlocks MAP."}
   },
   ezer: {
-    name:"Ezer Amanuel",initials:"EA",role:"Partnerships Manager",market:"UK",isTL:false,
-    calls:4,avg_score:3.2,
-    best_call:"APA <> Moss (Sourcing, 4.7)",worst_call:"Aalia Rangrez (Sourcing, 2.7)",
+    name:"Ezer Amanuel", initials:"EA", role:"Partnerships Manager", market:"UK", isTL:false,
+    calls:5, avg_score:3.7, pc_avg:2.4,
+    best_call:"APA (Sourcing, 4.7)", worst_call:"Hotglue (Discovery, 3.4 — pre-call 2)",
     sourcing:[
-      {title:"APA <> Moss",score:4.7,outcome:"Follow-up booked",gap:null},
-      {title:"Ronnie Patel",score:2.9,outcome:"Referred to contact",gap:"No qualification, no meeting confirmed"},
-      {title:"Aalia Rangrez",score:2.7,outcome:"Info sent",gap:"No meeting booked, limited qualification depth"},
-      {title:"Justis Vercoe",score:3.9,outcome:"Demo booked",gap:"Decision maker not on next call"},
+      {t:"APA <> Moss",s:4.7,out:"Follow-up booked",gap:null},
+      {t:"Ronnie Patel",s:2.9,out:"Referred to contact",gap:"No qualification, no meeting confirmed"},
+      {t:"Aalia Rangrez",s:2.7,out:"Info sent",gap:"No meeting booked, limited qualification depth"}
     ],
     discovery:[
-      {title:"Hotglue Partnership",score:3.6,outcome:"Info sent — no meeting",gap:"No immediate integration need, unclear next step"},
+      {t:"Justis Vercoe",s:3.9,pc:3,out:"Demo booked",gap:"No pre-call objective. Decision maker not on next call"},
+      {t:"Hotglue Partnership",s:3.4,pc:2,out:"Info sent — no meeting",gap:"No agenda, no objective. Outcome did not match — no next meeting booked"}
     ],
-    demo:[],management:[],
+    demo:[], management:[],
     next_steps:[
-      {partner:"APA / Ross Batten",action:"Send calendar invite for Friday follow-up",overdue:false},
-      {partner:"Justis Vercoe",action:"Demo Wednesday at 1:15pm — confirm attendees",overdue:false},
-      {partner:"Hotglue",action:"Follow up with clear next meeting proposal — currently no confirmed next step",overdue:true},
+      {p:"APA / Ross Batten",a:"Send calendar invite for Friday follow-up",od:false},
+      {p:"Justis Vercoe",a:"Demo Wednesday 1:15pm — confirm attendees",od:false},
+      {p:"Hotglue",a:"Follow up with clear next meeting proposal",od:true}
+    ],
+    upcoming:[
+      {call:"Portswigger // Moss",date:"Fri Jun 12, 9am",type:"prospect-sourcing",flag:"missing",note:"No agenda — set ICP qualification objective before joining"},
+      {call:"Ashdale Care // Moss",date:"Fri Jun 12, 10am",type:"prospect-sourcing",flag:"missing",note:"No agenda — set ICP qualification objective before joining"},
+      {call:"APA // Moss demo",date:"Fri Jun 12, 1:15pm",type:"partner-demo",flag:"warn",note:"Follow-up from 4.7 sourcing call. Define use case to demo AND the commitment ask before joining. Ross Batten attending."},
+      {call:"AAB // Moss",date:"Fri Jun 12, 1:15pm",type:"prospect-discovery",flag:"missing",note:"No agenda — define what qualified looks like before joining"},
+      {call:"AAT x Moss: Demo",date:"Mon Jun 15, 11:15am",type:"prospect-demo",flag:"ok",note:"Anish Tailor (AAT) + Charlotte Lenman attending. Agenda appears set."},
+      {call:"MW Finman // Moss intro",date:"Mon Jun 15, 4:30pm",type:"prospect-sourcing",flag:"missing",note:"No agenda — first contact, set ICP objective"}
     ],
     coaching:{
-      focus:"Hotglue has no confirmed next step — at risk of going cold. APA follow-up calendar invite should already be sent.",
-      strength:"Strongest sourcing call this month (APA, 4.7). Best at opening and articulating ICP fit.",
-      map_gap:"No management calls this period.",
+      focus:"Hotglue has no confirmed next step — at risk of going cold. Today you have the APA demo — set your commitment ask before joining: which client will Ross refer first?",
+      strength:"Best sourcing call this month (APA, 4.7). Strong opener and ICP articulation.",
+      map_gap:"No management calls this period — no active partners to manage yet.",
+      pc_insight:"Pre-call clarity avg is 2.4. Hotglue and Justis Vercoe both had no defined objective before the call — outcomes reflected that. For the APA demo today: write one sentence before joining — the outcome of this call should be X."
     },
-    pipeline:{market:"UK",june_sqls:{GB:{actual:1,target:10}},insight:"GB is critically behind — 1 SQL vs a target of 10. Ezer and Alex are the UK reps. Sourcing quality is the immediate lever."}
+    pipeline:{market:"UK",june_sqls:{GB:{actual:1,target:10}},
+      insight:"GB is at 1/10 SQLs. You have no management calls this period because you do not have active partners yet. APA demo today is the most important call this week — if it goes well, APA could become your first active management relationship. That is the path to GB SQLs."}
   },
   alex: {
-    name:"Alex Schlee",initials:"AS",role:"Partnerships Manager",market:"UK",isTL:false,
-    calls:6,avg_score:3.8,
-    best_call:"AMT / Moss Commercials (Demo, 4.7)",worst_call:"Rina Trivedi (Sourcing, 2.2)",
+    name:"Alex Schlee", initials:"AS", role:"Partnerships Manager", market:"UK", isTL:false,
+    calls:5, avg_score:3.9, pc_avg:3.0,
+    best_call:"AMT / Moss Commercials (Demo, 4.6 — pre-call 4)", worst_call:"Rina Trivedi (Sourcing, 2.2)",
     sourcing:[
-      {title:"Ideas Community",score:4.3,outcome:"Follow-up booked",gap:null},
-      {title:"Naman Gupta",score:2.7,outcome:"Disqualified",gap:"No qualification, no next step"},
-      {title:"Rina Trivedi",score:2.2,outcome:"Disqualified",gap:"No qualification, not relevant prospect"},
+      {t:"Ideas Community",s:4.3,out:"Follow-up booked",gap:null},
+      {t:"Naman Gupta",s:2.7,out:"Disqualified",gap:"No qualification, no next step"},
+      {t:"Rina Trivedi",s:2.2,out:"Disqualified",gap:"No qualification, not relevant prospect"}
     ],
     discovery:[],
     demo:[
-      {title:"AMT / Moss Commercials",score:4.7,outcome:"Agreement sent",gap:"Some uncertainty on supplier communication feature"},
-      {title:"Zedra // Moss Demo",score:4.1,outcome:"Info sent — no meeting",gap:"No clear next meeting, pricing clarity needed"},
+      {t:"AMT / Moss Commercials",s:4.6,pc:4,out:"Agreement sent",gap:"Some uncertainty on supplier communication feature"},
+      {t:"Zedra // Moss Demo",s:3.9,pc:2,out:"Info sent — no meeting",gap:"No agenda set. No clear next meeting — outcome did not match"}
     ],
     management:[],
     next_steps:[
-      {partner:"Zedra",action:"Send costing and partnership tier details to Rahul",overdue:false},
-      {partner:"AMT / Kate",action:"Send short contract with commercials and standard terms",overdue:false},
-      {partner:"Ideas Community",action:"Review deck Francesca sent and discuss with marketing team",overdue:false},
+      {p:"Zedra",a:"Send costing and partnership tier details to Rahul",od:false},
+      {p:"AMT / Kate",a:"Send short contract with commercials and standard terms",od:false},
+      {p:"Ideas Community",a:"Review deck Francesca sent",od:false}
+    ],
+    upcoming:[
+      {call:"AAT x Moss: Demo",date:"Mon Jun 15, 11:15am",type:"prospect-demo",flag:"ok",note:"With Ezer. Anish Tailor (AAT) attending. Agenda set — confirm your role in the demo before joining."},
+      {call:"MW Finman // Moss intro",date:"Mon Jun 15, 4:30pm",type:"prospect-sourcing",flag:"missing",note:"With Ezer. No agenda — first contact, set ICP objective"}
     ],
     coaching:{
-      focus:"2 of 3 sourcing calls ended in disqualification — pre-call research needs work. Zedra ended without a next meeting despite a strong demo.",
-      strength:"AMT demo resulted in agreement sent. Ideas Community was a well-run sourcing call.",
+      focus:"2 of 3 sourcing calls ended in disqualification — pre-call research needs work. Zedra ended without a next meeting. Zedra pricing still unsent to Rahul.",
+      strength:"AMT demo resulted in agreement sent. Ideas Community was a well-run sourcing call. Pre-call clarity of 4 on AMT correlated directly with the strong outcome.",
       map_gap:"No management calls this period.",
+      pc_insight:"AMT had a pre-call clarity of 4 — you set a clear objective and the outcome matched. Zedra had a pre-call clarity of 2 — no objective, and the outcome did not match. The pattern is clear: prepare a single-sentence objective before every call."
     },
-    pipeline:{market:"UK",june_sqls:{GB:{actual:1,target:10}},insight:"GB at 1/10 SQLs. Alex and Ezer are both UK — fixing sourcing quality is urgent for Q3 pipeline."}
+    pipeline:{market:"UK",june_sqls:{GB:{actual:1,target:10}},
+      insight:"GB is at 1/10 SQLs. Like Ezer, you have no active management relationships yet. AMT agreement sent this week — once that closes, AMT becomes your first active partner to manage. That is the path to GB SQLs."}
   },
   aurel: {
-    name:"Aurel Bernhard",initials:"AB",role:"Partnerships Manager",market:"AT / DE",isTL:false,
-    calls:4,avg_score:4.7,
-    best_call:"Beke Kratzmann (Demo, 4.9)",worst_call:"Stephan Grad (Discovery, 4.6)",
+    name:"Aurel Bernhard", initials:"AB", role:"Partnerships Manager", market:"AT / DE", isTL:false,
+    calls:2, avg_score:4.7, pc_avg:5.0,
+    best_call:"Beke Kratzmann (Demo, 4.9 — pre-call 5)", worst_call:"Stephan Grad (Discovery, 4.6 — pre-call 5)",
     sourcing:[],
-    discovery:[{title:"Stephan Grad | Q2 Lead",score:4.6,outcome:"Demo booked",gap:"Austria conversion rate lower"}],
-    demo:[{title:"Beke Kratzmann | Plattform Demo",score:4.9,outcome:"Agreement sent",gap:null}],
+    discovery:[{t:"Stephan Grad | Q2 Lead",s:4.6,pc:5,out:"Demo booked",gap:"Austria conversion rate lower"}],
+    demo:[{t:"Beke Kratzmann | Plattform Demo",s:4.9,pc:5,out:"Agreement sent",gap:null}],
     management:[],
     next_steps:[
-      {partner:"Stephan Grad",action:"Confirm by email which companies are already in contact",overdue:false},
-      {partner:"Beke Kratzmann",action:"Send Partner-Agreement and Marketing-Materialien; follow-up post July 15",overdue:false},
+      {p:"Stephan Grad",a:"Confirm by email which companies are already in contact",od:false},
+      {p:"Beke Kratzmann",a:"Send Partner-Agreement and Marketing materials; follow up post Jul 15",od:false}
     ],
+    upcoming:[],
     coaching:{
-      focus:"Volume is low — only 2 calls this period, both high quality. Need more sourcing activity to build pipeline for Q3.",
-      strength:"Best demo of the month (Beke Kratzmann, 4.9). Highest avg score on the team.",
-      map_gap:"No management calls this period — as new partners activate, start building MAP review habits now.",
+      focus:"Volume is low — only 2 calls this period, both very high quality. Need more sourcing activity to build pipeline for Q3.",
+      strength:"Best avg score on the team (4.7). Best pre-call clarity on the team (5.0). Beke Kratzmann demo was the best call this month — the pre-call preparation showed.",
+      map_gap:"No management calls this period — as Beke and Stephan activate, start building MAP review habits now before the first management call.",
+      pc_insight:"You are the only rep with a pre-call clarity average of 5. Both calls had a clear agenda and outcomes matched exactly. This is the standard the rest of the team should be aiming for — share how you prepare."
     },
-    pipeline:{market:"AT/DE",june_sqls:{DE:{actual:8,target:38}},insight:"Aurel's 2 agreements sent (Beke, Stephan) should show up as SQLs in July–August. Quality is there — volume is the gap."}
+    pipeline:{market:"AT/DE",june_sqls:{DE:{actual:8,target:38}},
+      insight:"Your 2 agreements this week (Beke, Stephan) should appear as SQLs in July-August. Quality is excellent. The only gap is volume — more sourcing calls now = more SQLs in Q3."}
   },
   taz: {
-    name:"Taz Ibrahim",initials:"TI",role:"Partnerships Team Lead",market:"All markets",isTL:true,
-    calls:35,avg_score:4.1,
-    best_call:"Beke Kratzmann — Aurel (Demo, 4.9)",worst_call:"Rina Trivedi — Alex (Sourcing, 2.2)",
-    team_summary:{
-      reps:[
-        {name:"Aurel",calls:4,avg:4.7,highlight:"Best avg score. 2 agreements sent. Low volume.",flag:null},
-        {name:"Jara",calls:13,avg:4.1,highlight:"Most active. Strong management. MAP gap.",flag:"IBB Ventures lunch overdue"},
-        {name:"Nicola",calls:8,avg:4.2,highlight:"Strong discovery. MAP missing on management calls.",flag:null},
-        {name:"Alex",calls:6,avg:3.8,highlight:"Good demo quality. Weak sourcing pre-call research.",flag:null},
-        {name:"Ezer",calls:4,avg:3.2,highlight:"Strong opener. Hotglue at risk — no next step.",flag:"Hotglue going cold"},
-      ],
-      wins:["2 partner agreements sent this week (Beke, AMT)","IBB Ventures and Argus Search both close to agreement","Discovery quality strong across DE team (avg 4.4)","Management engagement scores excellent team-wide (4.6 avg)"],
-      gaps:["MAP review missing on 8 of 13 management calls — biggest structural issue","GB critically behind: 1 SQL in May, 1 in June vs target of 10","Meeting lock rate on sourcing: only 3 of 9 calls ended with confirmed time","Ezer and Alex both have unresolved next steps at risk of going cold"],
-      priorities:["Fix MAP review — add it as standing first agenda item on all management calls","GB intervention needed: Alex and Ezer need structured sourcing process","Follow up on Hotglue (Ezer) and Zedra (Alex) before end of week","Aurel needs volume — only 4 calls this period despite highest quality"],
-    },
+    name:"Taz Ibrahim", initials:"TI", role:"Partnerships Team Lead", market:"All markets", isTL:true,
+    calls:35, avg_score:4.1, pc_avg:3.1,
+    best_call:"Beke Kratzmann — Aurel (Demo, 4.9 — pre-call 5)", worst_call:"Rina Trivedi — Alex (Sourcing, 2.2)",
+    team:[
+      {name:"Aurel",calls:2,avg:4.7,pc:5.0,mgmt:0,flag:null,highlight:"Best quality on team. Both calls had pre-call clarity 5. 2 agreements sent. Volume is the only gap."},
+      {name:"Jara",calls:13,avg:4.1,pc:3.2,mgmt:7,flag:"IBB Ventures lunch overdue",highlight:"Most active. Strong management volume. MAP gap on 3 calls. Pre-call below 3 on management calls."},
+      {name:"Nicola",calls:8,avg:4.1,pc:2.8,mgmt:6,flag:null,highlight:"Strong discovery. Pre-call avg 2.8 — lowest on team. MAP missing on all management calls."},
+      {name:"Alex",calls:5,avg:3.9,pc:3.0,mgmt:0,flag:null,highlight:"AMT agreement sent. Zedra pricing unsent. No management calls. Sourcing pre-call research weak."},
+      {name:"Ezer",calls:5,avg:3.7,pc:2.4,mgmt:0,flag:"Hotglue going cold",highlight:"APA demo today — most important call this week. No management calls = no GB pipeline path."}
+    ],
+    wins:["2 partner agreements sent this week (Beke via Aurel 4.9, AMT via Alex 4.6) — both had pre-call clarity 4+","IBB Ventures and Argus Search both close to agreement","Aurel is the pre-call clarity benchmark — both calls scored 5, both outcomes matched exactly","Management engagement is strong team-wide (4.5 avg)"],
+    gaps:["Pre-call clarity below 3 on 8 of 13 management calls — partners are being checked in on, not managed","MAP below 3 on 8 of 13 management calls — same calls, same pattern","Ezer and Alex have zero management calls — GB has no active partner base for SQLs","Hotglue (Ezer) and Zedra pricing (Alex) both at risk of going cold"],
+    priorities:["Fix pre-call clarity across all management calls — it is the root cause of MAP gaps","In today's 1:1s: ask every rep to write their objective for each upcoming call before joining","Ezer: APA demo is today — coach the commitment ask before the call","Nicola: 6 management calls with pre-call avg 2.8 — review agenda-setting in 1:1","Aurel: quality is exceptional, push for more sourcing volume this week"],
+    upcoming_team:[
+      {rep:"Ezer",call:"APA // Moss demo",date:"Fri Jun 12, 1:15pm",flag:"warn",note:"Most important call this week. Coach Ezer on commitment ask before joining."},
+      {rep:"Jara",call:"Niedling & Partner Monthly",date:"Mon Jun 15, 10:30am",flag:"warn",note:"MAP missing last call. Remind Jara to add MAP as first agenda item."},
+      {rep:"Jara",call:"Poool GTM",date:"Mon Jun 15, 4pm",flag:"missing",note:"Scored 3.2 last time. No pre-call objective set. High risk of another unproductive call."},
+      {rep:"Nicola",call:"Pape & Co. Monthly",date:"Tue Jun 16, 9:30am",flag:"warn",note:"MAP missing last call. Nicola's pre-call avg is 2.8 — check she has set an objective."},
+      {rep:"Nicola",call:"ba tax Session",date:"Wed Jun 17, 10am",flag:"ok",note:"30+ attendees. Good enablement opportunity. Remind Nicola to close with a referral ask."},
+      {rep:"Ezer+Alex",call:"AAT x Moss: Demo",date:"Mon Jun 15, 11:15am",flag:"ok",note:"Agenda set. Good prep signal. Both reps attending."}
+    ],
     pipeline:{
       june_sqls:{DE:{actual:8,target:38},GB:{actual:1,target:10},NL:{actual:4,target:16}},
       june_total:{actual:13,target:64,forecast:17},
-      insight:"June is tracking at 13/64 SQLs — forecast only 17. The SQL gap is a management quality problem, not sourcing volume. MAP review and commitment signals are not being consistently run. The agreements sent this week (Beke, AMT) should materialise as SQLs in July. GB is a structural issue — even at 100% management quality, current active UK partner base cannot hit a target of 10 SQLs/month. New UK partner sourcing needs to accelerate now for Q3.",
-    },
-    coaching:{
-      focus:"MAP review consistency across all reps — it is the single biggest lever on SQL output right now.",
-      strength:"Team engagement quality is genuinely strong. Partners are active and relationships are deepening.",
-      map_gap:"8 of 13 management calls scored below 3 on MAP.",
-    },
-    next_steps:[],
+      insight:"June at 13/64 SQLs. The gap is management call quality — MAP below 3 on 8 of 13 calls, pre-call clarity below 3 on the same 8. Partners are not being held to referral commitments. GB at 1/10 because Ezer and Alex have no active management relationships yet — that is a structural gap, not a quality gap. The 2 agreements signed this week (Beke, AMT) will materialise as SQLs in July-August."
+    }
   }
 };
 
 const SUGGESTIONS = {
-  jara:["Why did I score low on MAP?","What's overdue?","What should I focus on this week?","How are my calls linking to SQLs?","Which partner should I prioritise?"],
-  nicola:["Why are my MAP scores low?","What should I do differently on management calls?","What's my strongest call type?","What's open from my calls?"],
-  ezer:["What's at risk this week?","How can I improve my sourcing calls?","What happened with Hotglue?","How does my market compare?"],
-  alex:["Why are my sourcing calls scoring low?","What should I do about Zedra?","How do I improve pre-call research?","What's my best call type?"],
-  aurel:["How do I increase my call volume?","When will my agreements show as SQLs?","What should I focus on next?","How does my quality compare to the team?"],
-  taz:["Who had the best week?","What's the biggest coaching priority?","Why is GB so far behind?","Which rep needs the most attention?","What should I focus on in 1:1s this week?","When will the agreements show as SQLs?","What's the forecast for end of June?"],
+  jara:["Why did I score low on MAP?","What is overdue?","What should I focus on this week?","How does my pre-call clarity affect outcomes?","Which partner should I prioritise?","What do I have coming up this week?"],
+  nicola:["Why are my MAP scores low?","What should I do on management calls?","How does pre-call clarity affect my scores?","What is coming up this week?","What is open from my calls?"],
+  ezer:["What is at risk this week?","Tell me about the APA demo today","How does pre-call clarity affect my calls?","What happened with Hotglue?","What is coming up this week?"],
+  alex:["Why are my sourcing calls scoring low?","What should I do about Zedra?","How did my AMT demo compare to Zedra?","What is coming up this week?"],
+  aurel:["How do I increase my call volume?","When will my agreements show as SQLs?","How does my pre-call clarity compare to the team?","What should I focus on next?"],
+  taz:["Who had the best week?","What is the biggest coaching priority?","Why is GB so far behind?","Which rep needs the most 1:1 attention?","What calls should I watch this week?","What is the pre-call clarity picture across the team?","When will the agreements show as SQLs?"]
 };
 
 function buildSystem(rep) {
   const d = REPS[rep];
   if (d.isTL) {
-    const t = d.team_summary;
-    const p = d.pipeline;
-    return `You are a partnerships analytics assistant for Moss/Nufin GmbH. You are talking to ${d.name}, the Partnerships Team Lead. You have full visibility of all 5 reps' call data, scores, next steps, and pipeline attainment for June 1–11, 2026.
+    return `You are a partnerships analytics assistant for Moss/Nufin GmbH. You are talking to ${d.name}, the Partnerships Team Lead. You have full call data, pre-call clarity scores, upcoming calendar data, and pipeline attainment for Jun 1-11, 2026.
 
-Be direct, analytical, and concise. Speak to Taz as a TL — give him team-level insights, coaching recommendations, and commercial context. Never give generic advice. Keep responses focused and short (4–8 sentences or a tight list).
+Be direct and concise. Speak as a TL-level analyst. Give team-level insights, coaching recommendations, and commercial context. Keep responses focused (4-8 sentences or a tight list).
 
 TEAM SUMMARY:
-Total calls: ${d.calls} | Team avg score: ${d.avg_score}/5
-Best call this period: ${d.best_call}
-Worst call this period: ${d.worst_call}
-
-REP PERFORMANCE:
-${t.reps.map(r=>`- ${r.name}: ${r.calls} calls | ${r.avg}/5 avg | ${r.highlight}${r.flag?` ⚠️ ${r.flag}`:''}`).join('\n')}
-
-TEAM WINS:
-${t.wins.map(w=>`- ${w}`).join('\n')}
-
-TEAM GAPS:
-${t.gaps.map(g=>`- ${g}`).join('\n')}
-
-TOP PRIORITIES THIS WEEK:
-${t.priorities.map(p=>`- ${p}`).join('\n')}
-
-PIPELINE CONTEXT:
-June SQLs: ${p.june_total.actual} actual / ${p.june_total.target} target / ${p.june_total.forecast} forecast
-- DE: ${p.june_sqls.DE.actual}/${p.june_sqls.DE.target} | GB: ${p.june_sqls.GB.actual}/${p.june_sqls.GB.target} | NL: ${p.june_sqls.NL.actual}/${p.june_sqls.NL.target}
-${p.insight}
-
-INDIVIDUAL REP DATA (for detailed questions):
-${Object.entries(REPS).filter(([k])=>k!=='taz').map(([k,r])=>`
-${r.name} (${r.market}): ${r.calls} calls | avg ${r.avg_score}/5
-- Focus: ${r.coaching.focus}
-- Strength: ${r.coaching.strength}
-- Overdue: ${r.next_steps.filter(n=>n.overdue).map(n=>n.partner).join(', ')||'none'}
-`).join('')}
-
-Speak directly to Taz ("your team", "I'd recommend"). Never use third-person for him.`;
-  }
-
-  const overdue = d.next_steps.filter(n=>n.overdue);
-  const upcoming = d.next_steps.filter(n=>!n.overdue);
-  return `You are a partnerships coaching assistant for Moss/Nufin GmbH. You are talking directly to ${d.name}, a ${d.role} covering ${d.market}.
-
-You have their call data for June 1–11, 2026. Be direct, specific, and concise. Always tie feedback to their actual calls and scores. Be encouraging but honest. Keep responses short (3–6 sentences or a short list). Mix prose and bullets naturally.
-
-THEIR CALL DATA:
-Total calls: ${d.calls} | Avg score: ${d.avg_score}/5
+Total calls: ${d.calls} | Team avg: ${d.avg_score}/5 | Team pre-call clarity avg: ${d.pc_avg}/5
 Best call: ${d.best_call} | Worst call: ${d.worst_call}
 
-SOURCING: ${d.sourcing.map(c=>`${c.title} (${c.score}/5)${c.gap?` — gap: ${c.gap}`:''}`).join(' | ')||'none this period'}
-DISCOVERY: ${d.discovery.map(c=>`${c.title} (${c.score}/5)${c.gap?` — gap: ${c.gap}`:''}`).join(' | ')||'none this period'}
-DEMO: ${d.demo.map(c=>`${c.title} (${c.score}/5)${c.gap?` — gap: ${c.gap}`:''}`).join(' | ')||'none this period'}
-MANAGEMENT: ${d.management.map(c=>`${c.title} (${c.score}/5)${c.gap?` — gap: ${c.gap}`:''}`).join(' | ')||'none this period'}
+REP PERFORMANCE:
+${d.team.map(r=>`- ${r.name}: ${r.calls} calls | avg ${r.avg}/5 | pre-call avg ${r.pc}/5 | mgmt calls: ${r.mgmt}${r.flag?` | FLAG: ${r.flag}`:''} | ${r.highlight}`).join('\n')}
+
+TEAM WINS:
+${d.wins.map(w=>`- ${w}`).join('\n')}
+
+TEAM GAPS:
+${d.gaps.map(g=>`- ${g}`).join('\n')}
+
+1:1 PRIORITIES THIS WEEK:
+${d.priorities.map(p=>`- ${p}`).join('\n')}
+
+UPCOMING CALLS TO WATCH (from calendar):
+${d.upcoming_team.map(c=>`- ${c.rep}: ${c.call} (${c.date}) — ${c.flag==='ok'?'Prepped':c.flag==='warn'?'Check prep':'No prep'} — ${c.note}`).join('\n')}
+
+PIPELINE:
+June: ${d.pipeline.june_total.actual}/${d.pipeline.june_total.target} SQLs | forecast ${d.pipeline.june_total.forecast}
+DE: ${d.pipeline.june_sqls.DE.actual}/${d.pipeline.june_sqls.DE.target} | GB: ${d.pipeline.june_sqls.GB.actual}/${d.pipeline.june_sqls.GB.target} | NL: ${d.pipeline.june_sqls.NL.actual}/${d.pipeline.june_sqls.NL.target}
+${d.pipeline.insight}
+
+KEY INSIGHT — PRE-CALL CLARITY:
+Pre-call clarity (w2) is now part of the Discovery, Demo, and Management scorecards. Score 5 = clear objective set + outcome matched. Score 1 = no objective, outcome did not match. Aurel is the benchmark (5.0 avg). Nicola is the gap (2.8 avg). The pattern is clear: calls with pre-call clarity 4+ consistently produce better outcomes.
+
+Speak directly to Taz. Never use third person for him.`;
+  }
+
+  const od = d.next_steps.filter(n=>n.od);
+  const up = d.next_steps.filter(n=>!n.od);
+  const mgmtCalls = d.management||[];
+  const pcLow = mgmtCalls.filter(c=>c.pc<3).length;
+
+  return `You are a partnerships coaching assistant for Moss/Nufin GmbH. You are talking directly to ${d.name}, a ${d.role} covering ${d.market}.
+
+You have their full call data including pre-call clarity scores, upcoming calendar data, and pipeline context for Jun 1-11, 2026. Be direct, specific, and concise. Always tie feedback to their actual calls and scores. Keep responses short (3-6 sentences or a short list). Mix prose and bullets naturally.
+
+CALL DATA:
+Total calls: ${d.calls} | Avg score: ${d.avg_score}/5 | Pre-call clarity avg: ${d.pc_avg}/5
+Best: ${d.best_call} | Worst: ${d.worst_call}
+
+SOURCING: ${d.sourcing.length?d.sourcing.map(c=>`${c.t} (${c.s}/5)${c.gap?` gap: ${c.gap}`:''}`).join(' | '):'none this period'}
+DISCOVERY: ${d.discovery.length?d.discovery.map(c=>`${c.t} (${c.s}/5, pre-call ${c.pc||'n/a'})${c.gap?` gap: ${c.gap}`:''}`).join(' | '):'none this period'}
+DEMO: ${d.demo.length?d.demo.map(c=>`${c.t} (${c.s}/5, pre-call ${c.pc||'n/a'})${c.gap?` gap: ${c.gap}`:''}`).join(' | '):'none this period'}
+MANAGEMENT: ${mgmtCalls.length?mgmtCalls.map(c=>`${c.t} (${c.s}/5, pre-call ${c.pc||'n/a'})${c.gap?` gap: ${c.gap}`:''}`).join(' | '):'none this period'}
+
+PRE-CALL CLARITY NOTE:
+${d.coaching.pc_insight}
+${pcLow>0?`${pcLow} of ${mgmtCalls.length} management calls had pre-call clarity below 3 this period.`:''}
 
 NEXT STEPS:
-Overdue (${overdue.length}): ${overdue.map(n=>`${n.partner} — ${n.action}`).join(' | ')||'none'}
-Upcoming (${upcoming.length}): ${upcoming.map(n=>`${n.partner} — ${n.action}`).join(' | ')}
+Overdue (${od.length}): ${od.length?od.map(n=>`${n.p} — ${n.a}`).join(' | '):'none'}
+Upcoming (${up.length}): ${up.map(n=>`${n.p} — ${n.a}`).join(' | ')}
+
+UPCOMING CALLS THIS WEEK (from calendar):
+${d.upcoming.length?d.upcoming.map(c=>`- ${c.call} (${c.date}, ${c.type}) — ${c.flag==='ok'?'Prepped':c.flag==='warn'?'Check prep':'No prep set'} — ${c.note}`).join('\n'):'No upcoming partner or prospect calls found this week'}
 
 COACHING:
 Focus: ${d.coaching.focus}
 Strength: ${d.coaching.strength}
-MAP gap: ${d.coaching.map_gap}
+MAP: ${d.coaching.map_gap}
 
 PIPELINE (${d.pipeline.market}):
 ${Object.entries(d.pipeline.june_sqls).map(([m,v])=>`${m}: ${v.actual}/${v.target} SQLs`).join(' | ')}
 ${d.pipeline.insight}
 
-Speak directly to ${d.name.split(' ')[0]} ("your calls", "you scored"). Never say "the rep" or refer to them in third person.`;
+Speak directly to ${d.name.split(' ')[0]}. Never say "the rep" or refer to them in third person.`;
 }
 
 let history = [];
 let repKey = 'jara';
 
-function getRepFromUrl() {
-  const p = new URLSearchParams(window.location.search);
-  const r = p.get('rep');
-  return r && REPS[r.toLowerCase()] ? r.toLowerCase() : 'jara';
-}
+function getRepFromUrl(){const p=new URLSearchParams(window.location.search);const r=p.get('rep');return r&&REPS[r.toLowerCase()]?r.toLowerCase():'jara';}
 
-function renderStats(rep) {
-  const d = REPS[rep];
-  const overdue = d.next_steps.filter(n=>n.overdue).length;
-  if (d.isTL) {
-    const t = d.team_summary;
-    const p = d.pipeline;
-    document.getElementById('stats-bar').innerHTML = `
+function renderStats(rep){
+  const d=REPS[rep];
+  const od=d.next_steps.filter(n=>n.od).length;
+  const noPrep=d.upcoming.filter(c=>c.flag==='missing').length;
+  if(d.isTL){
+    const p=d.pipeline;
+    document.getElementById('stats-bar').innerHTML=`
       <div class="stat"><span class="stat-label">Team calls</span><span class="stat-value">${d.calls}</span></div>
       <div class="stat-sep"></div>
       <div class="stat"><span class="stat-label">Team avg</span><span class="stat-value ${d.avg_score>=4?'green':'amber'}">${d.avg_score}/5</span></div>
+      <div class="stat-sep"></div>
+      <div class="stat"><span class="stat-label">Pre-call avg</span><span class="stat-value ${d.pc_avg>=4?'green':d.pc_avg>=3?'amber':'red'}">${d.pc_avg}/5</span></div>
       <div class="stat-sep"></div>
       <div class="stat"><span class="stat-label">Agreements sent</span><span class="stat-value green">2</span></div>
       <div class="stat-sep"></div>
       <div class="stat"><span class="stat-label">Jun SQLs</span><span class="stat-value red">${p.june_total.actual} / ${p.june_total.target}</span></div>
       <div class="stat-sep"></div>
-      <div class="stat"><span class="stat-label">GB SQLs</span><span class="stat-value red">${p.june_sqls.GB.actual} / ${p.june_sqls.GB.target}</span></div>
-      <div class="stat-sep"></div>
-      <div class="stat"><span class="stat-label">Flags</span><span class="overdue-pill">2</span></div>`;
+      <div class="stat"><span class="stat-label">Calls needing prep</span><span class="overdue-pill">${d.upcoming_team.filter(c=>c.flag!=='ok').length}</span></div>`;
   } else {
-    document.getElementById('stats-bar').innerHTML = `
+    document.getElementById('stats-bar').innerHTML=`
       <div class="stat"><span class="stat-label">Calls</span><span class="stat-value">${d.calls}</span></div>
       <div class="stat-sep"></div>
       <div class="stat"><span class="stat-label">Avg score</span><span class="stat-value ${d.avg_score>=4?'green':d.avg_score>=3?'amber':'red'}">${d.avg_score}/5</span></div>
       <div class="stat-sep"></div>
-      <div class="stat"><span class="stat-label">Best</span><span class="stat-value green">${d.best_call.split('(')[0].trim()}</span></div>
+      <div class="stat"><span class="stat-label">Pre-call avg</span><span class="stat-value ${d.pc_avg>=4?'green':d.pc_avg>=3?'amber':'red'}">${d.pc_avg}/5</span></div>
       <div class="stat-sep"></div>
       <div class="stat"><span class="stat-label">Next steps</span><span class="stat-value">${d.next_steps.length}</span></div>
       <div class="stat-sep"></div>
-      <div class="stat"><span class="stat-label">Overdue</span>${overdue>0?`<span class="overdue-pill">${overdue}</span>`:`<span class="stat-value green">0</span>`}</div>
+      <div class="stat"><span class="stat-label">Overdue</span>${od>0?`<span class="overdue-pill">${od}</span>`:`<span class="stat-value green">0</span>`}</div>
       <div class="stat-sep"></div>
-      <div class="stat"><span class="stat-label">Jun SQLs</span><span class="stat-value red">13 / 64</span></div>`;
+      <div class="stat"><span class="stat-label">Upcoming calls</span><span class="stat-value">${d.upcoming.length}</span></div>
+      ${noPrep>0?`<div class="stat-sep"></div><div class="stat"><span class="stat-label">Need prep</span><span class="overdue-pill">${noPrep}</span></div>`:''}`;
   }
 }
 
-function renderSuggestions(rep) {
-  const s = SUGGESTIONS[rep]||[];
-  document.getElementById('suggestions').innerHTML = s.map(q=>
-    `<button class="suggestion" onclick="sendSuggestion('${q.replace(/'/g,"\\'")}')"> ${q}</button>`
-  ).join('');
+function renderSuggestions(rep){
+  const s=SUGGESTIONS[rep]||[];
+  document.getElementById('suggestions').innerHTML=s.map(q=>`<button class="suggestion" onclick="sendSuggestion('${q.replace(/'/g,"\\'")}')">${q}</button>`).join('');
 }
 
-function addMessage(role, text) {
-  const area = document.getElementById('chat-area');
-  const d = REPS[repKey];
-  const div = document.createElement('div');
-  div.className = `message ${role}${d.isTL&&role==='user'?' tl-user':''}`;
-  const uAvatar = `<div class="msg-avatar${d.isTL?' tl':''}">${d.initials}</div>`;
-  const aAvatar = `<div class="msg-avatar">AI</div>`;
-  div.innerHTML = `${role==='user'?uAvatar:aAvatar}<div class="msg-bubble">${formatText(text)}</div>`;
+function addMessage(role,text){
+  const area=document.getElementById('chat-area');
+  const d=REPS[repKey];
+  const div=document.createElement('div');
+  div.className=`message ${role}${d.isTL&&role==='user'?' tl-user':''}`;
+  const uAvatar=`<div class="msg-avatar${d.isTL?' tl':''}">${d.initials}</div>`;
+  const aAvatar=`<div class="msg-avatar">AI</div>`;
+  div.innerHTML=`${role==='user'?uAvatar:aAvatar}<div class="msg-bubble">${formatText(text)}</div>`;
   area.appendChild(div);
-  area.scrollTop = area.scrollHeight;
+  area.scrollTop=area.scrollHeight;
 }
 
-function formatText(text) {
+function formatText(text){
   return text
     .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
     .replace(/^- (.+)$/gm,'<li>$1</li>')
@@ -430,34 +466,33 @@ function formatText(text) {
     .split('\n\n').map(p=>p.startsWith('<ul>')?p:`<p>${p}</p>`).join('');
 }
 
-function addTyping() {
-  const area = document.getElementById('chat-area');
-  const div = document.createElement('div');
+function addTyping(){
+  const area=document.getElementById('chat-area');
+  const div=document.createElement('div');
   div.className='message assistant';div.id='typing-indicator';
   div.innerHTML=`<div class="msg-avatar">AI</div><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
   area.appendChild(div);area.scrollTop=area.scrollHeight;
 }
 function removeTyping(){const el=document.getElementById('typing-indicator');if(el)el.remove();}
 
-async function callClaude(userMessage) {
+async function callClaude(userMessage){
   history.push({role:'user',content:userMessage});
   document.getElementById('send-btn').disabled=true;
   addTyping();
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:buildSystem(repKey),messages:history})
     });
-    const data = await res.json();
-    const reply = data.content?.[0]?.text||"Sorry, I couldn't generate a response.";
+    const data=await res.json();
+    const reply=data.content?.[0]?.text||"Sorry, something went wrong.";
     history.push({role:'assistant',content:reply});
     removeTyping();addMessage('assistant',reply);
-  } catch(e){removeTyping();addMessage('assistant',"Something went wrong. Please try again.");}
+  }catch(e){removeTyping();addMessage('assistant',"Something went wrong. Please try again.");}
   document.getElementById('send-btn').disabled=false;
 }
 
-function send() {
+function send(){
   const input=document.getElementById('input');
   const text=input.value.trim();
   if(!text)return;
@@ -483,38 +518,45 @@ avatar.textContent=d.initials;
 if(d.isTL)avatar.classList.add('tl');
 document.getElementById('rep-name').textContent=d.name;
 document.getElementById('rep-role').textContent=d.role;
-renderStats(repKey);renderSuggestions(repKey);
+renderStats(repKey);
+renderSuggestions(repKey);
 
 /* Opening message */
-let openingMsg='';
+let opening='';
+const od=d.next_steps.filter(n=>n.od);
+const noPrep=d.upcoming.filter(c=>c.flag==='missing').length;
+
 if(d.isTL){
   const p=d.pipeline;
-  openingMsg=`Hi Taz 👋 Here's your team summary for **June 1–11**.
+  opening=`Hi Taz, here is your team summary for **June 1-11**.
 
-**35 calls across 5 reps | Team avg 4.1/5**
+**35 calls | Team avg 4.1/5 | Pre-call clarity avg 3.1/5**
 
-✅ **Biggest wins:** 2 partner agreements sent (Beke Kratzmann via Aurel, AMT via Alex). IBB Ventures and Argus Search both close. Management engagement is strong team-wide (4.6 avg).
+**Wins:** 2 agreements sent (Beke via Aurel, AMT via Alex — both had pre-call clarity 4+). Management engagement strong team-wide.
 
-⚠️ **Biggest gaps:** MAP review missing on 8 of 13 management calls — this is directly linked to the SQL shortfall. GB is critically behind at 1/10 SQLs. Hotglue (Ezer) and Zedra (Alex) both have unresolved next steps at risk of going cold.
+**Gaps:** Pre-call clarity below 3 on 8 of 13 management calls — same calls where MAP is low. Partners are being checked in on, not managed. Ezer and Alex have zero management calls — GB has no active partner base.
 
-📊 **Pipeline:** June at **${p.june_total.actual}/${p.june_total.target} SQLs**, forecast only ${p.june_total.forecast}. DE: ${p.june_sqls.DE.actual}/${p.june_sqls.DE.target} | GB: ${p.june_sqls.GB.actual}/${p.june_sqls.GB.target} | NL: ${p.june_sqls.NL.actual}/${p.june_sqls.NL.target}.
+**Pipeline:** ${p.june_total.actual}/${p.june_total.target} SQLs in June | DE: ${p.june_sqls.DE.actual}/${p.june_sqls.DE.target} | GB: ${p.june_sqls.GB.actual}/${p.june_sqls.GB.target} | NL: ${p.june_sqls.NL.actual}/${p.june_sqls.NL.target}
 
-Ask me anything about your team, reps, pipeline, or what to focus on in 1:1s.`;
+**This week:** ${d.upcoming_team.filter(c=>c.flag!=='ok').length} upcoming calls across the team need prep. APA demo (Ezer, today) is the highest priority call.
+
+Ask me anything about your team, reps, upcoming calls, or pipeline.`;
 } else {
-  const overdue=d.next_steps.filter(n=>n.overdue);
-  openingMsg=`Hi ${d.name.split(' ')[0]} 👋 Here's your calls summary for **June 1–11**.
+  const upcomingCount=d.upcoming.length;
+  opening=`Hi ${d.name.split(' ')[0]}, here is your summary for **June 1-11**.
 
-**${d.calls} calls | Avg score ${d.avg_score}/5**
-🏆 Best: ${d.best_call}
-${d.worst_call?`⚠️ Weakest: ${d.worst_call}`:''}
+**${d.calls} calls | Avg ${d.avg_score}/5 | Pre-call clarity avg ${d.pc_avg}/5**
+Best: ${d.best_call}
 
-**Main focus this week:** ${d.coaching.focus}
+**Pre-call clarity this period:** ${d.coaching.pc_insight.split('.')[0]}.
 
-${overdue.length>0?`**Overdue:** ${overdue.map(n=>`${n.partner} — ${n.action}`).join(' | ')} — action these today.`:'No overdue items — good.'}
+${od.length?`**Overdue:** ${od.map(n=>`${n.p} (${n.a})`).join(', ')} — action these today.`:'No overdue items.'}
 
-Ask me anything about your calls, next steps, or what to prioritise.`;
+${upcomingCount?`**You have ${upcomingCount} upcoming calls this week** — ${noPrep} still need a pre-call objective set.`:''}
+
+Ask me anything about your calls, scores, upcoming calls, or what to prioritise.`;
 }
-setTimeout(()=>addMessage('assistant',openingMsg),400);
+setTimeout(()=>addMessage('assistant',opening),400);
 </script>
 </body>
 </html>
