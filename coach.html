@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moss Partnerships — Coach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f0ede8;--surface:#faf8f5;--border:#ddd9d2;--border-soft:#e8e4de;
+  --text-primary:#2c2820;--text-secondary:#6b6358;--text-tertiary:#9e968c;
+  --accent:#2d6a4f;--accent-bg:#e8f4ed;--accent-light:#52b788;
+  --warn:#8a5c0a;--warn-bg:#fdf2dc;
+  --danger:#8b2e2e;--danger-bg:#fdeaea;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--text-primary);height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.5rem;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.header-left{display:flex;align-items:center;gap:10px}
+.rep-avatar{width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rep-avatar.tl{background:#2c5f7a}
+.rep-name{font-size:14px;font-weight:600}
+.rep-role{font-size:11px;color:var(--text-tertiary)}
+.header-right{display:flex;align-items:center;gap:8px}
+.dash-link{font-size:12px;font-weight:500;color:var(--accent);text-decoration:none;padding:5px 10px;border:1px solid var(--accent);border-radius:6px;white-space:nowrap}
+.dash-link:hover{background:var(--accent-bg)}
+.period-badge{font-size:11px;font-weight:500;color:var(--text-tertiary);font-family:var(--mono);padding:4px 8px;background:var(--bg);border:1px solid var(--border);border-radius:5px}
+.stats-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:.6rem 1.5rem;display:flex;gap:1.5rem;align-items:center;flex-shrink:0;overflow-x:auto}
+.stat{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.stat-label{font-size:11px;color:var(--text-tertiary);font-weight:500;text-transform:uppercase;letter-spacing:.3px}
+.stat-value{font-size:13px;font-weight:600;font-family:var(--mono);color:var(--text-primary)}
+.stat-value.green{color:var(--accent)}.stat-value.amber{color:var(--warn)}.stat-value.red{color:var(--danger)}
+.stat-sep{width:1px;height:16px;background:var(--border);flex-shrink:0}
+.overdue-pill{font-size:10px;font-weight:600;padding:2px 6px;border-radius:20px;background:var(--danger-bg);color:var(--danger)}
+.chat-area{flex:1;overflow-y:auto;padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:12px}
+.message{display:flex;gap:10px;max-width:700px}
+.message.user{align-self:flex-end;flex-direction:row-reverse}
+.message.assistant{align-self:flex-start}
+.msg-avatar{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;margin-top:2px}
+.message.user .msg-avatar{background:var(--accent);color:#fff}
+.message.user .msg-avatar.tl{background:#2c5f7a}
+.message.assistant .msg-avatar{background:var(--border);color:var(--text-secondary);font-size:10px}
+.msg-bubble{padding:.75rem 1rem;border-radius:12px;font-size:13px;line-height:1.6;max-width:580px}
+.message.user .msg-bubble{background:var(--accent);color:#fff;border-bottom-right-radius:3px}
+.message.user.tl-user .msg-bubble{background:#2c5f7a}
+.message.assistant .msg-bubble{background:var(--ai-bubble, var(--surface));border:1px solid var(--border);color:var(--text-primary);border-bottom-left-radius:3px}
+.msg-bubble p{margin-bottom:.5rem}.msg-bubble p:last-child{margin-bottom:0}
+.msg-bubble strong{font-weight:600}
+.msg-bubble ul{margin:.4rem 0 .4rem 1.1rem}.msg-bubble li{margin-bottom:.2rem}
+.typing{display:flex;align-items:center;gap:4px;padding:.6rem .8rem}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--text-tertiary);animation:bounce .9s infinite}
+.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+.suggestions{display:flex;flex-wrap:wrap;gap:6px;padding:0 1.5rem .75rem;flex-shrink:0}
+.suggestion{font-size:12px;font-weight:500;color:var(--text-secondary);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 12px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.suggestion:hover{background:var(--accent-bg);border-color:var(--accent);color:var(--accent)}
+.input-area{padding:.75rem 1.5rem 1rem;background:var(--surface);border-top:1px solid var(--border);flex-shrink:0}
+.input-row{display:flex;gap:8px;align-items:flex-end}
+textarea{flex:1;font-family:var(--sans);font-size:13px;color:var(--text-primary);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:.65rem .9rem;resize:none;outline:none;min-height:40px;max-height:120px;line-height:1.5}
+textarea:focus{border-color:var(--accent)}
+textarea::placeholder{color:var(--text-tertiary)}
+button.send{width:36px;height:36px;border-radius:8px;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .15s}
+button.send:hover{opacity:.85}
+button.send:disabled{opacity:.4;cursor:not-allowed}
+button.send svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-left">
+    <div class="rep-avatar" id="rep-avatar">J</div>
+    <div>
+      <div class="rep-name" id="rep-name">Jara Bockx</div>
+      <div class="rep-role" id="rep-role">Senior Partnerships Manager</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="period-badge">Jun 1–11, 2026</span>
+    <a class="dash-link" href="https://tazibrahim-a11y.github.io/calls-view/" target="_blank">View dashboard →</a>
+  </div>
+</header>
+<div class="stats-bar" id="stats-bar"></div>
+<div class="chat-area" id="chat-area"></div>
+<div class="suggestions" id="suggestions"></div>
+<div class="input-area">
+  <div class="input-row">
+    <textarea id="input" placeholder="Ask about your calls, next steps, pipeline…" rows="1"></textarea>
+    <button class="send" id="send-btn" disabled>
+      <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+const REPS = {
+  jara: {
+    name:"Jara Bockx",initials:"JB",role:"Senior Partnerships Manager",market:"UK / DE",isTL:false,
+    calls:13,avg_score:4.1,
+    best_call:"IBB Ventures (Discovery, 4.9)",worst_call:"Poool x Moss (Management, 3.3)",
+    sourcing:[
+      {title:"BizAway intro",score:4.5,outcome:"Follow-up booked",gap:"No specific meeting time confirmed"},
+      {title:"CCA // Moss intro",score:3.7,outcome:"Demo booked",gap:"No specific demo time confirmed"},
+    ],
+    discovery:[
+      {title:"IBB Ventures x Moss",score:4.9,outcome:"Follow-up booked",gap:"Competitor mentioned"},
+      {title:"Bitesize x Moss",score:4.3,outcome:"Demo booked",gap:"Some uncertainty on features"},
+      {title:"Org // Moss intro",score:3.3,outcome:"Follow-up booked",gap:"No DM confirmed, unclear client expense needs"},
+    ],
+    demo:[
+      {title:"Supy x Moss",score:4.3,outcome:"Follow-up booked",gap:"Integration details unclear, petty cash unresolved"},
+    ],
+    management:[
+      {title:"Arthur Liebrecht",score:4.5,gap:"No explicit deal timeline"},
+      {title:"score business x Moss",score:4.5,gap:"No explicit customer commitment captured"},
+      {title:"WOW Company x Moss",score:4.5,gap:"No explicit close on all blockers"},
+      {title:"One Company x Moss",score:4.3,gap:null},
+      {title:"WS x Moss",score:4.1,gap:"Blockers not deeply explored"},
+      {title:"ESER Capital",score:3.9,gap:"No explicit competitor, some data missing"},
+      {title:"Poool x Moss",score:3.3,gap:"No new pipeline, slow customer response"},
+    ],
+    next_steps:[
+      {partner:"IBB Ventures",action:"Send lunch meeting slots to Cindy",overdue:true},
+      {partner:"CCA",action:"Prep and send demo — Rupert to confirm time",overdue:false},
+      {partner:"BizAway",action:"Send API docs and share SFTP integration roadmap lessons",overdue:false},
+      {partner:"Bitesize",action:"Send freemium account link; check prepayment and credit note handling",overdue:false},
+      {partner:"Supy",action:"Send summary; ask partner manager about DATEV response timeline",overdue:false},
+      {partner:"score business",action:"Send API docs, tracking team landing page, confirm Jun 22 14:00",overdue:false},
+      {partner:"ESER Capital",action:"Send summary of discussion for Latif",overdue:false},
+      {partner:"WOW Company",action:"Platform walkthrough at lunch & learn; cross-reference WS event attendee list",overdue:false},
+      {partner:"One Company",action:"Send invoice to finance; confirm API write access timeline",overdue:false},
+      {partner:"Poool",action:"Send calendar link for joint meeting with Clemens and Markus",overdue:false},
+      {partner:"Arthur Liebrecht",action:"Send summary of discussion for Arthur to review",overdue:false},
+    ],
+    coaching:{
+      focus:"Meeting lock rate on sourcing — 2 of 2 calls ended without a confirmed time. IBB Ventures lunch overdue.",
+      strength:"Pipeline depth in management calls. Best management caller on the team.",
+      map_gap:"MAP review missing or weak on 3 of 7 management calls.",
+    },
+    pipeline:{
+      market:"UK/DE",june_sqls:{DE:{actual:8,target:38},GB:{actual:1,target:10}},
+      insight:"June DE SQLs at 8/38, GB at 1/10. Management calls are the lever — MAP review and commitment signals directly drive referrals.",
+    }
+  },
+  nicola: {
+    name:"Nicola Rohne",initials:"NR",role:"Partnerships Manager",market:"DE",isTL:false,
+    calls:8,avg_score:4.2,
+    best_call:"Argus Search (Discovery, 4.6)",worst_call:"Büsra Karadag (Management, 3.7)",
+    sourcing:[{title:"Wußler & Schmid",score:3.7,outcome:"Follow-up booked",gap:"No specific demo time confirmed"}],
+    discovery:[
+      {title:"Argus Search GmbH",score:4.6,outcome:"Agreement sent",gap:"No deep product pain surfaced yet"},
+      {title:"Patrick Schreiner",score:4.6,outcome:"Follow-up booked",gap:"No direct DM confirmed"},
+      {title:"Miro | Moss Ambassador",score:4.1,outcome:"Agreement sent",gap:"Customer not ready to switch from Pleo yet"},
+    ],
+    demo:[],
+    management:[
+      {title:"n.a. (Marjan)",score:4.3,gap:null},
+      {title:"Alina Nauen",score:4.3,gap:"Uncertainty due to scheduling conflict"},
+      {title:"Felix Schmitt",score:3.9,gap:"No explicit competitor discussion, pipeline limited"},
+      {title:"ba tax",score:3.9,gap:"No explicit pipeline or account mapping"},
+      {title:"+491776",score:3.7,gap:"No explicit competitive discussion, vagueness on MAP"},
+      {title:"Büsra Karadag",score:3.7,gap:"No explicit pipeline or MAP details shared"},
+    ],
+    next_steps:[
+      {partner:"Wußler & Schmid",action:"Speak with Raphael; schedule joint setup call with Melanie",overdue:false},
+      {partner:"Argus Search",action:"Send NDA; check affiliate link",overdue:false},
+      {partner:"Miro Schmiedt",action:"Awaiting Umsatzsteuer-ID and address for contract setup",overdue:false},
+      {partner:"Patrick Schreiner",action:"Align next week once Patrick has spoken with the customer",overdue:false},
+    ],
+    coaching:{
+      focus:"MAP review is missing on all management calls. Start every call with: 'Last time we agreed X — has that happened?'",
+      strength:"Discovery qualification is strong — Argus Search and Patrick Schreiner both scored 4.6.",
+      map_gap:"MAP scored below 3 on 4 of 6 management calls.",
+    },
+    pipeline:{market:"DE",june_sqls:{DE:{actual:8,target:38}},insight:"DE is tracking but behind target. Your management calls need stronger MAP review to drive referrals."}
+  },
+  ezer: {
+    name:"Ezer Amanuel",initials:"EA",role:"Partnerships Manager",market:"UK",isTL:false,
+    calls:4,avg_score:3.2,
+    best_call:"APA <> Moss (Sourcing, 4.7)",worst_call:"Aalia Rangrez (Sourcing, 2.7)",
+    sourcing:[
+      {title:"APA <> Moss",score:4.7,outcome:"Follow-up booked",gap:null},
+      {title:"Ronnie Patel",score:2.9,outcome:"Referred to contact",gap:"No qualification, no meeting confirmed"},
+      {title:"Aalia Rangrez",score:2.7,outcome:"Info sent",gap:"No meeting booked, limited qualification depth"},
+      {title:"Justis Vercoe",score:3.9,outcome:"Demo booked",gap:"Decision maker not on next call"},
+    ],
+    discovery:[
+      {title:"Hotglue Partnership",score:3.6,outcome:"Info sent — no meeting",gap:"No immediate integration need, unclear next step"},
+    ],
+    demo:[],management:[],
+    next_steps:[
+      {partner:"APA / Ross Batten",action:"Send calendar invite for Friday follow-up",overdue:false},
+      {partner:"Justis Vercoe",action:"Demo Wednesday at 1:15pm — confirm attendees",overdue:false},
+      {partner:"Hotglue",action:"Follow up with clear next meeting proposal — currently no confirmed next step",overdue:true},
+    ],
+    coaching:{
+      focus:"Hotglue has no confirmed next step — at risk of going cold. APA follow-up calendar invite should already be sent.",
+      strength:"Strongest sourcing call this month (APA, 4.7). Best at opening and articulating ICP fit.",
+      map_gap:"No management calls this period.",
+    },
+    pipeline:{market:"UK",june_sqls:{GB:{actual:1,target:10}},insight:"GB is critically behind — 1 SQL vs a target of 10. Ezer and Alex are the UK reps. Sourcing quality is the immediate lever."}
+  },
+  alex: {
+    name:"Alex Schlee",initials:"AS",role:"Partnerships Manager",market:"UK",isTL:false,
+    calls:6,avg_score:3.8,
+    best_call:"AMT / Moss Commercials (Demo, 4.7)",worst_call:"Rina Trivedi (Sourcing, 2.2)",
+    sourcing:[
+      {title:"Ideas Community",score:4.3,outcome:"Follow-up booked",gap:null},
+      {title:"Naman Gupta",score:2.7,outcome:"Disqualified",gap:"No qualification, no next step"},
+      {title:"Rina Trivedi",score:2.2,outcome:"Disqualified",gap:"No qualification, not relevant prospect"},
+    ],
+    discovery:[],
+    demo:[
+      {title:"AMT / Moss Commercials",score:4.7,outcome:"Agreement sent",gap:"Some uncertainty on supplier communication feature"},
+      {title:"Zedra // Moss Demo",score:4.1,outcome:"Info sent — no meeting",gap:"No clear next meeting, pricing clarity needed"},
+    ],
+    management:[],
+    next_steps:[
+      {partner:"Zedra",action:"Send costing and partnership tier details to Rahul",overdue:false},
+      {partner:"AMT / Kate",action:"Send short contract with commercials and standard terms",overdue:false},
+      {partner:"Ideas Community",action:"Review deck Francesca sent and discuss with marketing team",overdue:false},
+    ],
+    coaching:{
+      focus:"2 of 3 sourcing calls ended in disqualification — pre-call research needs work. Zedra ended without a next meeting despite a strong demo.",
+      strength:"AMT demo resulted in agreement sent. Ideas Community was a well-run sourcing call.",
+      map_gap:"No management calls this period.",
+    },
+    pipeline:{market:"UK",june_sqls:{GB:{actual:1,target:10}},insight:"GB at 1/10 SQLs. Alex and Ezer are both UK — fixing sourcing quality is urgent for Q3 pipeline."}
+  },
+  aurel: {
+    name:"Aurel Bernhard",initials:"AB",role:"Partnerships Manager",market:"AT / DE",isTL:false,
+    calls:4,avg_score:4.7,
+    best_call:"Beke Kratzmann (Demo, 4.9)",worst_call:"Stephan Grad (Discovery, 4.6)",
+    sourcing:[],
+    discovery:[{title:"Stephan Grad | Q2 Lead",score:4.6,outcome:"Demo booked",gap:"Austria conversion rate lower"}],
+    demo:[{title:"Beke Kratzmann | Plattform Demo",score:4.9,outcome:"Agreement sent",gap:null}],
+    management:[],
+    next_steps:[
+      {partner:"Stephan Grad",action:"Confirm by email which companies are already in contact",overdue:false},
+      {partner:"Beke Kratzmann",action:"Send Partner-Agreement and Marketing-Materialien; follow-up post July 15",overdue:false},
+    ],
+    coaching:{
+      focus:"Volume is low — only 2 calls this period, both high quality. Need more sourcing activity to build pipeline for Q3.",
+      strength:"Best demo of the month (Beke Kratzmann, 4.9). Highest avg score on the team.",
+      map_gap:"No management calls this period — as new partners activate, start building MAP review habits now.",
+    },
+    pipeline:{market:"AT/DE",june_sqls:{DE:{actual:8,target:38}},insight:"Aurel's 2 agreements sent (Beke, Stephan) should show up as SQLs in July–August. Quality is there — volume is the gap."}
+  },
+  taz: {
+    name:"Taz Ibrahim",initials:"TI",role:"Partnerships Team Lead",market:"All markets",isTL:true,
+    calls:35,avg_score:4.1,
+    best_call:"Beke Kratzmann — Aurel (Demo, 4.9)",worst_call:"Rina Trivedi — Alex (Sourcing, 2.2)",
+    team_summary:{
+      reps:[
+        {name:"Aurel",calls:4,avg:4.7,highlight:"Best avg score. 2 agreements sent. Low volume.",flag:null},
+        {name:"Jara",calls:13,avg:4.1,highlight:"Most active. Strong management. MAP gap.",flag:"IBB Ventures lunch overdue"},
+        {name:"Nicola",calls:8,avg:4.2,highlight:"Strong discovery. MAP missing on management calls.",flag:null},
+        {name:"Alex",calls:6,avg:3.8,highlight:"Good demo quality. Weak sourcing pre-call research.",flag:null},
+        {name:"Ezer",calls:4,avg:3.2,highlight:"Strong opener. Hotglue at risk — no next step.",flag:"Hotglue going cold"},
+      ],
+      wins:["2 partner agreements sent this week (Beke, AMT)","IBB Ventures and Argus Search both close to agreement","Discovery quality strong across DE team (avg 4.4)","Management engagement scores excellent team-wide (4.6 avg)"],
+      gaps:["MAP review missing on 8 of 13 management calls — biggest structural issue","GB critically behind: 1 SQL in May, 1 in June vs target of 10","Meeting lock rate on sourcing: only 3 of 9 calls ended with confirmed time","Ezer and Alex both have unresolved next steps at risk of going cold"],
+      priorities:["Fix MAP review — add it as standing first agenda item on all management calls","GB intervention needed: Alex and Ezer need structured sourcing process","Follow up on Hotglue (Ezer) and Zedra (Alex) before end of week","Aurel needs volume — only 4 calls this period despite highest quality"],
+    },
+    pipeline:{
+      june_sqls:{DE:{actual:8,target:38},GB:{actual:1,target:10},NL:{actual:4,target:16}},
+      june_total:{actual:13,target:64,forecast:17},
+      insight:"June is tracking at 13/64 SQLs — forecast only 17. The SQL gap is a management quality problem, not sourcing volume. MAP review and commitment signals are not being consistently run. The agreements sent this week (Beke, AMT) should materialise as SQLs in July. GB is a structural issue — even at 100% management quality, current active UK partner base cannot hit a target of 10 SQLs/month. New UK partner sourcing needs to accelerate now for Q3.",
+    },
+    coaching:{
+      focus:"MAP review consistency across all reps — it is the single biggest lever on SQL output right now.",
+      strength:"Team engagement quality is genuinely strong. Partners are active and relationships are deepening.",
+      map_gap:"8 of 13 management calls scored below 3 on MAP.",
+    },
+    next_steps:[],
+  }
+};
+
+const SUGGESTIONS = {
+  jara:["Why did I score low on MAP?","What's overdue?","What should I focus on this week?","How are my calls linking to SQLs?","Which partner should I prioritise?"],
+  nicola:["Why are my MAP scores low?","What should I do differently on management calls?","What's my strongest call type?","What's open from my calls?"],
+  ezer:["What's at risk this week?","How can I improve my sourcing calls?","What happened with Hotglue?","How does my market compare?"],
+  alex:["Why are my sourcing calls scoring low?","What should I do about Zedra?","How do I improve pre-call research?","What's my best call type?"],
+  aurel:["How do I increase my call volume?","When will my agreements show as SQLs?","What should I focus on next?","How does my quality compare to the team?"],
+  taz:["Who had the best week?","What's the biggest coaching priority?","Why is GB so far behind?","Which rep needs the most attention?","What should I focus on in 1:1s this week?","When will the agreements show as SQLs?","What's the forecast for end of June?"],
+};
+
+function buildSystem(rep) {
+  const d = REPS[rep];
+  if (d.isTL) {
+    const t = d.team_summary;
+    const p = d.pipeline;
+    return `You are a partnerships analytics assistant for Moss/Nufin GmbH. You are talking to ${d.name}, the Partnerships Team Lead. You have full visibility of all 5 reps' call data, scores, next steps, and pipeline attainment for June 1–11, 2026.
+
+Be direct, analytical, and concise. Speak to Taz as a TL — give him team-level insights, coaching recommendations, and commercial context. Never give generic advice. Keep responses focused and short (4–8 sentences or a tight list).
+
+TEAM SUMMARY:
+Total calls: ${d.calls} | Team avg score: ${d.avg_score}/5
+Best call this period: ${d.best_call}
+Worst call this period: ${d.worst_call}
+
+REP PERFORMANCE:
+${t.reps.map(r=>`- ${r.name}: ${r.calls} calls | ${r.avg}/5 avg | ${r.highlight}${r.flag?` ⚠️ ${r.flag}`:''}`).join('\n')}
+
+TEAM WINS:
+${t.wins.map(w=>`- ${w}`).join('\n')}
+
+TEAM GAPS:
+${t.gaps.map(g=>`- ${g}`).join('\n')}
+
+TOP PRIORITIES THIS WEEK:
+${t.priorities.map(p=>`- ${p}`).join('\n')}
+
+PIPELINE CONTEXT:
+June SQLs: ${p.june_total.actual} actual / ${p.june_total.target} target / ${p.june_total.forecast} forecast
+- DE: ${p.june_sqls.DE.actual}/${p.june_sqls.DE.target} | GB: ${p.june_sqls.GB.actual}/${p.june_sqls.GB.target} | NL: ${p.june_sqls.NL.actual}/${p.june_sqls.NL.target}
+${p.insight}
+
+INDIVIDUAL REP DATA (for detailed questions):
+${Object.entries(REPS).filter(([k])=>k!=='taz').map(([k,r])=>`
+${r.name} (${r.market}): ${r.calls} calls | avg ${r.avg_score}/5
+- Focus: ${r.coaching.focus}
+- Strength: ${r.coaching.strength}
+- Overdue: ${r.next_steps.filter(n=>n.overdue).map(n=>n.partner).join(', ')||'none'}
+`).join('')}
+
+Speak directly to Taz ("your team", "I'd recommend"). Never use third-person for him.`;
+  }
+
+  const overdue = d.next_steps.filter(n=>n.overdue);
+  const upcoming = d.next_steps.filter(n=>!n.overdue);
+  return `You are a partnerships coaching assistant for Moss/Nufin GmbH. You are talking directly to ${d.name}, a ${d.role} covering ${d.market}.
+
+You have their call data for June 1–11, 2026. Be direct, specific, and concise. Always tie feedback to their actual calls and scores. Be encouraging but honest. Keep responses short (3–6 sentences or a short list). Mix prose and bullets naturally.
+
+THEIR CALL DATA:
+Total calls: ${d.calls} | Avg score: ${d.avg_score}/5
+Best call: ${d.best_call} | Worst call: ${d.worst_call}
+
+SOURCING: ${d.sourcing.map(c=>`${c.title} (${c.score}/5)${c.gap?` — gap: ${c.gap}`:''}`).join(' | ')||'none this period'}
+DISCOVERY: ${d.discovery.map(c=>`${c.title} (${c.score}/5)${c.gap?` — gap: ${c.gap}`:''}`).join(' | ')||'none this period'}
+DEMO: ${d.demo.map(c=>`${c.title} (${c.score}/5)${c.gap?` — gap: ${c.gap}`:''}`).join(' | ')||'none this period'}
+MANAGEMENT: ${d.management.map(c=>`${c.title} (${c.score}/5)${c.gap?` — gap: ${c.gap}`:''}`).join(' | ')||'none this period'}
+
+NEXT STEPS:
+Overdue (${overdue.length}): ${overdue.map(n=>`${n.partner} — ${n.action}`).join(' | ')||'none'}
+Upcoming (${upcoming.length}): ${upcoming.map(n=>`${n.partner} — ${n.action}`).join(' | ')}
+
+COACHING:
+Focus: ${d.coaching.focus}
+Strength: ${d.coaching.strength}
+MAP gap: ${d.coaching.map_gap}
+
+PIPELINE (${d.pipeline.market}):
+${Object.entries(d.pipeline.june_sqls).map(([m,v])=>`${m}: ${v.actual}/${v.target} SQLs`).join(' | ')}
+${d.pipeline.insight}
+
+Speak directly to ${d.name.split(' ')[0]} ("your calls", "you scored"). Never say "the rep" or refer to them in third person.`;
+}
+
+let history = [];
+let repKey = 'jara';
+
+function getRepFromUrl() {
+  const p = new URLSearchParams(window.location.search);
+  const r = p.get('rep');
+  return r && REPS[r.toLowerCase()] ? r.toLowerCase() : 'jara';
+}
+
+function renderStats(rep) {
+  const d = REPS[rep];
+  const overdue = d.next_steps.filter(n=>n.overdue).length;
+  if (d.isTL) {
+    const t = d.team_summary;
+    const p = d.pipeline;
+    document.getElementById('stats-bar').innerHTML = `
+      <div class="stat"><span class="stat-label">Team calls</span><span class="stat-value">${d.calls}</span></div>
+      <div class="stat-sep"></div>
+      <div class="stat"><span class="stat-label">Team avg</span><span class="stat-value ${d.avg_score>=4?'green':'amber'}">${d.avg_score}/5</span></div>
+      <div class="stat-sep"></div>
+      <div class="stat"><span class="stat-label">Agreements sent</span><span class="stat-value green">2</span></div>
+      <div class="stat-sep"></div>
+      <div class="stat"><span class="stat-label">Jun SQLs</span><span class="stat-value red">${p.june_total.actual} / ${p.june_total.target}</span></div>
+      <div class="stat-sep"></div>
+      <div class="stat"><span class="stat-label">GB SQLs</span><span class="stat-value red">${p.june_sqls.GB.actual} / ${p.june_sqls.GB.target}</span></div>
+      <div class="stat-sep"></div>
+      <div class="stat"><span class="stat-label">Flags</span><span class="overdue-pill">2</span></div>`;
+  } else {
+    document.getElementById('stats-bar').innerHTML = `
+      <div class="stat"><span class="stat-label">Calls</span><span class="stat-value">${d.calls}</span></div>
+      <div class="stat-sep"></div>
+      <div class="stat"><span class="stat-label">Avg score</span><span class="stat-value ${d.avg_score>=4?'green':d.avg_score>=3?'amber':'red'}">${d.avg_score}/5</span></div>
+      <div class="stat-sep"></div>
+      <div class="stat"><span class="stat-label">Best</span><span class="stat-value green">${d.best_call.split('(')[0].trim()}</span></div>
+      <div class="stat-sep"></div>
+      <div class="stat"><span class="stat-label">Next steps</span><span class="stat-value">${d.next_steps.length}</span></div>
+      <div class="stat-sep"></div>
+      <div class="stat"><span class="stat-label">Overdue</span>${overdue>0?`<span class="overdue-pill">${overdue}</span>`:`<span class="stat-value green">0</span>`}</div>
+      <div class="stat-sep"></div>
+      <div class="stat"><span class="stat-label">Jun SQLs</span><span class="stat-value red">13 / 64</span></div>`;
+  }
+}
+
+function renderSuggestions(rep) {
+  const s = SUGGESTIONS[rep]||[];
+  document.getElementById('suggestions').innerHTML = s.map(q=>
+    `<button class="suggestion" onclick="sendSuggestion('${q.replace(/'/g,"\\'")}')"> ${q}</button>`
+  ).join('');
+}
+
+function addMessage(role, text) {
+  const area = document.getElementById('chat-area');
+  const d = REPS[repKey];
+  const div = document.createElement('div');
+  div.className = `message ${role}${d.isTL&&role==='user'?' tl-user':''}`;
+  const uAvatar = `<div class="msg-avatar${d.isTL?' tl':''}">${d.initials}</div>`;
+  const aAvatar = `<div class="msg-avatar">AI</div>`;
+  div.innerHTML = `${role==='user'?uAvatar:aAvatar}<div class="msg-bubble">${formatText(text)}</div>`;
+  area.appendChild(div);
+  area.scrollTop = area.scrollHeight;
+}
+
+function formatText(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/^- (.+)$/gm,'<li>$1</li>')
+    .replace(/((<li>.*<\/li>\n?)+)/g,'<ul>$1</ul>')
+    .split('\n\n').map(p=>p.startsWith('<ul>')?p:`<p>${p}</p>`).join('');
+}
+
+function addTyping() {
+  const area = document.getElementById('chat-area');
+  const div = document.createElement('div');
+  div.className='message assistant';div.id='typing-indicator';
+  div.innerHTML=`<div class="msg-avatar">AI</div><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
+  area.appendChild(div);area.scrollTop=area.scrollHeight;
+}
+function removeTyping(){const el=document.getElementById('typing-indicator');if(el)el.remove();}
+
+async function callClaude(userMessage) {
+  history.push({role:'user',content:userMessage});
+  document.getElementById('send-btn').disabled=true;
+  addTyping();
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:buildSystem(repKey),messages:history})
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text||"Sorry, I couldn't generate a response.";
+    history.push({role:'assistant',content:reply});
+    removeTyping();addMessage('assistant',reply);
+  } catch(e){removeTyping();addMessage('assistant',"Something went wrong. Please try again.");}
+  document.getElementById('send-btn').disabled=false;
+}
+
+function send() {
+  const input=document.getElementById('input');
+  const text=input.value.trim();
+  if(!text)return;
+  input.value='';input.style.height='auto';
+  addMessage('user',text);
+  document.getElementById('suggestions').style.display='none';
+  callClaude(text);
+}
+function sendSuggestion(text){document.getElementById('input').value=text;send();}
+
+const textarea=document.getElementById('input');
+textarea.addEventListener('input',function(){
+  this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px';
+  document.getElementById('send-btn').disabled=!this.value.trim();
+});
+textarea.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}});
+
+/* Init */
+repKey=getRepFromUrl();
+const d=REPS[repKey];
+const avatar=document.getElementById('rep-avatar');
+avatar.textContent=d.initials;
+if(d.isTL)avatar.classList.add('tl');
+document.getElementById('rep-name').textContent=d.name;
+document.getElementById('rep-role').textContent=d.role;
+renderStats(repKey);renderSuggestions(repKey);
+
+/* Opening message */
+let openingMsg='';
+if(d.isTL){
+  const p=d.pipeline;
+  openingMsg=`Hi Taz 👋 Here's your team summary for **June 1–11**.
+
+**35 calls across 5 reps | Team avg 4.1/5**
+
+✅ **Biggest wins:** 2 partner agreements sent (Beke Kratzmann via Aurel, AMT via Alex). IBB Ventures and Argus Search both close. Management engagement is strong team-wide (4.6 avg).
+
+⚠️ **Biggest gaps:** MAP review missing on 8 of 13 management calls — this is directly linked to the SQL shortfall. GB is critically behind at 1/10 SQLs. Hotglue (Ezer) and Zedra (Alex) both have unresolved next steps at risk of going cold.
+
+📊 **Pipeline:** June at **${p.june_total.actual}/${p.june_total.target} SQLs**, forecast only ${p.june_total.forecast}. DE: ${p.june_sqls.DE.actual}/${p.june_sqls.DE.target} | GB: ${p.june_sqls.GB.actual}/${p.june_sqls.GB.target} | NL: ${p.june_sqls.NL.actual}/${p.june_sqls.NL.target}.
+
+Ask me anything about your team, reps, pipeline, or what to focus on in 1:1s.`;
+} else {
+  const overdue=d.next_steps.filter(n=>n.overdue);
+  openingMsg=`Hi ${d.name.split(' ')[0]} 👋 Here's your calls summary for **June 1–11**.
+
+**${d.calls} calls | Avg score ${d.avg_score}/5**
+🏆 Best: ${d.best_call}
+${d.worst_call?`⚠️ Weakest: ${d.worst_call}`:''}
+
+**Main focus this week:** ${d.coaching.focus}
+
+${overdue.length>0?`**Overdue:** ${overdue.map(n=>`${n.partner} — ${n.action}`).join(' | ')} — action these today.`:'No overdue items — good.'}
+
+Ask me anything about your calls, next steps, or what to prioritise.`;
+}
+setTimeout(()=>addMessage('assistant',openingMsg),400);
+</script>
+</body>
+</html>
