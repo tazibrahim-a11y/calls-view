@@ -9,136 +9,139 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #f7f7f5; --surface: #fff; --border: #e4e4e0; --border-soft: #efefec;
-    --text-primary: #1a1a18; --text-secondary: #6b6b66; --text-tertiary: #9b9b96;
-    --accent: #1a6b4a; --accent-bg: #edf7f2;
-    --warn: #92580a; --warn-bg: #fef3e2;
-    --danger: #991f1f; --danger-bg: #fdf0f0;
-    --mono: 'JetBrains Mono', monospace; --sans: 'Inter', sans-serif;
-  }
-  body { font-family: var(--sans); background: var(--bg); color: var(--text-primary); font-size: 14px; line-height: 1.6; }
-
-  /* Nav */
-  nav { position: sticky; top: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; height: 48px; }
-  .nav-logo { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-right: 2rem; white-space: nowrap; }
-  .nav-tabs { display: flex; }
-  .nav-tab { font-size: 13px; font-weight: 500; color: var(--text-secondary); padding: 0 1rem; height: 48px; display: flex; align-items: center; cursor: pointer; border-bottom: 2px solid transparent; transition: color .15s, border-color .15s; white-space: nowrap; user-select: none; }
-  .nav-tab:hover { color: var(--text-primary); }
-  .nav-tab.active { color: var(--text-primary); border-bottom-color: var(--accent); }
-
-  /* Sections */
-  .section { display: none; padding: 2rem; max-width: 1100px; margin: 0 auto; }
-  .section.active { display: block; }
-  .placeholder { border: 1.5px dashed var(--border); border-radius: 10px; padding: 3rem 2rem; text-align: center; color: var(--text-tertiary); margin-top: 1.5rem; }
-  .placeholder p { font-size: 13px; margin-top: .4rem; }
-
-  /* Legend / intro block */
-  .legend-block { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
-  .legend-title { font-size: 12px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .5px; margin-bottom: .75rem; }
-  .legend-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .5rem .75rem; }
-  .legend-item { display: flex; align-items: flex-start; gap: 7px; }
-  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
-  .legend-item-text { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
-  .legend-item-text strong { color: var(--text-primary); font-weight: 600; }
-
-  /* MTD badge */
-  .mtd-badge { font-size: 12px; font-weight: 500; color: var(--text-secondary); font-family: var(--mono); margin-bottom: 1.5rem; padding: .5rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; display: inline-block; }
-
-  /* Filters */
-  .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 1.5rem; padding: 1rem 1.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
-  .filter-group { display: flex; align-items: center; gap: 6px; }
-  .filter-group label { font-size: 11px; font-weight: 500; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .4px; white-space: nowrap; }
-  .filters select, .filters input[type=date] { font-family: var(--sans); font-size: 12px; font-weight: 500; color: var(--text-primary); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 8px; height: 30px; outline: none; cursor: pointer; }
-  .filters select:focus, .filters input[type=date]:focus { border-color: var(--accent); }
-  .filter-sep { width: 1px; height: 20px; background: var(--border); margin: 0 4px; }
-
-  /* KPIs */
-  .kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 1.5rem; }
-  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: .9rem 1.1rem; display: flex; flex-direction: column; gap: 4px; }
-  .kpi-label { font-size: 11px; font-weight: 500; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .4px; }
-  .kpi-value { font-size: 24px; font-weight: 600; letter-spacing: -.5px; color: var(--text-primary); font-family: var(--mono); }
-  .kpi-value.green { color: var(--accent); } .kpi-value.amber { color: var(--warn); } .kpi-value.red { color: var(--danger); }
-
-  /* Charts */
-  .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-  .chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.25rem; }
-  .chart-card.wide { grid-column: 1 / -1; }
-  .chart-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: var(--text-tertiary); margin-bottom: 2px; }
-  .chart-hint { font-size: 11px; color: var(--text-tertiary); margin-bottom: 10px; line-height: 1.4; }
-
-  /* Alert */
-  .alert-card { background: var(--danger-bg); border: 1px solid #f5c6c6; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 12px; }
-  .alert-title { font-size: 12px; font-weight: 600; color: var(--danger); margin: 0 0 3px; }
-  .alert-body { font-size: 12px; color: var(--danger); opacity: .85; margin: 0; }
-
-  /* Insights */
-  .insights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-  .insight-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.25rem; }
-  .insight-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
-  .insight-title.green { color: var(--accent); } .insight-title.red { color: var(--danger); }
-  .insight-row { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border-soft); font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
-  .insight-row:last-child { border-bottom: none; }
-  .badge { flex-shrink: 0; font-size: 10px; font-weight: 600; font-family: var(--mono); padding: 1px 6px; border-radius: 20px; margin-top: 1px; }
-  .badge.green { background: var(--accent-bg); color: var(--accent); } .badge.red { background: var(--danger-bg); color: var(--danger); }
-
-  /* Tables */
-  .table-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
-  table { width: 100%; border-collapse: collapse; font-size: 12px; }
-  th { text-align: left; padding: 8px 12px; font-size: 11px; font-weight: 500; color: var(--text-tertiary); border-bottom: 1px solid var(--border-soft); white-space: nowrap; background: var(--bg); }
-  td { padding: 8px 12px; border-bottom: 1px solid var(--border-soft); color: var(--text-primary); vertical-align: middle; }
-  tr:last-child td { border-bottom: none; } tr:hover td { background: var(--bg); }
-  .td-muted { color: var(--text-tertiary); font-family: var(--mono); font-size: 11px; }
-  .td-score { font-family: var(--mono); font-weight: 600; font-size: 13px; }
-  .td-score.green { color: var(--accent); } .td-score.amber { color: var(--warn); } .td-score.red { color: var(--danger); }
-  .pill { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 20px; white-space: nowrap; }
-  .pill-green { background: var(--accent-bg); color: var(--accent); } .pill-red { background: var(--danger-bg); color: var(--danger); } .pill-amber { background: var(--warn-bg); color: var(--warn); }
-  .bar-wrap { width: 80px; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; display: inline-block; vertical-align: middle; }
-  .bar-fill { height: 5px; border-radius: 3px; }
-  .section-divider { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: var(--text-tertiary); margin: 1.5rem 0 .75rem; display: flex; align-items: center; gap: 10px; }
-  .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-  @media (max-width: 768px) {
-    nav { padding: 0 1rem; overflow-x: auto; } .section { padding: 1rem; }
-    .kpis { grid-template-columns: repeat(2,1fr); } .charts-row { grid-template-columns: 1fr; }
-    .insights-grid { grid-template-columns: 1fr; } .chart-card.wide { grid-column: 1; }
-    .legend-grid { grid-template-columns: 1fr 1fr; }
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f0ede8;--surface:#faf8f5;--surface2:#f5f2ed;--border:#ddd9d2;--border-soft:#e8e4de;
+  --text-primary:#2c2820;--text-secondary:#6b6358;--text-tertiary:#9e968c;
+  --accent:#2d6a4f;--accent-bg:#e8f4ed;--accent-light:#52b788;
+  --warn:#8a5c0a;--warn-bg:#fdf2dc;--warn-light:#e9b84a;
+  --danger:#8b2e2e;--danger-bg:#fdeaea;--danger-light:#d4726b;
+  --info:#2c5f7a;--info-bg:#e6f3f8;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;
+  --radius:10px;--radius-sm:6px;
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--text-primary);font-size:14px;line-height:1.6}
+/* Nav */
+nav{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;height:48px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.nav-logo{font-size:13px;font-weight:600;color:var(--text-primary);margin-right:2rem;white-space:nowrap}
+.nav-tabs{display:flex}
+.nav-tab{font-size:13px;font-weight:500;color:var(--text-secondary);padding:0 1rem;height:48px;display:flex;align-items:center;cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;user-select:none}
+.nav-tab:hover{color:var(--text-primary)}
+.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+/* Layout */
+.section{display:none;padding:1.75rem 2rem;max-width:1120px;margin:0 auto}
+.section.active{display:block}
+/* Legend */
+.legend-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+.legend-title{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.6rem}
+.legend-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.4rem .75rem}
+.legend-item{display:flex;align-items:flex-start;gap:7px}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.legend-item-text{font-size:12px;color:var(--text-secondary);line-height:1.5}
+.legend-item-text strong{color:var(--text-primary);font-weight:600}
+/* Commentary */
+.commentary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1.25rem}
+.commentary-card{border-radius:var(--radius);padding:1rem 1.1rem;border:1px solid}
+.commentary-card.win{background:var(--accent-bg);border-color:#b8ddc8}
+.commentary-card.gap{background:var(--warn-bg);border-color:#e8d4a0}
+.commentary-card.focus{background:var(--info-bg);border-color:#aed4e6}
+.commentary-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+.commentary-card.win .commentary-label{color:var(--accent)}
+.commentary-card.gap .commentary-label{color:var(--warn)}
+.commentary-card.focus .commentary-label{color:var(--info)}
+.commentary-text{font-size:12px;line-height:1.55;color:var(--text-primary)}
+/* MTD badge */
+.mtd-badge{font-size:11px;font-weight:500;color:var(--text-secondary);font-family:var(--mono);margin-bottom:1.1rem;padding:.4rem .85rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);display:inline-block}
+/* Filters */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:1.25rem;padding:.85rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+.filter-group{display:flex;align-items:center;gap:5px}
+.filter-group label{font-size:11px;font-weight:500;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+.filters select,.filters input[type=date]{font-family:var(--sans);font-size:12px;font-weight:500;color:var(--text-primary);background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:4px 8px;height:28px;outline:none;cursor:pointer}
+.filters select:focus,.filters input[type=date]:focus{border-color:var(--accent)}
+.filter-sep{width:1px;height:18px;background:var(--border);margin:0 4px}
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:1.25rem}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.8rem 1rem;display:flex;flex-direction:column;gap:3px}
+.kpi-label{font-size:10px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.4px}
+.kpi-value{font-size:22px;font-weight:600;letter-spacing:-.5px;color:var(--text-primary);font-family:var(--mono)}
+.kpi-value.green{color:var(--accent)}.kpi-value.amber{color:var(--warn)}.kpi-value.red{color:var(--danger)}
+/* Charts */
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem}
+.chart-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-tertiary);margin-bottom:1px}
+.chart-hint{font-size:11px;color:var(--text-tertiary);margin-bottom:8px;line-height:1.4}
+/* Alert */
+.alert-card{background:var(--warn-bg);border:1px solid #e0c98a;border-radius:var(--radius);padding:.85rem 1.1rem;margin-bottom:10px}
+.alert-title{font-size:12px;font-weight:600;color:var(--warn);margin:0 0 2px}
+.alert-body{font-size:12px;color:var(--warn);opacity:.9;margin:0}
+/* Insights */
+.insights-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.insight-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem}
+.insight-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.insight-title.green{color:var(--accent)}.insight-title.red{color:var(--danger)}
+.insight-row{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid var(--border-soft);font-size:12px;color:var(--text-secondary);line-height:1.5}
+.insight-row:last-child{border-bottom:none}
+.badge{flex-shrink:0;font-size:10px;font-weight:600;font-family:var(--mono);padding:1px 6px;border-radius:20px;margin-top:1px}
+.badge.green{background:var(--accent-bg);color:var(--accent)}.badge.red{background:var(--danger-bg);color:var(--danger)}
+/* Rep panel */
+.rep-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem 1.25rem;margin-bottom:10px;display:none}
+.rep-panel.visible{display:block}
+.rep-panel-title{font-size:13px;font-weight:600;margin-bottom:1rem;color:var(--text-primary);display:flex;align-items:center;gap:8px}
+.rep-panel-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.rep-section-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--text-tertiary);margin-bottom:6px}
+.rep-item{font-size:12px;color:var(--text-secondary);padding:5px 0;border-bottom:1px solid var(--border-soft);line-height:1.5;display:flex;align-items:flex-start;gap:6px}
+.rep-item:last-child{border-bottom:none}
+.rep-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.rep-dot.green{background:var(--accent-light)}.rep-dot.amber{background:var(--warn-light)}.rep-dot.red{background:var(--danger-light)}
+.overdue-badge{font-size:10px;font-weight:600;padding:1px 5px;border-radius:3px;background:var(--danger-bg);color:var(--danger);flex-shrink:0}
+/* Tables */
+.table-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:7px 11px;font-size:11px;font-weight:500;color:var(--text-tertiary);border-bottom:1px solid var(--border-soft);white-space:nowrap;background:var(--surface2)}
+td{padding:7px 11px;border-bottom:1px solid var(--border-soft);color:var(--text-primary);vertical-align:middle}
+tr:last-child td{border-bottom:none}tr:hover td{background:var(--surface2)}
+.td-muted{color:var(--text-tertiary);font-family:var(--mono);font-size:11px}
+.td-score{font-family:var(--mono);font-weight:600;font-size:13px}
+.td-score.green{color:var(--accent)}.td-score.amber{color:var(--warn)}.td-score.red{color:var(--danger)}
+.pill{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;white-space:nowrap}
+.pill-green{background:var(--accent-bg);color:var(--accent)}.pill-red{background:var(--danger-bg);color:var(--danger)}.pill-amber{background:var(--warn-bg);color:var(--warn)}
+.bar-wrap{width:72px;height:4px;background:var(--border);border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle}
+.bar-fill{height:4px;border-radius:3px}
+.section-divider{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-tertiary);margin:1.25rem 0 .6rem;display:flex;align-items:center;gap:10px}
+.section-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.placeholder{border:1.5px dashed var(--border);border-radius:var(--radius);padding:3rem 2rem;text-align:center;color:var(--text-tertiary);margin-top:1.5rem}
+.placeholder p{font-size:13px;margin-top:.4rem}
+@media(max-width:768px){nav{padding:0 1rem;overflow-x:auto}.section{padding:1rem}.kpis{grid-template-columns:repeat(2,1fr)}.charts-row{grid-template-columns:1fr}.insights-grid{grid-template-columns:1fr}.legend-grid{grid-template-columns:1fr 1fr}.commentary{grid-template-columns:1fr}.rep-panel-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
 <nav>
   <span class="nav-logo">📞 Calls View</span>
   <div class="nav-tabs">
     <div class="nav-tab active" data-tab="sourcing">Sourcing</div>
-    <div class="nav-tab" data-tab="management">Management</div>
     <div class="nav-tab" data-tab="discovery">Discovery</div>
     <div class="nav-tab" data-tab="demo">Demo</div>
+    <div class="nav-tab" data-tab="management">Management</div>
   </div>
 </nav>
 
-<!-- ═══════════ SOURCING ═══════════ -->
+<!-- SOURCING -->
 <section id="tab-sourcing" class="section active">
-
   <div class="legend-block">
-    <div class="legend-title">How sourcing calls are scored</div>
-    <p style="font-size:12px;color:var(--text-secondary);margin-bottom:.75rem;line-height:1.6">Each sourcing call is scored on 4 criteria. The weighted formula is: <strong style="color:var(--text-primary);font-family:var(--mono)">(Opening×2 + Qualification×3 + Objection×2 + Meeting×3) ÷ 50 × 5</strong>. Meeting is weighted highest because booking a next step is the only tangible output of a sourcing call.</p>
+    <div class="legend-title">How sourcing calls are scored — Formula: (Opening×2 + Qualification×3 + Objection×2 + Meeting×3) ÷ 50 × 5</div>
     <div class="legend-grid">
-      <div class="legend-item"><div class="legend-dot" style="background:#378add"></div><div class="legend-item-text"><strong>Opening (w2)</strong> — Did the rep establish context, relevance, and the purpose of the call within the first 2 minutes?</div></div>
-      <div class="legend-item"><div class="legend-dot" style="background:#1a9e70"></div><div class="legend-item-text"><strong>Qualification (w3)</strong> — Did the rep confirm client type, size, industry, service model, and geography?</div></div>
-      <div class="legend-item"><div class="legend-dot" style="background:#c07a14"></div><div class="legend-item-text"><strong>Objection (w2)</strong> — Were concerns handled confidently? Score 3 if no objection arose.</div></div>
-      <div class="legend-item"><div class="legend-dot" style="background:#d85a30"></div><div class="legend-item-text"><strong>Meeting (w3)</strong> — Was a specific time confirmed by both sides? 5 = date locked, 3 = agreed in principle, 1 = no next step.</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4a8ec2"></div><div class="legend-item-text"><strong>Opening (w2)</strong> — Context and purpose established in first 2 mins?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#52b788"></div><div class="legend-item-text"><strong>Qualification (w3)</strong> — Client type, size, industry, service model, geography confirmed?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c07a14"></div><div class="legend-item-text"><strong>Objection (w2)</strong> — Concerns handled? Score 3 if none arose.</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c05c3a"></div><div class="legend-item-text"><strong>Meeting (w3)</strong> — Specific time confirmed? 5=locked, 3=in principle, 1=none.</div></div>
     </div>
-    <div style="display:flex;gap:1.5rem;margin-top:.75rem;flex-wrap:wrap">
+    <div style="display:flex;gap:1.5rem;margin-top:.6rem;flex-wrap:wrap">
       <span style="font-size:11px;color:var(--accent);font-weight:600">● ≥4.0 Strong</span>
       <span style="font-size:11px;color:var(--warn);font-weight:600">● 3.0–3.9 Developing</span>
       <span style="font-size:11px;color:var(--danger);font-weight:600">● &lt;3.0 Needs review</span>
     </div>
   </div>
-
-  <div class="mtd-badge">June 2026 MTD — updated Jun 11</div>
+  <div class="mtd-badge" id="s-badge">June 2026 MTD — updated Jun 11</div>
   <div class="filters">
     <div class="filter-group"><label>From</label><input type="date" id="sf-from" value="2026-06-01"></div>
     <div class="filter-group"><label>To</label><input type="date" id="sf-to" value="2026-06-11"></div>
@@ -146,131 +149,140 @@
     <div class="filter-group"><label>Country</label><select id="sf-country"><option value="all">All</option><option value="UK">UK</option><option value="DE">DE</option><option value="AT">AT</option><option value="NL">NL</option></select></div>
     <div class="filter-group"><label>Rep</label><select id="sf-rep"><option value="all">All reps</option></select></div>
   </div>
-
+  <div class="commentary" id="s-commentary"></div>
+  <div class="rep-panel" id="s-rep-panel"></div>
   <div class="kpis" id="s-kpis"></div>
-
   <div class="charts-row">
-    <div class="chart-card">
-      <div class="chart-label">Score distribution</div>
-      <div class="chart-hint">How many calls land in each score band. A healthy pipeline clusters in 3–4 and 4–5.</div>
-      <div style="position:relative;height:140px"><canvas id="s-dist"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-label">Avg score per criterion</div>
-      <div class="chart-hint">Where the team is strongest and weakest. Meeting consistently scores lowest — it's the main lever.</div>
-      <div style="position:relative;height:140px"><canvas id="s-crit"></canvas></div>
-    </div>
+    <div class="chart-card"><div class="chart-label">Score distribution</div><div class="chart-hint">Healthy pipeline clusters in 3–4 and 4–5.</div><div style="position:relative;height:130px"><canvas id="s-dist"></canvas></div></div>
+    <div class="chart-card"><div class="chart-label">Avg score per criterion</div><div class="chart-hint">Meeting scores lowest — it's the main coaching lever.</div><div style="position:relative;height:130px"><canvas id="s-crit"></canvas></div></div>
   </div>
   <div class="charts-row">
-    <div class="chart-card">
-      <div class="chart-label">Outcomes</div>
-      <div class="chart-hint">What happened at the end of each call. Demo/Discovery/Follow-up booked = success. Info sent = incomplete.</div>
-      <div style="position:relative;height:140px"><canvas id="s-out"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-label">Weekly score trend</div>
-      <div class="chart-hint">Average score by week. An upward trend means coaching is working; flat or declining needs attention.</div>
-      <div style="position:relative;height:140px"><canvas id="s-trend"></canvas></div>
-    </div>
+    <div class="chart-card"><div class="chart-label">Outcomes</div><div class="chart-hint">Demo/Discovery/Follow-up = success. Info sent = incomplete.</div><div style="position:relative;height:130px"><canvas id="s-out"></canvas></div></div>
+    <div class="chart-card"><div class="chart-label">Weekly score trend</div><div class="chart-hint">Upward = coaching working. Flat or declining = needs attention.</div><div style="position:relative;height:130px"><canvas id="s-trend"></canvas></div></div>
   </div>
-
   <div class="insights-grid" id="s-insights"></div>
-
   <div class="section-divider">Rep rankings — by call count</div>
-  <div class="table-card"><table>
-    <thead><tr><th>#</th><th>Rep</th><th>Country</th><th>Calls</th><th>Avg</th><th>Strength</th><th>Weakness</th><th>Open</th><th>Qual</th><th>Obj</th><th>Mtg</th></tr></thead>
-    <tbody id="s-reps"></tbody>
-  </table></div>
-
+  <div class="table-card"><table><thead><tr><th>#</th><th>Rep</th><th>Country</th><th>Calls</th><th>Avg</th><th>Strength</th><th>Weakness</th><th>Open</th><th>Qual</th><th>Obj</th><th>Mtg</th></tr></thead><tbody id="s-reps"></tbody></table></div>
   <div class="section-divider">All calls — sorted by score</div>
-  <div class="table-card"><table>
-    <thead><tr><th>Call</th><th>Rep</th><th>Date</th><th>Dur</th><th>Open</th><th>Qual</th><th>Obj</th><th>Mtg</th><th>Score</th><th>Outcome</th><th></th><th style="width:80px"></th></tr></thead>
-    <tbody id="s-calls"></tbody>
-  </table></div>
+  <div class="table-card"><table><thead><tr><th>Call</th><th>Rep</th><th>Date</th><th>Dur</th><th>Open</th><th>Qual</th><th>Obj</th><th>Mtg</th><th>Score</th><th>Outcome</th><th></th><th style="width:72px"></th></tr></thead><tbody id="s-calls"></tbody></table></div>
 </section>
 
-<!-- ═══════════ MANAGEMENT ═══════════ -->
-<section id="tab-management" class="section">
-
+<!-- DISCOVERY -->
+<section id="tab-discovery" class="section">
   <div class="legend-block">
-    <div class="legend-title">How management calls are scored</div>
-    <p style="font-size:12px;color:var(--text-secondary);margin-bottom:.75rem;line-height:1.6">Each management call is scored on 6 criteria. The weighted formula is: <strong style="color:var(--text-primary);font-family:var(--mono)">(Pipeline×3 + MAP×3 + Blocker×3 + Engagement×2 + Competitive×2 + Next step×2) ÷ 75 × 5</strong>. Pipeline, MAP, and Blocker are weighted highest — they directly determine whether a partnership is generating revenue.</p>
+    <div class="legend-title">How discovery calls are scored — Formula: (Customer base×3 + Decision access×3 + Champion×3 + Geography×2 + Next step×3) ÷ 70 × 5</div>
     <div class="legend-grid">
-      <div class="legend-item"><div class="legend-dot" style="background:#1a9e70"></div><div class="legend-item-text"><strong>Pipeline (w3)</strong> — Were specific clients discussed by name, with status and expected close timing?</div></div>
-      <div class="legend-item"><div class="legend-dot" style="background:#378add"></div><div class="legend-item-text"><strong>MAP (w3)</strong> — Were MAP commitments reviewed — what was agreed vs what has actually happened?</div></div>
-      <div class="legend-item"><div class="legend-dot" style="background:#d85a30"></div><div class="legend-item-text"><strong>Blocker (w3)</strong> — Was at least one blocker surfaced, root cause explored, and a resolution agreed?</div></div>
-      <div class="legend-item"><div class="legend-dot" style="background:#c07a14"></div><div class="legend-item-text"><strong>Engagement (w2)</strong> — Is the relationship deepening? New contacts, joint activities, or increasing frequency.</div></div>
-      <div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div><div class="legend-item-text"><strong>Competitive (w2)</strong> — Were competitor signals explored? Score 3 if no competitor arose in the call.</div></div>
-      <div class="legend-item"><div class="legend-dot" style="background:#0e7490"></div><div class="legend-item-text"><strong>Next step (w2)</strong> — Was a specific date and owner confirmed by both sides before the call ended?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#52b788"></div><div class="legend-item-text"><strong>Customer base & service model (w3)</strong> — Segment, count, industry, and ongoing vs project confirmed?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4a8ec2"></div><div class="legend-item-text"><strong>Access to decision moment (w3)</strong> — Partner involved when clients select spend tools?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c05c3a"></div><div class="legend-item-text"><strong>DM / champion identified (w3)</strong> — Named, seniority confirmed, ability to move partnership forward?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c07a14"></div><div class="legend-item-text"><strong>Geography confirmed (w2)</strong> — Markets confirmed with Moss overlap (UK, DE, NL, AT)?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#7c5cbf"></div><div class="legend-item-text"><strong>Next step quality (w3)</strong> — Demo booked with date and right people? 5=locked, 3=in principle, 1=none.</div></div>
     </div>
-    <div style="display:flex;gap:1.5rem;margin-top:.75rem;flex-wrap:wrap">
+    <div style="display:flex;gap:1.5rem;margin-top:.6rem;flex-wrap:wrap">
       <span style="font-size:11px;color:var(--accent);font-weight:600">● ≥4.0 Strong</span>
       <span style="font-size:11px;color:var(--warn);font-weight:600">● 3.0–3.9 Developing</span>
       <span style="font-size:11px;color:var(--danger);font-weight:600">● &lt;3.0 Needs review</span>
     </div>
   </div>
+  <div class="mtd-badge">June 2026 MTD — updated Jun 11</div>
+  <div class="filters">
+    <div class="filter-group"><label>From</label><input type="date" id="df-from" value="2026-06-01"></div>
+    <div class="filter-group"><label>To</label><input type="date" id="df-to" value="2026-06-11"></div>
+    <div class="filter-group"><label>Rep</label><select id="df-rep"><option value="all">All reps</option></select></div>
+  </div>
+  <div class="commentary" id="d-commentary"></div>
+  <div class="rep-panel" id="d-rep-panel"></div>
+  <div class="kpis" id="d-kpis"></div>
+  <div class="charts-row">
+    <div class="chart-card"><div class="chart-label">Score distribution</div><div class="chart-hint">Discovery calls should cluster at 3.5+. Below 3 = qualification skipped.</div><div style="position:relative;height:130px"><canvas id="d-dist"></canvas></div></div>
+    <div class="chart-card"><div class="chart-label">Avg score per criterion</div><div class="chart-hint">Decision access and champion determine if a demo is worth running.</div><div style="position:relative;height:130px"><canvas id="d-crit"></canvas></div></div>
+  </div>
+  <div class="insights-grid" id="d-insights"></div>
+  <div class="section-divider">Rep rankings — by call count</div>
+  <div class="table-card"><table><thead><tr><th>#</th><th>Rep</th><th>Calls</th><th>Avg</th><th>Cust base</th><th>Dec access</th><th>Champion</th><th>Geography</th><th>Next step</th></tr></thead><tbody id="d-reps"></tbody></table></div>
+  <div class="section-divider">All calls — sorted by score</div>
+  <div class="table-card"><table><thead><tr><th>Call</th><th>Rep</th><th>Date</th><th>Dur</th><th>Cust</th><th>Dec</th><th>Champ</th><th>Geo</th><th>Next</th><th>Score</th><th>Outcome</th><th style="width:72px"></th></tr></thead><tbody id="d-calls"></tbody></table></div>
+</section>
 
+<!-- DEMO -->
+<section id="tab-demo" class="section">
+  <div class="legend-block">
+    <div class="legend-title">How demo calls are scored — Formula: (Use case×4 + Value×3 + Workflow×3 + Commitment×3 + Next step×2) ÷ 75 × 5</div>
+    <div class="legend-grid">
+      <div class="legend-item"><div class="legend-dot" style="background:#2d6a4f"></div><div class="legend-item-text"><strong>Use case clarity (w4)</strong> — Specific workflow + client type + trigger moment validated from partner's words?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4a8ec2"></div><div class="legend-item-text"><strong>Value recognition (w3)</strong> — Partner explicitly confirmed relevance: "this is useful", "our clients need this"?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c07a14"></div><div class="legend-item-text"><strong>Workflow fit (w3)</strong> — Moss placed in existing process with friction level (Easy/Medium/Hard)?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#7c5cbf"></div><div class="legend-item-text"><strong>Commitment signal (w3)</strong> — Partner willing to refer? Named clients, agreed process, or concrete action?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c05c3a"></div><div class="legend-item-text"><strong>Next step quality (w2)</strong> — Concrete step toward formalising: MAP, agreement sent, enablement?</div></div>
+    </div>
+    <div style="display:flex;gap:1.5rem;margin-top:.6rem;flex-wrap:wrap">
+      <span style="font-size:11px;color:var(--accent);font-weight:600">● ≥4.0 Strong</span>
+      <span style="font-size:11px;color:var(--warn);font-weight:600">● 3.0–3.9 Developing</span>
+      <span style="font-size:11px;color:var(--danger);font-weight:600">● &lt;3.0 Needs review</span>
+    </div>
+  </div>
+  <div class="mtd-badge">June 2026 MTD — updated Jun 11</div>
+  <div class="filters">
+    <div class="filter-group"><label>From</label><input type="date" id="emf-from" value="2026-06-01"></div>
+    <div class="filter-group"><label>To</label><input type="date" id="emf-to" value="2026-06-11"></div>
+    <div class="filter-group"><label>Rep</label><select id="emf-rep"><option value="all">All reps</option></select></div>
+  </div>
+  <div class="commentary" id="em-commentary"></div>
+  <div class="rep-panel" id="em-rep-panel"></div>
+  <div class="kpis" id="em-kpis"></div>
+  <div class="charts-row">
+    <div class="chart-card"><div class="chart-label">Score distribution</div><div class="chart-hint">Demo calls should be 4+. Weak demo = discovery wasn't thorough enough.</div><div style="position:relative;height:130px"><canvas id="em-dist"></canvas></div></div>
+    <div class="chart-card"><div class="chart-label">Avg score per criterion</div><div class="chart-hint">Use case and commitment drive conversion. Low commitment = partner not ready to refer.</div><div style="position:relative;height:130px"><canvas id="em-crit"></canvas></div></div>
+  </div>
+  <div class="insights-grid" id="em-insights"></div>
+  <div class="section-divider">Rep rankings — by call count</div>
+  <div class="table-card"><table><thead><tr><th>#</th><th>Rep</th><th>Calls</th><th>Avg</th><th>Use case</th><th>Value</th><th>Workflow</th><th>Commit</th><th>Next</th></tr></thead><tbody id="em-reps"></tbody></table></div>
+  <div class="section-divider">All calls — sorted by score</div>
+  <div class="table-card"><table><thead><tr><th>Call</th><th>Rep</th><th>Date</th><th>Dur</th><th>UC</th><th>Val</th><th>WF</th><th>Com</th><th>Next</th><th>Score</th><th>Outcome</th><th style="width:72px"></th></tr></thead><tbody id="em-calls"></tbody></table></div>
+</section>
+
+<!-- MANAGEMENT -->
+<section id="tab-management" class="section">
+  <div class="legend-block">
+    <div class="legend-title">How management calls are scored — Formula: (Pipeline×3 + MAP×3 + Blocker×3 + Engagement×2 + Competitive×2 + Next step×2) ÷ 75 × 5</div>
+    <div class="legend-grid">
+      <div class="legend-item"><div class="legend-dot" style="background:#52b788"></div><div class="legend-item-text"><strong>Pipeline (w3)</strong> — Specific clients by name, with status and expected close timing?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4a8ec2"></div><div class="legend-item-text"><strong>MAP (w3)</strong> — Commitments reviewed: agreed vs actually happened?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c05c3a"></div><div class="legend-item-text"><strong>Blocker (w3)</strong> — One blocker surfaced, root cause explored, resolution agreed?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c07a14"></div><div class="legend-item-text"><strong>Engagement (w2)</strong> — Relationship deepening? New contacts, joint activities, increasing frequency?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#7c5cbf"></div><div class="legend-item-text"><strong>Competitive (w2)</strong> — Competitor signals explored? Score 3 if none arose.</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#0e7490"></div><div class="legend-item-text"><strong>Next step (w2)</strong> — Specific date and owner confirmed by both sides?</div></div>
+    </div>
+    <div style="display:flex;gap:1.5rem;margin-top:.6rem;flex-wrap:wrap">
+      <span style="font-size:11px;color:var(--accent);font-weight:600">● ≥4.0 Strong</span>
+      <span style="font-size:11px;color:var(--warn);font-weight:600">● 3.0–3.9 Developing</span>
+      <span style="font-size:11px;color:var(--danger);font-weight:600">● &lt;3.0 Needs review</span>
+    </div>
+  </div>
   <div class="mtd-badge">June 2026 MTD — updated Jun 11</div>
   <div class="filters">
     <div class="filter-group"><label>From</label><input type="date" id="mf-from" value="2026-06-01"></div>
     <div class="filter-group"><label>To</label><input type="date" id="mf-to" value="2026-06-11"></div>
     <div class="filter-group"><label>Rep</label><select id="mf-rep"><option value="all">All reps</option></select></div>
   </div>
-
+  <div class="commentary" id="m-commentary"></div>
+  <div class="rep-panel" id="m-rep-panel"></div>
   <div id="m-alert"></div>
   <div class="kpis" id="m-kpis"></div>
-
   <div class="charts-row">
-    <div class="chart-card">
-      <div class="chart-label">Score distribution</div>
-      <div class="chart-hint">Management calls should cluster at 4+. A strong partner base means consistent, high-quality check-ins.</div>
-      <div style="position:relative;height:140px"><canvas id="m-dist"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-label">Avg score per criterion</div>
-      <div class="chart-hint">MAP and Pipeline are the revenue-critical criteria. If either is below 3, pipeline is at risk.</div>
-      <div style="position:relative;height:140px"><canvas id="m-crit"></canvas></div>
-    </div>
+    <div class="chart-card"><div class="chart-label">Score distribution</div><div class="chart-hint">Management calls should cluster at 4+. Strong partner base = consistent high-quality check-ins.</div><div style="position:relative;height:130px"><canvas id="m-dist"></canvas></div></div>
+    <div class="chart-card"><div class="chart-label">Avg score per criterion</div><div class="chart-hint">MAP and Pipeline are revenue-critical. Either below 3 = pipeline at risk.</div><div style="position:relative;height:130px"><canvas id="m-crit"></canvas></div></div>
   </div>
-
   <div class="insights-grid" id="m-insights"></div>
-
   <div class="section-divider">Rep rankings — by call count</div>
-  <div class="table-card"><table>
-    <thead><tr><th>#</th><th>Rep</th><th>Calls</th><th>Avg</th><th>Pipeline</th><th>MAP</th><th>Blocker</th><th>Engage</th><th>Compet</th><th>Next</th></tr></thead>
-    <tbody id="m-reps"></tbody>
-  </table></div>
-
+  <div class="table-card"><table><thead><tr><th>#</th><th>Rep</th><th>Calls</th><th>Avg</th><th>Pipeline</th><th>MAP</th><th>Blocker</th><th>Engage</th><th>Compet</th><th>Next</th></tr></thead><tbody id="m-reps"></tbody></table></div>
   <div class="section-divider">All calls — sorted by score</div>
-  <div class="table-card"><table>
-    <thead><tr><th>Call</th><th>Rep</th><th>Date</th><th>Dur</th><th>Pipe</th><th>MAP</th><th>Block</th><th>Eng</th><th>Comp</th><th>Next</th><th>Score</th><th style="width:80px"></th></tr></thead>
-    <tbody id="m-calls"></tbody>
-  </table></div>
-</section>
-
-<!-- ═══════════ DISCOVERY ═══════════ -->
-<section id="tab-discovery" class="section">
-  <div class="legend-block">
-    <div class="legend-title">How discovery calls are scored</div>
-    <p style="font-size:12px;color:var(--text-secondary);line-height:1.6">Discovery calls are the first substantive conversation with a potential partner. The goal is to qualify fit — confirming client base, service model, decision access, geography, and identifying the right champion. Scored on 5 criteria: <strong style="color:var(--text-primary)">Customer base & service model (w3) · Access to decision moment (w3) · DM/champion identified (w3) · Geography confirmed (w2) · Next step quality (w3)</strong>.</p>
-  </div>
-  <div class="placeholder"><strong>Discovery calls</strong><p>Attention is reclassifying existing calls from Acquisition → Discovery. Check back in a few hours — data will appear here automatically on the next analysis run.</p></div>
-</section>
-
-<!-- ═══════════ DEMO ═══════════ -->
-<section id="tab-demo" class="section">
-  <div class="legend-block">
-    <div class="legend-title">How demo calls are scored</div>
-    <p style="font-size:12px;color:var(--text-secondary);line-height:1.6">Demo calls validate a specific use case and move toward a signed partnership. The goal is a "yes, this works for us." Scored on 5 criteria: <strong style="color:var(--text-primary)">Use case clarity (w4) · Value recognition (w3) · Workflow fit (w3) · Commitment signal (w3) · Next step quality (w2)</strong>. Use case clarity is weighted highest — if a concrete workflow, client type, and trigger moment aren't identified, the rest doesn't matter.</p>
-  </div>
-  <div class="placeholder"><strong>Demo calls</strong><p>Attention is reclassifying existing calls from Acquisition → Demo. Check back in a few hours — data will appear here automatically on the next analysis run.</p></div>
+  <div class="table-card"><table><thead><tr><th>Call</th><th>Rep</th><th>Date</th><th>Dur</th><th>Pipe</th><th>MAP</th><th>Block</th><th>Eng</th><th>Comp</th><th>Next</th><th>Score</th><th style="width:72px"></th></tr></thead><tbody id="m-calls"></tbody></table></div>
 </section>
 
 <script>
-/* ═══════════════════════════════════════
-   DATA — replace both arrays on each run
-   ═══════════════════════════════════════ */
-const SOURCING = [
+/* ══════════════════════ DATA ══════════════════════ */
+const SOURCING=[
   {title:"APA <> Moss",rep:"Ezer",country:"UK",date:"2026-06-08",dur:"20m",O:5,Q:5,H:3,M:5,score:4.7,outcome:"follow_up_call_booked",well:"Strong qualification, clear ICP fit, next meeting booked.",wrong:null},
   {title:"BizAway intro",rep:"Jara",country:"UK",date:"2026-06-04",dur:"29m",O:5,Q:5,H:4,M:3,score:4.5,outcome:"follow_up_call_booked",well:"Identified mutual ICP and market fit clearly.",wrong:"Did not secure a concrete follow-up meeting date."},
   {title:"Ideas Community",rep:"Alex",country:"UK",date:"2026-06-03",dur:"21m",O:5,Q:5,H:3,M:3,score:4.3,outcome:"follow_up_call_booked",well:"Clear mutual fit, strong qualification, next steps agreed.",wrong:null},
@@ -281,8 +293,24 @@ const SOURCING = [
   {title:"Naman Gupta",rep:"Alex",country:"UK",date:"2026-06-05",dur:"2m",O:4,Q:3,H:5,M:1,score:2.7,outcome:"disqualified",well:"Clear intro, company explained, polite close.",wrong:"No qualification, no next step."},
   {title:"Rina Trivedi",rep:"Alex",country:"UK",date:"2026-06-05",dur:"2m",O:3,Q:2,H:4,M:1,score:2.2,outcome:"disqualified",well:"Polite, clear about reason for call.",wrong:"No qualification, not relevant prospect."},
 ];
-
-const MANAGEMENT = [
+const DISCOVERY=[
+  {title:"IBB Ventures x Moss",rep:"Jara",date:"2026-06-03",dur:"19m",CB:5,DA:4,CH:5,GE:5,NS:5,score:4.9,outcome:"follow_up_call_booked",well:"Strong qualification, clear next steps, partnership interest.",wrong:"Competitor mentioned."},
+  {title:"Stephan Grad | Q2 Lead",rep:"Aurel",date:"2026-06-09",dur:"25m",CB:4,DA:5,CH:5,GE:4,NS:5,score:4.6,outcome:"demo_booked",well:"Clear ICP, direct access to decision makers.",wrong:"Austria conversion rate lower."},
+  {title:"Argus Search GmbH",rep:"Nicola",date:"2026-06-09",dur:"31m",CB:4,DA:5,CH:4,GE:5,NS:5,score:4.6,outcome:"agreement_sent",well:"Clear next steps, decision maker engaged, strong fit.",wrong:"No deep product pain surfaced yet."},
+  {title:"Patrick Schreiner",rep:"Nicola",date:"2026-06-01",dur:"6m",CB:4,DA:4,CH:5,GE:5,NS:5,score:4.6,outcome:"follow_up_call_booked",well:"Clear next steps, strong champion, pricing alignment.",wrong:"No direct decision maker confirmed."},
+  {title:"Bitesize x Moss",rep:"Jara",date:"2026-06-08",dur:"20m",CB:4,DA:4,CH:5,GE:5,NS:4,score:4.3,outcome:"demo_booked",well:"Clear qualification, strong champion, next steps agreed.",wrong:"Some uncertainty on features."},
+  {title:"Miro | Moss Ambassador",rep:"Nicola",date:"2026-06-02",dur:"19m",CB:4,DA:4,CH:4,GE:5,NS:4,score:4.1,outcome:"agreement_sent",well:"Clear partnership model, mutual interest, next steps defined.",wrong:"Customer not ready to switch from Pleo yet."},
+  {title:"Justis Vercoe",rep:"Ezer",date:"2026-06-11",dur:"5m",CB:4,DA:3,CH:4,GE:5,NS:5,score:3.9,outcome:"demo_booked",well:"Identified champion, booked demo, clear next steps.",wrong:"Decision maker not on next call."},
+  {title:"Hotglue Partnership",rep:"Ezer",date:"2026-06-01",dur:"34m",CB:3,DA:4,CH:4,GE:5,NS:3,score:3.6,outcome:"info_sent_no_meeting",well:"Clear value prop, good champion, product intro.",wrong:"No immediate integration need, unclear next step."},
+  {title:"Org // Moss intro",rep:"Jara",date:"2026-06-10",dur:"25m",CB:4,DA:3,CH:3,GE:5,NS:3,score:3.3,outcome:"follow_up_call_booked",well:"Good fit identified, pain points discussed.",wrong:"No direct decision maker, unclear client expense needs."},
+];
+const DEMO=[
+  {title:"Beke Kratzmann | Plattform Demo",rep:"Aurel",date:"2026-06-11",dur:"61m",UC:5,VA:5,WF:5,CO:4,NS:5,score:4.9,outcome:"agreement_sent",well:"Full product demo, all modules covered, next steps clear.",wrong:null},
+  {title:"AMT / Moss Commercials",rep:"Alex",date:"2026-06-05",dur:"40m",UC:5,VA:4,WF:4,CO:4,NS:5,score:4.7,outcome:"agreement_sent",well:"Clear use cases, strong value, next steps agreed.",wrong:"Some uncertainty on supplier communication feature."},
+  {title:"Supy x Moss",rep:"Jara",date:"2026-06-03",dur:"45m",UC:5,VA:4,WF:4,CO:3,NS:4,score:4.3,outcome:"follow_up_call_booked",well:"Clear product walkthrough, mutual fit, next steps discussed.",wrong:"Integration details unclear, petty cash workflow unresolved."},
+  {title:"Zedra // Moss Demo",rep:"Alex",date:"2026-06-04",dur:"64m",UC:5,VA:4,WF:4,CO:3,NS:3,score:4.1,outcome:"info_sent_no_meeting",well:"Deep use case fit, strong workflow discussion, pricing covered.",wrong:"No clear next meeting, pricing clarity needed."},
+];
+const MANAGEMENT=[
   {title:"Arthur Liebrecht",rep:"Jara",date:"2026-06-11",dur:"37m",P:4,M:4,B:4,E:5,C:5,N:4,score:4.5,well:"Strong engagement, clear next steps, competitive insights.",wrong:"No explicit deal timeline or quantified pipeline."},
   {title:"score business x Moss",rep:"Jara",date:"2026-06-09",dur:"35m",P:4,M:4,B:4,E:5,C:4,N:5,score:4.5,well:"Clear next steps, strong engagement, competitive insights.",wrong:"No explicit customer commitment captured."},
   {title:"WOW Company x Moss",rep:"Jara",date:"2026-06-08",dur:"11m",P:4,M:4,B:4,E:5,C:4,N:5,score:4.5,well:"Clear next steps, strong engagement, competitor discussed.",wrong:"No explicit close on all blockers."},
@@ -293,135 +321,242 @@ const MANAGEMENT = [
   {title:"ESER Capital",rep:"Jara",date:"2026-06-08",dur:"20m",P:4,M:4,B:3,E:5,C:3,N:4,score:3.9,well:"Clear structure, pain points and next steps discussed.",wrong:"No explicit competitor, some data missing."},
   {title:"Felix Schmitt",rep:"Nicola",date:"2026-06-02",dur:"7m",P:4,M:3,B:4,E:4,C:3,N:4,score:3.9,well:"Clear blockers, next steps, mutual follow-up agreed.",wrong:"No explicit competitor discussion, pipeline limited."},
   {title:"ba tax",rep:"Nicola",date:"2026-06-03",dur:"12m",P:3,M:3,B:4,E:4,C:4,N:5,score:3.9,well:"Clear next steps, blockers discussed, engagement high.",wrong:"No explicit pipeline or account mapping."},
-  {title:"+491776",rep:"Nicola",date:"2026-06-03",dur:"4m",P:4,M:3,B:3,E:4,C:3,N:4,score:3.7,well:"Clear follow-up, good engagement, blockers discussed.",wrong:"No explicit competitive discussion, some vagueness on MAP."},
+  {title:"+491776",rep:"Nicola",date:"2026-06-03",dur:"4m",P:4,M:3,B:3,E:4,C:3,N:4,score:3.7,well:"Clear follow-up, good engagement, blockers discussed.",wrong:"No explicit competitive discussion, vagueness on MAP."},
   {title:"Büsra Karadag",rep:"Nicola",date:"2026-06-08",dur:"12m",P:3,M:3,B:3,E:5,C:3,N:4,score:3.7,well:"Engaged discussion, clear next steps, feedback requested.",wrong:"No explicit pipeline or MAP details shared."},
   {title:"Poool x Moss",rep:"Jara",date:"2026-06-09",dur:"21m",P:2,M:3,B:4,E:4,C:3,N:4,score:3.3,well:"Clear next steps, blockers identified, engagement maintained.",wrong:"No new pipeline, slow customer response."},
 ];
 
-/* ═══ Config ═══ */
-const OUT_LABELS={demo_booked:"Demo booked",discovery_booked:"Discovery booked",follow_up_call_booked:"Follow-up booked",referred_to_contact:"Referred",info_sent_no_meeting:"Info sent",disqualified:"Disqualified",no_next_step:"No next step"};
-const OUT_COLORS={demo_booked:"#0f6b4a",discovery_booked:"#1a9e70",follow_up_call_booked:"#5dcaa5",referred_to_contact:"#c07a14",info_sent_no_meeting:"#92580a",disqualified:"#b91c1c",no_next_step:"#7f1d1d"};
-const S_WELL_B=[{l:"Strong qualification / ICP fit",k:["qualification","icp","fit","mutual"]},{l:"Meeting or referral secured",k:["booked","meeting","referral","next steps agreed"]},{l:"Clear value proposition",k:["explained","clear","proposition","rapport"]},{l:"Good objection handling",k:["objection","polite close"]}];
-const S_WRONG_B=[{l:"Meeting not locked on the call",k:["no meeting","not confirmed","not specific","no next step","date"]},{l:"Weak qualification / poor research",k:["no qualification","limited qualification","not relevant"]},{l:"No urgency or depth created",k:["urgency","timeline","depth"]}];
-const M_WELL_B=[{l:"Specific clients / pipeline reviewed",k:["clients","pipeline","accounts","specific","named"]},{l:"Strong engagement / relationship",k:["engagement","relationship","deepening","joint"]},{l:"Next steps confirmed with owners",k:["next steps","confirmed","owners"]},{l:"Competitive signals handled",k:["competitor","competitive"]}];
-const M_WRONG_B=[{l:"MAP not reviewed",k:["map","MAP"]},{l:"Next steps vague or unconfirmed",k:["not confirmed","vague","not fully confirmed"]},{l:"Blockers not fully resolved",k:["blockers not","not explored","not deeply"]},{l:"Pipeline not specific enough",k:["pipeline","no explicit pipeline","no new pipeline","limited"]}];
+/* Next steps per rep — extracted from Attention */
+const REP_NEXT_STEPS={
+  Jara:[
+    {partner:"CCA / Collective Concepts",action:"Prep and send demo — Rupert to confirm time with Chris",overdue:false},
+    {partner:"BizAway",action:"Send API docs and share SFTP integration roadmap lessons",overdue:false},
+    {partner:"IBB Ventures",action:"Send lunch meeting slots to Cindy",overdue:true},
+    {partner:"Org / Adeline",action:"Follow up and coordinate deeper dive / demo call",overdue:false},
+    {partner:"Bitesize / Dennis",action:"Send freemium account link; check prepayment and credit note handling",overdue:false},
+    {partner:"Supy",action:"Send summary; ask partner manager about DATEV response timeline",overdue:false},
+    {partner:"score business",action:"Send API docs, speak to tracking team about landing page, confirm follow-up Jun 22 14:00",overdue:false},
+    {partner:"ESER Capital",action:"Send summary of discussion for Latif",overdue:false},
+    {partner:"WOW Company",action:"Walk through platform and Xero integration at lunch & learn; cross-reference attendee list for WS event",overdue:false},
+    {partner:"One Company",action:"Send invoice to finance; confirm API write access timeline; share partnership slides",overdue:false},
+    {partner:"Poool",action:"Send calendar link for joint meeting with Clemens and Markus; send PSK case summary to Fabian",overdue:false},
+    {partner:"Arthur Liebrecht",action:"Send summary of discussion for Arthur to review",overdue:false},
+  ],
+  Nicola:[
+    {partner:"Wußler & Schmid",action:"Speak with Raphael; schedule joint setup call with Melanie and client",overdue:false},
+    {partner:"Argus Search",action:"Send NDA; check affiliate link; connect Argus Search if recruiting partnership relevant",overdue:false},
+    {partner:"Miro Schmiedt",action:"Awaiting Umsatzsteuer-ID and address from Miro for contract setup",overdue:false},
+    {partner:"Patrick Schreiner",action:"Align next week once Patrick has spoken with the customer",overdue:false},
+  ],
+  Ezer:[
+    {partner:"APA / Ross Batten",action:"Send calendar invite for Friday follow-up meeting",overdue:false},
+    {partner:"Justis Vercoe",action:"Schedule demo for Justis and Freya — Wednesday at 1:15pm",overdue:false},
+    {partner:"Hotglue",action:"Follow up with clear next meeting proposal — currently no next step",overdue:true},
+  ],
+  Alex:[
+    {partner:"Zedra",action:"Send costing and partnership tier details to Rahul",overdue:false},
+    {partner:"AMT / Kate",action:"Send short contract with commercials and standard terms",overdue:false},
+    {partner:"Ideas Community",action:"Review deck Francesca sent and discuss with marketing team",overdue:false},
+  ],
+  Aurel:[
+    {partner:"Stephan Grad",action:"Confirm by email which companies are already in contact",overdue:false},
+    {partner:"Beke Kratzmann",action:"Send Partner-Agreement and Marketing-Materialien; follow-up meeting post July 15",overdue:false},
+  ],
+};
+
+/* Coaching focus per rep */
+const REP_COACHING={
+  Jara:{focus:"Meeting lock rate on sourcing calls — 3 of 4 sourcing calls ended without a time confirmed. IBB Ventures lunch is overdue.",strength:"Pipeline depth in management calls — consistently names clients with status. Best management caller on the team."},
+  Nicola:{focus:"MAP review is missing on all management calls. Start every management call by checking what was agreed last time.",strength:"Discovery qualification is strong — Argus Search and Patrick Schreiner both scored 4.6. Decision access and champion identification are consistent."},
+  Ezer:{focus:"Hotglue has no confirmed next step — risk of going cold. APA follow-up calendar invite should have been sent already.",strength:"Strongest sourcing call this month (APA, 4.7). Best at opening calls and articulating ICP fit."},
+  Alex:{focus:"Sourcing calls ending in disqualification suggest pre-call research needs work. Zedra demo ended without a next meeting — send pricing now.",strength:"Ideas Community was a strong sourcing call (4.3). AMT demo resulted in an agreement sent."},
+  Aurel:{focus:"Only 2 sourcing calls and 2 demo calls this month — volume is low relative to the rest of the team.",strength:"Beke Kratzmann demo was the best demo this month (4.9). Stephan Grad discovery was also high quality."},
+};
+
+/* Commentary per tab */
+const COMMENTARY={
+  sourcing:{
+    win:"3 of 9 calls resulted in a confirmed next step — APA (Ezer), BizAway (Jara) and Ideas Community (Alex) all showed strong mutual ICP fit with clear follow-up.",
+    gap:"Meeting lock rate is the single biggest gap: 6 of 9 calls ended with 'I'll send an email' rather than a confirmed time. This is consistent across all reps.",
+    focus:"This week: every sourcing call should end with a proposed time in the calendar before hanging up. Aim to get meeting lock rate from 33% to 60%."
+  },
+  discovery:{
+    win:"IBB Ventures (4.9) and Argus Search (4.6) are standout calls — both ended with clear agreements or follow-up calls locked. Nicola's discovery quality is excellent.",
+    gap:"Org // Moss intro (3.3) and Hotglue (3.6) both ended without a confirmed next step. Decision access wasn't confirmed on either call.",
+    focus:"For every discovery call this week, make sure you can answer: who is the decision maker, and do they know they're being considered as a Moss partner?"
+  },
+  demo:{
+    win:"2 of 4 demos resulted in agreements sent — Beke Kratzmann (Aurel, 4.9) and AMT (Alex, 4.7). Use case clarity was 5/5 on all 4 calls. The team is demonstrating the right things.",
+    gap:"Zedra (Alex, 4.1) ended with pricing info sent but no confirmed next meeting — 4 days after the call. This needs to be chased.",
+    focus:"Commitment signal is the weakest criterion (avg 3.5). On every demo, explicitly ask: 'Which of your clients would you refer to Moss first?'"
+  },
+  management:{
+    win:"Engagement is genuinely strong across the board — 4.6/5 average. Partners are active, relationships are deepening, and Jara's pipeline reviews are excellent.",
+    gap:"MAP review is still inconsistent. 5 of 13 management calls scored below 3 on MAP. Commitments are being made but not checked against actuals.",
+    focus:"Add MAP review as a standing first agenda item on every management call. 2 minutes: 'Last time we agreed X — has that happened?'"
+  }
+};
+
+/* ══════════════════════ CONFIG ══════════════════════ */
+const OUT_LABELS={demo_booked:"Demo booked",discovery_booked:"Discovery booked",follow_up_call_booked:"Follow-up booked",referred_to_contact:"Referred",info_sent_no_meeting:"Info sent",disqualified:"Disqualified",no_next_step:"No next step",agreement_sent:"Agreement sent"};
+const OUT_COLORS={demo_booked:"#2d6a4f",discovery_booked:"#52b788",follow_up_call_booked:"#74c69d",referred_to_contact:"#c07a14",info_sent_no_meeting:"#8a5c0a",disqualified:"#8b2e2e",no_next_step:"#6b2020",agreement_sent:"#1b4d36"};
+const S_WELL=[{l:"Strong qualification / ICP fit",k:["qualification","icp","fit","mutual"]},{l:"Meeting or referral secured",k:["booked","meeting","referral","next steps agreed"]},{l:"Clear value proposition",k:["explained","clear","proposition","rapport"]},{l:"Good objection handling",k:["objection","polite close"]}];
+const S_WRONG=[{l:"Meeting not locked on the call",k:["no meeting","not confirmed","not specific","no next step","date"]},{l:"Weak qualification / poor research",k:["no qualification","limited qualification","not relevant"]},{l:"No urgency or depth created",k:["urgency","timeline","depth"]}];
+const D_WELL=[{l:"Strong ICP / client base confirmed",k:["qualification","icp","fit","client","segment"]},{l:"Decision maker / champion identified",k:["decision maker","champion","dm","seniority"]},{l:"Demo or agreement locked",k:["booked","demo","next steps","confirmed","agreement"]},{l:"Geography and market confirmed",k:["geography","market","uk","de","nl","at"]}];
+const D_WRONG=[{l:"Decision maker not confirmed",k:["no direct","not confirmed","unclear","not ready"]},{l:"Next step not locked",k:["no next step","unclear next","not locked","no demo"]},{l:"Weak qualification depth",k:["unclear","limited","no deep","not explored"]}];
+const E_WELL=[{l:"Concrete use case validated",k:["use case","workflow","specific","validated","walkthrough"]},{l:"Agreement or next step confirmed",k:["agreement","next steps","agreed","booked","confirmed"]},{l:"Strong value recognition",k:["value","relevant","clients need","useful","strong"]},{l:"Good workflow fit established",k:["workflow","fit","process","integration"]}];
+const E_WRONG=[{l:"Commitment signal weak",k:["not ready","commitment","unclear","no referral","uncertainty"]},{l:"Next step not confirmed",k:["no clear next","no next meeting","not confirmed","needed"]},{l:"Integration or workflow unclear",k:["integration","unclear","unresolved","feature"]}];
+const M_WELL=[{l:"Specific clients / pipeline reviewed",k:["clients","pipeline","accounts","specific","named"]},{l:"Strong engagement / relationship",k:["engagement","relationship","deepening","joint"]},{l:"Next steps confirmed with owners",k:["next steps","confirmed","owners"]},{l:"Competitive signals handled",k:["competitor","competitive"]}];
+const M_WRONG=[{l:"MAP not reviewed",k:["map","MAP"]},{l:"Next steps vague or unconfirmed",k:["not confirmed","vague","not fully confirmed"]},{l:"Blockers not fully resolved",k:["blockers not","not explored","not deeply"]},{l:"Pipeline not specific enough",k:["pipeline","no explicit pipeline","no new pipeline","limited"]}];
 
 function bucket(t,bs){if(!t)return null;const tx=t.toLowerCase();for(const b of bs)if(b.k.some(k=>tx.includes(k)))return b.l;return"Other";}
-function sc(v){return v>=4?'#0f6b4a':v>=3?'#92580a':'#b91c1c';}
-function bc(v){return v>=4?'#1a9e70':v>=3?'#c07a14':'#ef4444';}
+function sc(v){return v>=4?'var(--accent)':v>=3?'var(--warn)':'var(--danger)';}
+function bc(v){return v>=4?'#52b788':v>=3?'#c07a14':'#c05c3a';}
 function cls(v){return v>=4?'green':v>=3?'amber':'red';}
 function avg(arr){return arr.length?arr.reduce((a,b)=>a+b,0)/arr.length:0;}
 function getWeek(d){const dt=new Date(d),day=dt.getDay(),diff=dt.getDate()-day+(day===0?-6:1);return new Date(dt.setDate(diff)).toISOString().slice(0,10);}
 const charts={};
-const baseChartOpts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
-const gridColor='rgba(0,0,0,0.04)';
+const base={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
+const gc='rgba(0,0,0,0.05)';
+const DC=['#c05c3a','#e8a99a','#c07a14','#74c69d','#2d6a4f'];
+const DL=['<2','2–3','3–4','4–5','5'];
 
-/* ═══ SOURCING ═══ */
-function getSourcing(){
-  const from=document.getElementById('sf-from').value,to=document.getElementById('sf-to').value,ctry=document.getElementById('sf-country').value,rep=document.getElementById('sf-rep').value;
-  return SOURCING.filter(c=>{if(from&&c.date<from)return false;if(to&&c.date>to)return false;if(ctry!=='all'&&c.country!==ctry)return false;if(rep!=='all'&&c.rep!==rep)return false;return true;});
-}
+function distBands(data){const b=[0,0,0,0,0];data.forEach(c=>{if(c.score<2)b[0]++;else if(c.score<3)b[1]++;else if(c.score<4)b[2]++;else if(c.score<5)b[3]++;else b[4]++;});return b;}
+function mkChart(id,type,data,opts,key){if(charts[key]){charts[key].data=data;charts[key].update();}else charts[key]=new Chart(document.getElementById(id),{type,data,options:opts});}
+function outPill(o){return`<span class="pill" style="background:${OUT_COLORS[o]||'#888'}22;color:${OUT_COLORS[o]||'#888'}">${OUT_LABELS[o]||o}</span>`;}
+function barHtml(s){return`<div class="bar-wrap"><div class="bar-fill" style="width:${(s/5*100).toFixed(0)}%;background:${bc(s)}"></div></div>`;}
+function kpiHtml(data,extra){const as=avg(data.map(c=>c.score)),hi=data.filter(c=>c.score>=4).length,lo=data.filter(c=>c.score<3).length;
+return`<div class="kpi"><div class="kpi-label">Calls</div><div class="kpi-value">${data.length}</div></div><div class="kpi"><div class="kpi-label">Avg score</div><div class="kpi-value ${cls(as)}">${as.toFixed(1)}</div></div><div class="kpi"><div class="kpi-label">Scored ≥4.0</div><div class="kpi-value green">${hi}</div></div><div class="kpi"><div class="kpi-label">Needs attention</div><div class="kpi-value ${lo>0?'red':'green'}">${lo}</div></div>${extra}`;}
+function insightsHtml(data,wb,rb){const wm={},rm={};data.forEach(c=>{const w=bucket(c.well,wb);if(w)wm[w]=(wm[w]||0)+1;const r=bucket(c.wrong,rb);if(r)rm[r]=(rm[r]||0)+1;});
+return`<div class="insight-card"><div class="insight-title green">What went well</div>${Object.entries(wm).sort((a,b)=>b[1]-a[1]).map(([t,n])=>`<div class="insight-row"><span class="badge green">${n}x</span>${t}</div>`).join('')}</div><div class="insight-card"><div class="insight-title red">What went wrong</div>${Object.entries(rm).sort((a,b)=>b[1]-a[1]).map(([t,n])=>`<div class="insight-row"><span class="badge red">${n}x</span>${t}</div>`).join('')}</div>`;}
+
+function commentaryHtml(tab){const c=COMMENTARY[tab];return`
+<div class="commentary-card win"><div class="commentary-label">🏆 Biggest win</div><div class="commentary-text">${c.win}</div></div>
+<div class="commentary-card gap"><div class="commentary-label">⚠ Main gap</div><div class="commentary-text">${c.gap}</div></div>
+<div class="commentary-card focus"><div class="commentary-label">🎯 Focus this week</div><div class="commentary-text">${c.focus}</div></div>`;}
+
+function repPanelHtml(rep){
+  const ns=REP_NEXT_STEPS[rep]||[];
+  const coach=REP_COACHING[rep];
+  if(!coach)return'';
+  const overdue=ns.filter(n=>n.overdue);
+  const upcoming=ns.filter(n=>!n.overdue);
+  return`<div class="rep-panel-title">👤 ${rep} — this week's view</div>
+<div class="rep-panel-grid">
+  <div>
+    <div class="rep-section-title">Next steps (${upcoming.length})</div>
+    ${upcoming.map(n=>`<div class="rep-item"><div class="rep-dot green"></div><div><strong>${n.partner}:</strong> ${n.action}</div></div>`).join('')}
+  </div>
+  <div>
+    <div class="rep-section-title">Overdue ${overdue.length>0?`<span class="overdue-badge">${overdue.length}</span>`:''}</div>
+    ${overdue.length?overdue.map(n=>`<div class="rep-item"><div class="rep-dot red"></div><div><strong>${n.partner}:</strong> ${n.action}</div></div>`).join(''):'<div class="rep-item" style="color:var(--text-tertiary)">Nothing overdue ✓</div>'}
+  </div>
+  <div>
+    <div class="rep-section-title">Coaching note</div>
+    <div class="rep-item" style="margin-bottom:8px"><div class="rep-dot amber"></div><div><strong>Focus:</strong> ${coach.focus}</div></div>
+    <div class="rep-item"><div class="rep-dot green"></div><div><strong>Strength:</strong> ${coach.strength}</div></div>
+  </div>
+</div>`;}
+
+/* ══════ SOURCING ══════ */
+function getSourcing(){const from=document.getElementById('sf-from').value,to=document.getElementById('sf-to').value,ctry=document.getElementById('sf-country').value,rep=document.getElementById('sf-rep').value;return SOURCING.filter(c=>{if(from&&c.date<from)return false;if(to&&c.date>to)return false;if(ctry!=='all'&&c.country!==ctry)return false;if(rep!=='all'&&c.rep!==rep)return false;return true;});}
 function renderSourcing(){
-  const data=getSourcing();
-  if(!data.length){document.getElementById('s-kpis').innerHTML='<p style="color:#9b9b96;font-size:13px">No calls match filters.</p>';return;}
-  const as=avg(data.map(c=>c.score)),hi=data.filter(c=>c.score>=4).length,lo=data.filter(c=>c.score<3).length;
+  const data=getSourcing(),rep=document.getElementById('sf-rep').value;
+  if(!data.length){document.getElementById('s-kpis').innerHTML='<p style="color:var(--text-tertiary);font-size:13px">No calls match filters.</p>';return;}
+  document.getElementById('s-commentary').innerHTML=commentaryHtml('sourcing');
+  const panel=document.getElementById('s-rep-panel');
+  if(rep!=='all'){panel.innerHTML=repPanelHtml(rep);panel.classList.add('visible');}else panel.classList.remove('visible');
   const mtg=data.filter(c=>['demo_booked','discovery_booked','follow_up_call_booked'].includes(c.outcome)).length;
-  document.getElementById('s-kpis').innerHTML=`
-    <div class="kpi"><div class="kpi-label">Calls</div><div class="kpi-value">${data.length}</div></div>
-    <div class="kpi"><div class="kpi-label">Avg score</div><div class="kpi-value ${cls(as)}">${as.toFixed(1)}</div></div>
-    <div class="kpi"><div class="kpi-label">Scored ≥4.0</div><div class="kpi-value green">${hi}</div></div>
-    <div class="kpi"><div class="kpi-label">Meetings booked</div><div class="kpi-value green">${mtg}</div></div>
-    <div class="kpi"><div class="kpi-label">Needs attention</div><div class="kpi-value ${lo>0?'red':'green'}">${lo}</div></div>`;
-  const bands=[0,0,0,0,0];
-  data.forEach(c=>{if(c.score<2)bands[0]++;else if(c.score<3)bands[1]++;else if(c.score<4)bands[2]++;else if(c.score<5)bands[3]++;else bands[4]++;});
-  const dd={labels:['<2','2–3','3–4','4–5','5'],datasets:[{data:bands,backgroundColor:['#ef4444','#fca5a5','#c07a14','#5dcaa5','#0f6b4a'],borderWidth:0,borderRadius:4}]};
-  const yOpts={beginAtZero:true,ticks:{stepSize:1,font:{size:10}},grid:{color:gridColor}},xOpts={ticks:{font:{size:10}},grid:{display:false}};
-  if(charts.sd){charts.sd.data=dd;charts.sd.update();}else charts.sd=new Chart(document.getElementById('s-dist'),{type:'bar',data:dd,options:{...baseChartOpts,scales:{y:yOpts,x:xOpts}}});
-  const cVals=[avg(data.map(c=>c.O)),avg(data.map(c=>c.Q)),avg(data.map(c=>c.H)),avg(data.map(c=>c.M))].map(v=>parseFloat(v.toFixed(1)));
-  const cd={labels:['Opening (w2)','Qualification (w3)','Objection (w2)','Meeting (w3)'],datasets:[{data:cVals,backgroundColor:['#378add','#1a9e70','#c07a14','#d85a30'],borderWidth:0,borderRadius:4}]};
-  if(charts.sc){charts.sc.data=cd;charts.sc.update();}else charts.sc=new Chart(document.getElementById('s-crit'),{type:'bar',data:cd,options:{...baseChartOpts,indexAxis:'y',scales:{x:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gridColor}},y:{ticks:{font:{size:10}},grid:{display:false}}}}});
-  const oc={};data.forEach(c=>{oc[c.outcome]=(oc[c.outcome]||0)+1;});
-  const ok=Object.keys(oc).sort((a,b)=>oc[b]-oc[a]);
-  const od={labels:ok.map(k=>OUT_LABELS[k]||k),datasets:[{data:ok.map(k=>oc[k]),backgroundColor:ok.map(k=>OUT_COLORS[k]||'#888'),borderWidth:0,borderRadius:4}]};
-  if(charts.so){charts.so.data=od;charts.so.update();}else charts.so=new Chart(document.getElementById('s-out'),{type:'bar',data:od,options:{...baseChartOpts,indexAxis:'y',scales:{x:{beginAtZero:true,ticks:{stepSize:1,font:{size:10}},grid:{color:gridColor}},y:{ticks:{font:{size:10}},grid:{display:false}}}}});
-  const wk={};data.forEach(c=>{const w=getWeek(c.date);if(!wk[w])wk[w]=[];wk[w].push(c.score);});
-  const weeks=Object.keys(wk).sort();
-  const td={labels:weeks.map(w=>w.slice(5)),datasets:[{data:weeks.map(w=>parseFloat(avg(wk[w]).toFixed(1))),borderColor:'#1a6b4a',backgroundColor:'rgba(26,107,74,0.08)',tension:.35,fill:true,pointRadius:4,pointBackgroundColor:'#1a6b4a',borderWidth:2}]};
-  if(charts.st){charts.st.data=td;charts.st.update();}else charts.st=new Chart(document.getElementById('s-trend'),{type:'line',data:td,options:{...baseChartOpts,scales:{y:{min:1,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gridColor}},x:{ticks:{font:{size:10}},grid:{display:false}}}}});
-  const wm={},rm={};
-  data.forEach(c=>{const wb=bucket(c.well,S_WELL_B);if(wb)wm[wb]=(wm[wb]||0)+1;const rb=bucket(c.wrong,S_WRONG_B);if(rb)rm[rb]=(rm[rb]||0)+1;});
-  document.getElementById('s-insights').innerHTML=`
-    <div class="insight-card"><div class="insight-title green">What went well</div>${Object.entries(wm).sort((a,b)=>b[1]-a[1]).map(([t,n])=>`<div class="insight-row"><span class="badge green">${n}x</span>${t}</div>`).join('')}</div>
-    <div class="insight-card"><div class="insight-title red">What went wrong</div>${Object.entries(rm).sort((a,b)=>b[1]-a[1]).map(([t,n])=>`<div class="insight-row"><span class="badge red">${n}x</span>${t}</div>`).join('')}</div>`;
-  const reps={};
-  data.forEach(c=>{if(!reps[c.rep])reps[c.rep]={n:0,s:0,O:0,Q:0,H:0,M:0,country:c.country};reps[c.rep].n++;reps[c.rep].s+=c.score;reps[c.rep].O+=c.O;reps[c.rep].Q+=c.Q;reps[c.rep].H+=c.H;reps[c.rep].M+=c.M;});
-  const crit=['Opening','Qualification','Objection','Meeting'];
-  document.getElementById('s-reps').innerHTML=Object.entries(reps).sort((a,b)=>b[1].n-a[1].n).map(([name,d],i)=>{
-    const a=(d.s/d.n),vals=[d.O/d.n,d.Q/d.n,d.H/d.n,d.M/d.n];
-    return `<tr><td class="td-muted">${i+1}</td><td style="font-weight:600">${name}</td><td class="td-muted">${d.country}</td><td style="font-weight:600">${d.n}</td><td><span class="td-score ${cls(a)}">${a.toFixed(1)}</span></td><td><span class="pill pill-green">${crit[vals.indexOf(Math.max(...vals))]}</span></td><td><span class="pill pill-red">${crit[vals.indexOf(Math.min(...vals))]}</span></td>${vals.map(v=>`<td style="color:${sc(v)};font-family:var(--mono);font-size:12px">${v.toFixed(1)}</td>`).join('')}</tr>`;
-  }).join('');
-  document.getElementById('s-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>{
-    const pct=(c.score/5*100).toFixed(0);
-    const outPill=`<span class="pill" style="background:${OUT_COLORS[c.outcome]}22;color:${OUT_COLORS[c.outcome]}">${OUT_LABELS[c.outcome]||c.outcome}</span>`;
-    return `<tr><td style="font-weight:500;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.title}</td><td class="td-muted">${c.rep}</td><td class="td-muted">${c.date.slice(5)}</td><td class="td-muted">${c.dur}</td><td style="color:${sc(c.O)};font-family:var(--mono);font-size:12px">${c.O}</td><td style="color:${sc(c.Q)};font-family:var(--mono);font-size:12px">${c.Q}</td><td style="color:${sc(c.H)};font-family:var(--mono);font-size:12px">${c.H}</td><td style="color:${sc(c.M)};font-family:var(--mono);font-size:12px">${c.M}</td><td><span class="td-score ${cls(c.score)}">${c.score.toFixed(1)}</span></td><td>${outPill}</td><td>${c.score<3?'<span class="pill pill-red">Review</span>':''}</td><td><div class="bar-wrap"><div class="bar-fill" style="width:${pct}%;background:${bc(c.score)}"></div></div></td></tr>`;
-  }).join('');
+  document.getElementById('s-kpis').innerHTML=kpiHtml(data,`<div class="kpi"><div class="kpi-label">Meetings booked</div><div class="kpi-value green">${mtg}</div></div>`);
+  mkChart('s-dist','bar',{labels:DL,datasets:[{data:distBands(data),backgroundColor:DC,borderWidth:0,borderRadius:3}]},{...base,scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'sd');
+  const cV=[avg(data.map(c=>c.O)),avg(data.map(c=>c.Q)),avg(data.map(c=>c.H)),avg(data.map(c=>c.M))].map(v=>+v.toFixed(1));
+  mkChart('s-crit','bar',{labels:['Opening (w2)','Qualification (w3)','Objection (w2)','Meeting (w3)'],datasets:[{data:cV,backgroundColor:['#4a8ec2','#52b788','#c07a14','#c05c3a'],borderWidth:0,borderRadius:3}]},{...base,indexAxis:'y',scales:{x:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},y:{ticks:{font:{size:10}},grid:{display:false}}}},'sc');
+  const oc={};data.forEach(c=>{oc[c.outcome]=(oc[c.outcome]||0)+1;});const ok=Object.keys(oc).sort((a,b)=>oc[b]-oc[a]);
+  mkChart('s-out','bar',{labels:ok.map(k=>OUT_LABELS[k]||k),datasets:[{data:ok.map(k=>oc[k]),backgroundColor:ok.map(k=>OUT_COLORS[k]||'#888'),borderWidth:0,borderRadius:3}]},{...base,indexAxis:'y',scales:{x:{beginAtZero:true,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},y:{ticks:{font:{size:10}},grid:{display:false}}}},'so');
+  const wk={};data.forEach(c=>{const w=getWeek(c.date);if(!wk[w])wk[w]=[];wk[w].push(c.score);});const weeks=Object.keys(wk).sort();
+  mkChart('s-trend','line',{labels:weeks.map(w=>w.slice(5)),datasets:[{data:weeks.map(w=>+avg(wk[w]).toFixed(1)),borderColor:'#2d6a4f',backgroundColor:'rgba(45,106,79,0.08)',tension:.35,fill:true,pointRadius:4,pointBackgroundColor:'#2d6a4f',borderWidth:2}]},{...base,scales:{y:{min:1,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'st');
+  document.getElementById('s-insights').innerHTML=insightsHtml(data,S_WELL,S_WRONG);
+  const reps={};data.forEach(c=>{if(!reps[c.rep])reps[c.rep]={n:0,s:0,O:0,Q:0,H:0,M:0,country:c.country};reps[c.rep].n++;reps[c.rep].s+=c.score;reps[c.rep].O+=c.O;reps[c.rep].Q+=c.Q;reps[c.rep].H+=c.H;reps[c.rep].M+=c.M;});
+  const cr=['Opening','Qualification','Objection','Meeting'];
+  document.getElementById('s-reps').innerHTML=Object.entries(reps).sort((a,b)=>b[1].n-a[1].n).map(([name,d],i)=>{const a=d.s/d.n,v=[d.O/d.n,d.Q/d.n,d.H/d.n,d.M/d.n];return`<tr><td class="td-muted">${i+1}</td><td style="font-weight:600">${name}</td><td class="td-muted">${d.country}</td><td style="font-weight:600">${d.n}</td><td><span class="td-score ${cls(a)}">${a.toFixed(1)}</span></td><td><span class="pill pill-green">${cr[v.indexOf(Math.max(...v))]}</span></td><td><span class="pill pill-red">${cr[v.indexOf(Math.min(...v))]}</span></td>${v.map(x=>`<td style="color:${sc(x)};font-family:var(--mono);font-size:12px">${x.toFixed(1)}</td>`).join('')}</tr>`;}).join('');
+  document.getElementById('s-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>`<tr><td style="font-weight:500;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.title}</td><td class="td-muted">${c.rep}</td><td class="td-muted">${c.date.slice(5)}</td><td class="td-muted">${c.dur}</td><td style="color:${sc(c.O)};font-family:var(--mono);font-size:12px">${c.O}</td><td style="color:${sc(c.Q)};font-family:var(--mono);font-size:12px">${c.Q}</td><td style="color:${sc(c.H)};font-family:var(--mono);font-size:12px">${c.H}</td><td style="color:${sc(c.M)};font-family:var(--mono);font-size:12px">${c.M}</td><td><span class="td-score ${cls(c.score)}">${c.score.toFixed(1)}</span></td><td>${outPill(c.outcome)}</td><td>${c.score<3?'<span class="pill pill-red">Review</span>':''}</td><td>${barHtml(c.score)}</td></tr>`).join('');
 }
 
-/* ═══ MANAGEMENT ═══ */
-function getMgmt(){
-  const from=document.getElementById('mf-from').value,to=document.getElementById('mf-to').value,rep=document.getElementById('mf-rep').value;
-  return MANAGEMENT.filter(c=>{if(from&&c.date<from)return false;if(to&&c.date>to)return false;if(rep!=='all'&&c.rep!==rep)return false;return true;});
+/* ══════ DISCOVERY ══════ */
+function getDiscovery(){const from=document.getElementById('df-from').value,to=document.getElementById('df-to').value,rep=document.getElementById('df-rep').value;return DISCOVERY.filter(c=>{if(from&&c.date<from)return false;if(to&&c.date>to)return false;if(rep!=='all'&&c.rep!==rep)return false;return true;});}
+function renderDiscovery(){
+  const data=getDiscovery(),rep=document.getElementById('df-rep').value;
+  if(!data.length){document.getElementById('d-kpis').innerHTML='<p style="color:var(--text-tertiary);font-size:13px">No calls match filters.</p>';return;}
+  document.getElementById('d-commentary').innerHTML=commentaryHtml('discovery');
+  const panel=document.getElementById('d-rep-panel');
+  if(rep!=='all'){panel.innerHTML=repPanelHtml(rep);panel.classList.add('visible');}else panel.classList.remove('visible');
+  const demos=data.filter(c=>['demo_booked','agreement_sent'].includes(c.outcome)).length;
+  document.getElementById('d-kpis').innerHTML=kpiHtml(data,`<div class="kpi"><div class="kpi-label">Demo / agreement</div><div class="kpi-value green">${demos}</div></div>`);
+  mkChart('d-dist','bar',{labels:DL,datasets:[{data:distBands(data),backgroundColor:DC,borderWidth:0,borderRadius:3}]},{...base,scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'dd');
+  const cV=[avg(data.map(c=>c.CB)),avg(data.map(c=>c.DA)),avg(data.map(c=>c.CH)),avg(data.map(c=>c.GE)),avg(data.map(c=>c.NS))].map(v=>+v.toFixed(1));
+  mkChart('d-crit','bar',{labels:['Cust base (w3)','Dec access (w3)','Champion (w3)','Geography (w2)','Next step (w3)'],datasets:[{data:cV,backgroundColor:['#52b788','#4a8ec2','#c05c3a','#c07a14','#7c5cbf'],borderWidth:0,borderRadius:3}]},{...base,indexAxis:'y',scales:{x:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},y:{ticks:{font:{size:10}},grid:{display:false}}}},'dc');
+  document.getElementById('d-insights').innerHTML=insightsHtml(data,D_WELL,D_WRONG);
+  const reps={};data.forEach(c=>{if(!reps[c.rep])reps[c.rep]={n:0,s:0,CB:0,DA:0,CH:0,GE:0,NS:0};reps[c.rep].n++;reps[c.rep].s+=c.score;['CB','DA','CH','GE','NS'].forEach(k=>reps[c.rep][k]+=c[k]);});
+  document.getElementById('d-reps').innerHTML=Object.entries(reps).sort((a,b)=>b[1].n-a[1].n).map(([name,d],i)=>{const a=d.s/d.n;return`<tr><td class="td-muted">${i+1}</td><td style="font-weight:600">${name}</td><td style="font-weight:600">${d.n}</td><td><span class="td-score ${cls(a)}">${a.toFixed(1)}</span></td>${['CB','DA','CH','GE','NS'].map(k=>`<td style="color:${sc(d[k]/d.n)};font-family:var(--mono);font-size:12px">${(d[k]/d.n).toFixed(1)}</td>`).join('')}</tr>`;}).join('');
+  document.getElementById('d-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>`<tr><td style="font-weight:500;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.title}</td><td class="td-muted">${c.rep}</td><td class="td-muted">${c.date.slice(5)}</td><td class="td-muted">${c.dur}</td>${['CB','DA','CH','GE','NS'].map(k=>`<td style="color:${sc(c[k])};font-family:var(--mono);font-size:12px">${c[k]}</td>`).join('')}<td><span class="td-score ${cls(c.score)}">${c.score.toFixed(1)}</span></td><td>${outPill(c.outcome)}</td><td>${barHtml(c.score)}</td></tr>`).join('');
 }
+
+/* ══════ DEMO ══════ */
+function getDemo(){const from=document.getElementById('emf-from').value,to=document.getElementById('emf-to').value,rep=document.getElementById('emf-rep').value;return DEMO.filter(c=>{if(from&&c.date<from)return false;if(to&&c.date>to)return false;if(rep!=='all'&&c.rep!==rep)return false;return true;});}
+function renderDemo(){
+  const data=getDemo(),rep=document.getElementById('emf-rep').value;
+  if(!data.length){document.getElementById('em-kpis').innerHTML='<p style="color:var(--text-tertiary);font-size:13px">No calls match filters.</p>';return;}
+  document.getElementById('em-commentary').innerHTML=commentaryHtml('demo');
+  const panel=document.getElementById('em-rep-panel');
+  if(rep!=='all'){panel.innerHTML=repPanelHtml(rep);panel.classList.add('visible');}else panel.classList.remove('visible');
+  const ag=data.filter(c=>c.outcome==='agreement_sent').length;
+  document.getElementById('em-kpis').innerHTML=kpiHtml(data,`<div class="kpi"><div class="kpi-label">Agreements sent</div><div class="kpi-value green">${ag}</div></div>`);
+  mkChart('em-dist','bar',{labels:DL,datasets:[{data:distBands(data),backgroundColor:DC,borderWidth:0,borderRadius:3}]},{...base,scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'emd');
+  const cV=[avg(data.map(c=>c.UC)),avg(data.map(c=>c.VA)),avg(data.map(c=>c.WF)),avg(data.map(c=>c.CO)),avg(data.map(c=>c.NS))].map(v=>+v.toFixed(1));
+  mkChart('em-crit','bar',{labels:['Use case (w4)','Value (w3)','Workflow (w3)','Commitment (w3)','Next step (w2)'],datasets:[{data:cV,backgroundColor:['#2d6a4f','#4a8ec2','#c07a14','#7c5cbf','#c05c3a'],borderWidth:0,borderRadius:3}]},{...base,indexAxis:'y',scales:{x:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},y:{ticks:{font:{size:10}},grid:{display:false}}}},'emc');
+  document.getElementById('em-insights').innerHTML=insightsHtml(data,E_WELL,E_WRONG);
+  const reps={};data.forEach(c=>{if(!reps[c.rep])reps[c.rep]={n:0,s:0,UC:0,VA:0,WF:0,CO:0,NS:0};reps[c.rep].n++;reps[c.rep].s+=c.score;['UC','VA','WF','CO','NS'].forEach(k=>reps[c.rep][k]+=c[k]);});
+  document.getElementById('em-reps').innerHTML=Object.entries(reps).sort((a,b)=>b[1].n-a[1].n).map(([name,d],i)=>{const a=d.s/d.n;return`<tr><td class="td-muted">${i+1}</td><td style="font-weight:600">${name}</td><td style="font-weight:600">${d.n}</td><td><span class="td-score ${cls(a)}">${a.toFixed(1)}</span></td>${['UC','VA','WF','CO','NS'].map(k=>`<td style="color:${sc(d[k]/d.n)};font-family:var(--mono);font-size:12px">${(d[k]/d.n).toFixed(1)}</td>`).join('')}</tr>`;}).join('');
+  document.getElementById('em-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>`<tr><td style="font-weight:500;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.title}</td><td class="td-muted">${c.rep}</td><td class="td-muted">${c.date.slice(5)}</td><td class="td-muted">${c.dur}</td>${['UC','VA','WF','CO','NS'].map(k=>`<td style="color:${sc(c[k])};font-family:var(--mono);font-size:12px">${c[k]}</td>`).join('')}<td><span class="td-score ${cls(c.score)}">${c.score.toFixed(1)}</span></td><td>${outPill(c.outcome)}</td><td>${barHtml(c.score)}</td></tr>`).join('');
+}
+
+/* ══════ MANAGEMENT ══════ */
+function getMgmt(){const from=document.getElementById('mf-from').value,to=document.getElementById('mf-to').value,rep=document.getElementById('mf-rep').value;return MANAGEMENT.filter(c=>{if(from&&c.date<from)return false;if(to&&c.date>to)return false;if(rep!=='all'&&c.rep!==rep)return false;return true;});}
 function renderMgmt(){
-  const data=getMgmt();
-  if(!data.length){document.getElementById('m-kpis').innerHTML='<p style="color:#9b9b96;font-size:13px">No calls match filters.</p>';return;}
-  const as=avg(data.map(c=>c.score)),hi=data.filter(c=>c.score>=4).length,lo=data.filter(c=>c.score<3).length,mapLow=data.filter(c=>c.M<3).length;
-  document.getElementById('m-alert').innerHTML=mapLow>0?`<div class="alert-card"><p class="alert-title">MAP review weak on ${mapLow} call${mapLow>1?'s':''} this period</p><p class="alert-body">MAP scored below 3 on ${mapLow} of ${data.length} management calls — commitments are not being checked against actuals.</p></div>`:'';
-  document.getElementById('m-kpis').innerHTML=`
-    <div class="kpi"><div class="kpi-label">Calls</div><div class="kpi-value">${data.length}</div></div>
-    <div class="kpi"><div class="kpi-label">Avg score</div><div class="kpi-value ${cls(as)}">${as.toFixed(1)}</div></div>
-    <div class="kpi"><div class="kpi-label">Scored ≥4.0</div><div class="kpi-value green">${hi}</div></div>
-    <div class="kpi"><div class="kpi-label">Needs attention</div><div class="kpi-value ${lo>0?'red':'green'}">${lo}</div></div>
-    <div class="kpi"><div class="kpi-label">MAP reviewed</div><div class="kpi-value ${mapLow>0?'amber':'green'}">${data.length-mapLow}/${data.length}</div></div>`;
-  const bands=[0,0,0,0,0];
-  data.forEach(c=>{if(c.score<2)bands[0]++;else if(c.score<3)bands[1]++;else if(c.score<4)bands[2]++;else if(c.score<5)bands[3]++;else bands[4]++;});
-  const dd={labels:['<2','2–3','3–4','4–5','5'],datasets:[{data:bands,backgroundColor:['#ef4444','#fca5a5','#c07a14','#5dcaa5','#0f6b4a'],borderWidth:0,borderRadius:4}]};
-  if(charts.md){charts.md.data=dd;charts.md.update();}else charts.md=new Chart(document.getElementById('m-dist'),{type:'bar',data:dd,options:{...baseChartOpts,scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:10}},grid:{color:gridColor}},x:{ticks:{font:{size:10}},grid:{display:false}}}}});
-  const crit6=['Pipeline (w3)','MAP (w3)','Blocker (w3)','Engagement (w2)','Competitive (w2)','Next step (w2)'];
-  const cVals=[avg(data.map(c=>c.P)),avg(data.map(c=>c.M)),avg(data.map(c=>c.B)),avg(data.map(c=>c.E)),avg(data.map(c=>c.C)),avg(data.map(c=>c.N))].map(v=>parseFloat(v.toFixed(1)));
-  const cd={labels:crit6,datasets:[{data:cVals,backgroundColor:cVals.map(v=>v>=4?'#1a9e70':v>=3?'#c07a14':'#ef4444'),borderWidth:0,borderRadius:4}]};
-  if(charts.mc){charts.mc.data=cd;charts.mc.update();}else charts.mc=new Chart(document.getElementById('m-crit'),{type:'bar',data:cd,options:{...baseChartOpts,indexAxis:'y',scales:{x:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gridColor}},y:{ticks:{font:{size:10}},grid:{display:false}}}}});
-  const wm={},rm={};
-  data.forEach(c=>{const wb=bucket(c.well,M_WELL_B);if(wb)wm[wb]=(wm[wb]||0)+1;const rb=bucket(c.wrong,M_WRONG_B);if(rb)rm[rb]=(rm[rb]||0)+1;});
-  document.getElementById('m-insights').innerHTML=`
-    <div class="insight-card"><div class="insight-title green">What went well</div>${Object.entries(wm).sort((a,b)=>b[1]-a[1]).map(([t,n])=>`<div class="insight-row"><span class="badge green">${n}x</span>${t}</div>`).join('')}</div>
-    <div class="insight-card"><div class="insight-title red">What went wrong</div>${Object.entries(rm).sort((a,b)=>b[1]-a[1]).map(([t,n])=>`<div class="insight-row"><span class="badge red">${n}x</span>${t}</div>`).join('')}</div>`;
-  const reps={};
-  data.forEach(c=>{if(!reps[c.rep])reps[c.rep]={n:0,s:0,P:0,M:0,B:0,E:0,C:0,N:0};reps[c.rep].n++;reps[c.rep].s+=c.score;['P','M','B','E','C','N'].forEach(k=>reps[c.rep][k]+=c[k]);});
-  document.getElementById('m-reps').innerHTML=Object.entries(reps).sort((a,b)=>b[1].n-a[1].n).map(([name,d],i)=>{
-    const a=(d.s/d.n);
-    return `<tr><td class="td-muted">${i+1}</td><td style="font-weight:600">${name}</td><td style="font-weight:600">${d.n}</td><td><span class="td-score ${cls(a)}">${a.toFixed(1)}</span></td>${['P','M','B','E','C','N'].map(k=>`<td style="color:${sc(d[k]/d.n)};font-family:var(--mono);font-size:12px">${(d[k]/d.n).toFixed(1)}</td>`).join('')}</tr>`;
-  }).join('');
-  document.getElementById('m-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>{
-    const pct=(c.score/5*100).toFixed(0);
-    return `<tr><td style="font-weight:500;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.title}</td><td class="td-muted">${c.rep}</td><td class="td-muted">${c.date.slice(5)}</td><td class="td-muted">${c.dur}</td>${['P','M','B','E','C','N'].map(k=>`<td style="color:${sc(c[k])};font-family:var(--mono);font-size:12px">${c[k]}</td>`).join('')}<td><span class="td-score ${cls(c.score)}">${c.score.toFixed(1)}</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:${pct}%;background:${bc(c.score)}"></div></div></td></tr>`;
-  }).join('');
+  const data=getMgmt(),rep=document.getElementById('mf-rep').value;
+  if(!data.length){document.getElementById('m-kpis').innerHTML='<p style="color:var(--text-tertiary);font-size:13px">No calls match filters.</p>';return;}
+  document.getElementById('m-commentary').innerHTML=commentaryHtml('management');
+  const panel=document.getElementById('m-rep-panel');
+  if(rep!=='all'){panel.innerHTML=repPanelHtml(rep);panel.classList.add('visible');}else panel.classList.remove('visible');
+  const mapLow=data.filter(c=>c.M<3).length;
+  document.getElementById('m-alert').innerHTML=mapLow>0?`<div class="alert-card"><p class="alert-title">MAP review weak on ${mapLow} call${mapLow>1?'s':''} this period</p><p class="alert-body">MAP scored below 3 on ${mapLow} of ${data.length} calls. Commitments are not being checked against actuals.</p></div>`:'';
+  document.getElementById('m-kpis').innerHTML=kpiHtml(data,`<div class="kpi"><div class="kpi-label">MAP reviewed</div><div class="kpi-value ${mapLow>0?'amber':'green'}">${data.length-mapLow}/${data.length}</div></div>`);
+  mkChart('m-dist','bar',{labels:DL,datasets:[{data:distBands(data),backgroundColor:DC,borderWidth:0,borderRadius:3}]},{...base,scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'md');
+  const cV=[avg(data.map(c=>c.P)),avg(data.map(c=>c.M)),avg(data.map(c=>c.B)),avg(data.map(c=>c.E)),avg(data.map(c=>c.C)),avg(data.map(c=>c.N))].map(v=>+v.toFixed(1));
+  mkChart('m-crit','bar',{labels:['Pipeline (w3)','MAP (w3)','Blocker (w3)','Engagement (w2)','Competitive (w2)','Next step (w2)'],datasets:[{data:cV,backgroundColor:cV.map(v=>v>=4?'#52b788':v>=3?'#c07a14':'#c05c3a'),borderWidth:0,borderRadius:3}]},{...base,indexAxis:'y',scales:{x:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},y:{ticks:{font:{size:10}},grid:{display:false}}}},'mc');
+  document.getElementById('m-insights').innerHTML=insightsHtml(data,M_WELL,M_WRONG);
+  const reps={};data.forEach(c=>{if(!reps[c.rep])reps[c.rep]={n:0,s:0,P:0,M:0,B:0,E:0,C:0,N:0};reps[c.rep].n++;reps[c.rep].s+=c.score;['P','M','B','E','C','N'].forEach(k=>reps[c.rep][k]+=c[k]);});
+  document.getElementById('m-reps').innerHTML=Object.entries(reps).sort((a,b)=>b[1].n-a[1].n).map(([name,d],i)=>{const a=d.s/d.n;return`<tr><td class="td-muted">${i+1}</td><td style="font-weight:600">${name}</td><td style="font-weight:600">${d.n}</td><td><span class="td-score ${cls(a)}">${a.toFixed(1)}</span></td>${['P','M','B','E','C','N'].map(k=>`<td style="color:${sc(d[k]/d.n)};font-family:var(--mono);font-size:12px">${(d[k]/d.n).toFixed(1)}</td>`).join('')}</tr>`;}).join('');
+  document.getElementById('m-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>`<tr><td style="font-weight:500;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.title}</td><td class="td-muted">${c.rep}</td><td class="td-muted">${c.date.slice(5)}</td><td class="td-muted">${c.dur}</td>${['P','M','B','E','C','N'].map(k=>`<td style="color:${sc(c[k])};font-family:var(--mono);font-size:12px">${c[k]}</td>`).join('')}<td><span class="td-score ${cls(c.score)}">${c.score.toFixed(1)}</span></td><td>${barHtml(c.score)}</td></tr>`).join('');
 }
 
-/* ═══ Init ═══ */
+/* ══════ INIT ══════ */
 [...new Set(SOURCING.map(c=>c.rep))].sort().forEach(r=>{const o=document.createElement('option');o.value=r;o.textContent=r;document.getElementById('sf-rep').appendChild(o);});
+[...new Set(DISCOVERY.map(c=>c.rep))].sort().forEach(r=>{const o=document.createElement('option');o.value=r;o.textContent=r;document.getElementById('df-rep').appendChild(o);});
+[...new Set(DEMO.map(c=>c.rep))].sort().forEach(r=>{const o=document.createElement('option');o.value=r;o.textContent=r;document.getElementById('emf-rep').appendChild(o);});
 [...new Set(MANAGEMENT.map(c=>c.rep))].sort().forEach(r=>{const o=document.createElement('option');o.value=r;o.textContent=r;document.getElementById('mf-rep').appendChild(o);});
-document.querySelectorAll('.nav-tab').forEach(tab=>{
-  tab.addEventListener('click',()=>{
-    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
-    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
-    if(tab.dataset.tab==='sourcing')renderSourcing();
-    if(tab.dataset.tab==='management')renderMgmt();
-  });
-});
+document.querySelectorAll('.nav-tab').forEach(tab=>{tab.addEventListener('click',()=>{
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  tab.classList.add('active');document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
+  if(tab.dataset.tab==='sourcing')renderSourcing();
+  if(tab.dataset.tab==='discovery')renderDiscovery();
+  if(tab.dataset.tab==='demo')renderDemo();
+  if(tab.dataset.tab==='management')renderMgmt();
+});});
 ['sf-from','sf-to','sf-country','sf-rep'].forEach(id=>document.getElementById(id).addEventListener('change',renderSourcing));
+['df-from','df-to','df-rep'].forEach(id=>document.getElementById(id).addEventListener('change',renderDiscovery));
+['emf-from','emf-to','emf-rep'].forEach(id=>document.getElementById(id).addEventListener('change',renderDemo));
 ['mf-from','mf-to','mf-rep'].forEach(id=>document.getElementById(id).addEventListener('change',renderMgmt));
 renderSourcing();
 </script>
