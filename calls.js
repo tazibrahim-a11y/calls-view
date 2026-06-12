@@ -7,8 +7,6 @@ const SOURCING=[
   {title:"Wußler & Schmid",rep:"Nicola",country:"DE",date:"2026-06-08",dur:"15m",O:4,Q:4,H:3,M:3,score:3.7,outcome:"follow_up_call_booked",well:"Clear qualification, partnership discussed, next steps agreed.",wrong:"No specific demo time confirmed."},
   {title:"Ronnie Patel",rep:"Ezer",country:"UK",date:"2026-06-05",dur:"3m",O:4,Q:2,H:3,M:3,score:2.9,outcome:"referred_to_contact",well:"Polite, got direct referral to decision maker.",wrong:"No qualification, no meeting confirmed."},
   {title:"Aalia Rangrez",rep:"Ezer",country:"UK",date:"2026-06-01",dur:"7m",O:4,Q:4,H:3,M:1,score:2.7,outcome:"info_sent_no_meeting",well:"Clear explanation, good rapport, permission for info.",wrong:"No meeting booked, limited qualification depth."},
-  {title:"Naman Gupta",rep:"Alex",country:"UK",date:"2026-06-05",dur:"2m",O:4,Q:3,H:5,M:1,score:2.7,outcome:"disqualified",well:"Clear intro, company explained, polite close.",wrong:"No qualification, no next step."},
-  {title:"Rina Trivedi",rep:"Alex",country:"UK",date:"2026-06-05",dur:"2m",O:3,Q:2,H:4,M:1,score:2.2,outcome:"disqualified",well:"Polite, clear about reason for call.",wrong:"No qualification, not relevant prospect."},
 ];
 
 const DISCOVERY=[
@@ -21,6 +19,10 @@ const DISCOVERY=[
   {title:"Justis Vercoe",rep:"Ezer",date:"2026-06-11",dur:"5m",CB:4,DA:3,CH:4,GE:5,NS:5,PC:3,score:3.9,outcome:"demo_booked",well:"Identified champion, booked demo, clear next steps.",wrong:"No pre-call objective set. Decision maker not on next call."},
   {title:"Hotglue Partnership",rep:"Ezer",date:"2026-06-01",dur:"34m",CB:3,DA:4,CH:4,GE:5,NS:3,PC:2,score:3.4,outcome:"info_sent_no_meeting",well:"Clear value prop, good champion, product intro.",wrong:"No agenda, no objective. Outcome did not match — no next meeting."},
   {title:"Org // Moss intro",rep:"Jara",date:"2026-06-10",dur:"25m",CB:4,DA:3,CH:3,GE:5,NS:3,PC:2,score:3.1,outcome:"follow_up_call_booked",well:"Good fit identified, pain points discussed.",wrong:"No DM confirmed, unclear client needs. No agenda set."},
+  {title:"Klostermann Gruppe // Moss",rep:"Jara",date:"2026-06-11",dur:"20m",CB:4,DA:4,CH:4,GE:5,NS:5,PC:4,score:4.2,outcome:"demo_booked",well:"Good qualification, pain points surfaced, demo booked Tue 16 13:00.",wrong:"No deep dive into integration requirements yet."},
+  {title:"Norman Sadlo / DHPG",rep:"Nicola",date:"2026-06-11",dur:"9m",CB:3,DA:4,CH:3,GE:5,NS:4,PC:3,score:3.8,outcome:"demo_booked",well:"Advisor portal demo booked Jul 17. DATEV interface discussed, pricing shared.",wrong:"No DM champion confirmed. Gustav not on the call."},
+  {title:"Chris Barnard / Collective Concepts",rep:"Ezer",date:"2026-06-05",dur:"8m",CB:4,DA:3,CH:3,GE:5,NS:3,PC:2,score:3.3,outcome:"follow_up_call_booked",well:"ICP fit discussed, CRM integration need surfaced, next call with Rupert agreed.",wrong:"No specific meeting time. CRM dependency is a potential blocker."},
+  {title:"Michelle Bycraft / MB Accounting",rep:"Ezer",date:"2026-06-02",dur:"4m",CB:3,DA:2,CH:2,GE:5,NS:2,PC:2,score:2.7,outcome:"info_sent_no_meeting",well:"Clear intro, explained Moss value prop.",wrong:"Clients too small — no meeting confirmed, one-pager sent only."},
 ];
 
 const DEMO=[
@@ -28,10 +30,11 @@ const DEMO=[
   {title:"AMT / Moss Commercials",rep:"Alex",date:"2026-06-05",dur:"40m",UC:5,VA:4,WF:4,CO:4,NS:5,PC:4,score:4.6,outcome:"agreement_sent",well:"Clear use cases, strong value, next steps agreed. Agenda partially set.",wrong:"Some uncertainty on supplier communication feature."},
   {title:"Supy x Moss",rep:"Jara",date:"2026-06-03",dur:"45m",UC:5,VA:4,WF:4,CO:3,NS:4,PC:3,score:4.1,outcome:"follow_up_call_booked",well:"Clear product walkthrough, mutual fit, next steps discussed.",wrong:"No explicit agenda. Integration details unclear, petty cash workflow unresolved."},
   {title:"Zedra // Moss Demo",rep:"Alex",date:"2026-06-04",dur:"64m",UC:5,VA:4,WF:4,CO:3,NS:3,PC:2,score:3.9,outcome:"info_sent_no_meeting",well:"Deep use case fit, strong workflow discussion, pricing covered.",wrong:"No agenda set. No clear next meeting — outcome did not match."},
+  {title:"EY AT x Moss Demo",rep:"Aurel",date:"2026-06-11",dur:"64m",UC:4,VA:4,WF:4,CO:3,NS:4,PC:4,score:4.3,outcome:"follow_up_call_booked",well:"Full platform walkthrough, clear agenda, technical questions addressed.",wrong:"Some technical questions deferred. No explicit referral commitment made."},
 ];
 
 const MANAGEMENT=[
-  {title:"Arthur Liebrecht",rep:"Jara",date:"2026-06-11",dur:"37m",P:4,M:4,B:4,E:5,C:5,N:4,PC:4,score:4.4,well:"Strong engagement, clear next steps, competitive insights.",wrong:"No explicit deal timeline."},
+  {title:"Arthur Liebrecht",rep:"Jara",date:"2026-06-11",dur:"37m",P:4,M:4,B:4,E:5,C:4,N:3,PC:3,score:4.0,well:"Consultative, referral opportunity surfaced (franchise client), information shared.",wrong:"No specific date for follow-up demo. Summary to send."},
   {title:"score business x Moss",rep:"Jara",date:"2026-06-09",dur:"35m",P:4,M:4,B:4,E:5,C:4,N:5,PC:4,score:4.4,well:"Clear next steps, strong engagement, competitive insights.",wrong:"No explicit customer commitment captured."},
   {title:"WOW Company x Moss",rep:"Jara",date:"2026-06-08",dur:"11m",P:4,M:4,B:4,E:5,C:4,N:5,PC:3,score:4.2,well:"Clear next steps, strong engagement, competitor discussed.",wrong:"No agenda set. No explicit close on all blockers."},
   {title:"One Company x Moss",rep:"Jara",date:"2026-06-03",dur:"42m",P:4,M:4,B:5,E:5,C:3,N:4,PC:4,score:4.2,well:"Thorough updates, blockers discussed, resources shared.",wrong:null},
@@ -40,10 +43,13 @@ const MANAGEMENT=[
   {title:"WS x Moss",rep:"Jara",date:"2026-06-03",dur:"15m",P:4,M:4,B:3,E:5,C:3,N:4,PC:3,score:3.9,well:"Clear next steps, strong engagement, event planning advanced.",wrong:"No agenda. Blockers not deeply explored."},
   {title:"ESER Capital",rep:"Jara",date:"2026-06-08",dur:"20m",P:4,M:4,B:3,E:5,C:3,N:4,PC:3,score:3.8,well:"Clear structure, pain points and next steps discussed.",wrong:"No pre-call objective. No explicit competitor, some data missing."},
   {title:"Felix Schmitt",rep:"Nicola",date:"2026-06-02",dur:"7m",P:4,M:3,B:4,E:4,C:3,N:4,PC:2,score:3.7,well:"Clear blockers, next steps, mutual follow-up agreed.",wrong:"No agenda. No explicit competitor discussion, pipeline limited."},
-  {title:"ba tax",rep:"Nicola",date:"2026-06-03",dur:"12m",P:3,M:3,B:4,E:4,C:4,N:5,PC:2,score:3.7,well:"Clear next steps, blockers discussed, engagement high.",wrong:"No agenda. No explicit pipeline or account mapping."},
   {title:"+491776",rep:"Nicola",date:"2026-06-03",dur:"4m",P:4,M:3,B:3,E:4,C:3,N:4,PC:2,score:3.5,well:"Clear follow-up, good engagement, blockers discussed.",wrong:"No agenda. No explicit competitive discussion, vagueness on MAP."},
   {title:"Buesra Karadag",rep:"Nicola",date:"2026-06-08",dur:"12m",P:3,M:3,B:3,E:5,C:3,N:4,PC:2,score:3.5,well:"Engaged discussion, clear next steps, feedback requested.",wrong:"No agenda. No explicit pipeline or MAP details shared."},
-  {title:"Poool x Moss",rep:"Jara",date:"2026-06-09",dur:"21m",P:2,M:3,B:4,E:4,C:3,N:4,PC:3,score:3.2,well:"Clear next steps, blockers identified, engagement maintained.",wrong:"No new pipeline, slow customer response."},
+  {title:"Poool x Moss",rep:"Jara",date:"2026-06-09",dur:"21m",P:2,M:3,B:4,E:4,C:3,N:4,PC:3,score:3.2,well:"Clear next steps, blockers identified.",wrong:"No new pipeline, slow customer response."},
+  {title:"Alta Via x Moss",rep:"Jara",date:"2026-06-11",dur:"39m",P:3,M:2,B:3,E:4,C:3,N:3,PC:2,score:3.4,well:"Open discussion, partner tiering reviewed.",wrong:"No MAP review. No pre-call objective. Next steps pushed to July — at risk of going cold."},
+  {title:"ba tax / Nicola",rep:"Nicola",date:"2026-06-03",dur:"12m",P:3,M:3,B:4,E:4,C:3,N:4,PC:2,score:3.5,well:"Feature clarification, demo with Nils planned, next steps agreed.",wrong:"No agenda. No explicit pipeline or MAP review."},
+  {title:"Done!Financials",rep:"Nicola",date:"2026-06-09",dur:"5m",P:3,M:2,B:3,E:4,C:3,N:4,PC:2,score:3.3,well:"Partner planning call, action plan discussed, next meeting scheduled.",wrong:"No agenda. MAP not reviewed."},
+  {title:"n.a. (Sue / Lunar X)",rep:"Ezer",date:"2026-06-11",dur:"8m",P:3,M:3,B:3,E:5,C:3,N:3,PC:3,score:3.6,well:"Positive feedback on RPC, referral opportunity uncovered.",wrong:"No specific follow-up date set for partnership call."},
 ];
 
 const UPCOMING={
