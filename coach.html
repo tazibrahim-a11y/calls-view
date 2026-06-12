@@ -315,13 +315,44 @@ const REPS = {
 };
 
 const SUGGESTIONS = {
-  jara:["Why did I score low on MAP?","What is overdue?","What should I focus on this week?","How does my pre-call clarity affect outcomes?","Which partner should I prioritise?","What do I have coming up this week?"],
-  nicola:["Why are my MAP scores low?","What should I do on management calls?","How does pre-call clarity affect my scores?","What is coming up this week?","What is open from my calls?"],
-  ezer:["What is at risk this week?","Tell me about the APA demo today","How does pre-call clarity affect my calls?","What happened with Hotglue?","What is coming up this week?"],
-  alex:["Why are my sourcing calls scoring low?","What should I do about Zedra?","How did my AMT demo compare to Zedra?","What is coming up this week?"],
-  aurel:["How do I increase my call volume?","When will my agreements show as SQLs?","How does my pre-call clarity compare to the team?","What should I focus on next?"],
-  taz:["Who had the best week?","What is the biggest coaching priority?","Why is GB so far behind?","Which rep needs the most 1:1 attention?","What calls should I watch this week?","What is the pre-call clarity picture across the team?","When will the agreements show as SQLs?"]
+  jara:["Should I advance IBB Ventures?","Should I advance Bitesize?","Why did I score low on MAP?","What is overdue?","What should I focus on this week?","What do I have coming up this week?"],
+  nicola:["Should I advance Argus Search?","Should I advance Patrick Schreiner?","Why are my MAP scores low?","What is coming up this week?","What is open from my calls?"],
+  ezer:["Should I advance Justis Vercoe?","What is at risk this week?","Tell me about the APA demo today","What happened with Hotglue?","What is coming up this week?"],
+  alex:["Should I advance Zedra?","Should I advance AMT?","Why are my sourcing calls scoring low?","What is coming up this week?"],
+  aurel:["Should I advance Beke Kratzmann?","Should I advance Stephan Grad?","How do I increase my call volume?","When will my agreements show as SQLs?"],
+  taz:["Which partners are ready to advance?","Who had the best week?","What is the biggest coaching priority?","Why is GB so far behind?","Which rep needs the most 1:1 attention?","What calls should I watch this week?"]
 };
+
+function exitCheck(rep) {
+  // Pre-computed exit decisions per partner per rep
+  const EXIT = {
+    jara:{
+      'IBB Ventures':{type:'discovery',decision:'advance',label:'Advance to Demo Booked',missing:[]},
+      'Bitesize':{type:'discovery',decision:'hold',label:'Hold',missing:['NS=4 borderline — demo not fully locked with confirmed date and right people']},
+      'Org // Moss intro':{type:'discovery',decision:'flag',label:'Flag — missing DM + no next step',missing:['CH=3 — no DM confirmed','NS=3 — no demo locked','PC=2 — no pre-call objective']},
+      'Supy':{type:'demo',decision:'hold',label:'Hold — commitment weak',missing:['CO=3 — partner has not explicitly committed to refer','NS=4 borderline — follow-up booked but not concrete next step toward MAP']},
+    },
+    nicola:{
+      'Argus Search GmbH':{type:'discovery',decision:'advance',label:'Advance to Demo Booked',missing:[]},
+      'Patrick Schreiner':{type:'discovery',decision:'advance',label:'Advance to Demo Booked',missing:[]},
+      'Miro | Moss Ambassador':{type:'discovery',decision:'advance',label:'Advance to Demo Booked',missing:[]},
+    },
+    ezer:{
+      'Justis Vercoe':{type:'discovery',decision:'hold',label:'Hold — DM not on next call',missing:['CH=4 but decision maker not confirmed on demo call','DA=3 — access to decision moment not fully validated']},
+      'Hotglue Partnership':{type:'discovery',decision:'flag',label:'Flag — no next step, outcome did not match',missing:['NS=3 — no demo locked','PC=2 — no pre-call objective','Outcome was info sent, not demo booked']},
+    },
+    alex:{
+      'AMT / Moss Commercials':{type:'demo',decision:'advance',label:'Advance to Partnership Validation',missing:[]},
+      'Zedra // Moss Demo':{type:'demo',decision:'hold',label:'Hold — no commitment, no next meeting',missing:['CO=3 — commitment signal not strong enough','NS=3 — no clear next meeting agreed','PC=2 — no pre-call objective']},
+      'Ideas Community':{type:'sourcing',decision:'advance',label:'Advance to Engaged',missing:[]},
+    },
+    aurel:{
+      'Beke Kratzmann':{type:'demo',decision:'advance',label:'Advance to Partnership Validation',missing:[]},
+      'Stephan Grad':{type:'discovery',decision:'advance',label:'Advance to Demo Booked',missing:[]},
+    },
+  };
+  return EXIT[rep]||{};
+}
 
 function buildSystem(rep) {
   const d = REPS[rep];
@@ -354,6 +385,12 @@ June: ${d.pipeline.june_total.actual}/${d.pipeline.june_total.target} SQLs | for
 DE: ${d.pipeline.june_sqls.DE.actual}/${d.pipeline.june_sqls.DE.target} | GB: ${d.pipeline.june_sqls.GB.actual}/${d.pipeline.june_sqls.GB.target} | NL: ${d.pipeline.june_sqls.NL.actual}/${d.pipeline.june_sqls.NL.target}
 ${d.pipeline.insight}
 
+KEY INSIGHT — EXIT CRITERIA:
+Exit criteria from the partner acquisition skill are now mapped to call scores. When asked "which partners are ready to advance?":
+- ADVANCE: IBB Ventures (Jara, demo booked ready), Argus Search (Nicola, demo booked ready), Patrick Schreiner (Nicola, demo booked ready), AMT (Alex, validation ready), Beke Kratzmann (Aurel, validation ready), Stephan Grad (Aurel, demo booked ready), Ideas Community (Alex, engaged ready)
+- HOLD: Bitesize (Jara, demo not fully locked), Supy (Jara, commitment weak), Justis Vercoe (Ezer, DM not on demo call), Zedra (Alex, no commitment + no next meeting)
+- FLAG: Org // Moss intro (Jara, no DM + no next step), Hotglue (Ezer, no next step + outcome did not match)
+
 KEY INSIGHT — PRE-CALL CLARITY:
 Pre-call clarity (w2) is now part of the Discovery, Demo, and Management scorecards. Score 5 = clear objective set + outcome matched. Score 1 = no objective, outcome did not match. Aurel is the benchmark (5.0 avg). Nicola is the gap (2.8 avg). The pattern is clear: calls with pre-call clarity 4+ consistently produce better outcomes.
 
@@ -364,10 +401,12 @@ Speak directly to Taz. Never use third person for him.`;
   const up = d.next_steps.filter(n=>!n.od);
   const mgmtCalls = d.management||[];
   const pcLow = mgmtCalls.filter(c=>c.pc<3).length;
+  const exits = exitCheck(rep);
+  const exitLines = Object.entries(exits).map(([partner,e])=>`- ${partner} (${e.type}): ${e.decision.toUpperCase()} — ${e.label}${e.missing.length?' | Missing: '+e.missing.join('; '):''}`).join('\n');
 
   return `You are a partnerships coaching assistant for Moss/Nufin GmbH. You are talking directly to ${d.name}, a ${d.role} covering ${d.market}.
 
-You have their full call data including pre-call clarity scores, upcoming calendar data, and pipeline context for Jun 1-11, 2026. Be direct, specific, and concise. Always tie feedback to their actual calls and scores. Keep responses short (3-6 sentences or a short list). Mix prose and bullets naturally.
+You have their full call data, pre-call clarity scores, upcoming calendar data, exit criteria assessments, and pipeline context for Jun 1-11, 2026. Be direct, specific, and concise. Always tie feedback to their actual calls and scores. Keep responses short (3-6 sentences or a short list). Mix prose and bullets naturally.
 
 CALL DATA:
 Total calls: ${d.calls} | Avg score: ${d.avg_score}/5 | Pre-call clarity avg: ${d.pc_avg}/5
@@ -377,6 +416,21 @@ SOURCING: ${d.sourcing.length?d.sourcing.map(c=>`${c.t} (${c.s}/5)${c.gap?` gap:
 DISCOVERY: ${d.discovery.length?d.discovery.map(c=>`${c.t} (${c.s}/5, pre-call ${c.pc||'n/a'})${c.gap?` gap: ${c.gap}`:''}`).join(' | '):'none this period'}
 DEMO: ${d.demo.length?d.demo.map(c=>`${c.t} (${c.s}/5, pre-call ${c.pc||'n/a'})${c.gap?` gap: ${c.gap}`:''}`).join(' | '):'none this period'}
 MANAGEMENT: ${mgmtCalls.length?mgmtCalls.map(c=>`${c.t} (${c.s}/5, pre-call ${c.pc||'n/a'})${c.gap?` gap: ${c.gap}`:''}`).join(' | '):'none this period'}
+
+EXIT CRITERIA — STAGE ADVANCEMENT DECISIONS:
+These are based on cross-referencing call scores against the partner acquisition skill exit criteria. When the rep asks "should I advance [partner]?" use these to give a clear Advance / Hold / Flag answer with exactly what is missing.
+${exitLines||'No exit criteria assessed for this rep yet'}
+
+EXIT CRITERIA RULES (use these if asked about a partner not listed above):
+- Sourcing → Advance to Engaged: score ≥3.5 AND Q≥3 AND M≥3 AND meeting confirmed
+- Discovery → Advance to Demo Booked: score ≥4.0 AND CH≥4 AND NS≥4 AND DA≥3 — all must pass
+- Demo → Advance to Partnership Validation: score ≥4.0 AND UC≥4 (HARD BLOCK if not met) AND CO≥3 AND NS≥3
+- If UC<4 on a demo call: do not advance regardless of any other signal — use case is the foundation
+
+SALESFORCE FIELDS TO UPDATE ON ADVANCE:
+- Sourcing → Engaged: Partner Type, Service Model, Customer Segment, Customer Count, ICP Alignment, Access to Decision Moment, Growth Signal, Partner Tier
+- Discovery → Demo Booked: Champion Name + Role, DM confirmed (Y/N), Geography confirmed, Next Meeting Date
+- Demo → Validation: Use Case confirmed, Workflow Fit (Easy/Medium/Hard), Willingness to Refer, AOV Estimate, Ease of Activation, Champion Strength
 
 PRE-CALL CLARITY NOTE:
 ${d.coaching.pc_insight}

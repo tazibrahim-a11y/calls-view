@@ -150,6 +150,67 @@ const E_WRONG=[{l:"No agenda/pre-call objective",k:["no agenda","no explicit","n
 const M_WELL=[{l:"Agenda set, outcome matched",k:["agenda set","outcome matched","exactly","clear agenda"]},{l:"MAP reviewed - commitments checked",k:["map","MAP","commitments","agreed vs"]},{l:"Specific pipeline reviewed by name",k:["clients","pipeline","accounts","specific","named"]},{l:"Referral ask made",k:["refer","referral","which client","commitment"]}];
 const M_WRONG=[{l:"No agenda/pre-call objective",k:["no agenda","no pre-call","no objective","no explicit"]},{l:"MAP not reviewed",k:["map not","MAP not","missing"]},{l:"No explicit referral ask",k:["no referral","no explicit","no commitment","no pipeline"]}];
 
+/* ══════ EXIT CRITERIA ══════ */
+// Sourcing → advance to Engaged?
+function sourcingExit(c){
+  const issues=[];
+  if(c.score<3.5)issues.push('Overall score below 3.5 — qualification incomplete');
+  if(c.Q<3)issues.push('Qualification weak — ICP not confirmed');
+  if(c.M<3)issues.push('No meeting confirmed — cannot advance without a booked next step');
+  if(c.O<3)issues.push('Opening score low — context not established');
+  if(!issues.length&&['demo_booked','follow_up_call_booked','discovery_booked'].includes(c.outcome)){
+    return{decision:'advance',label:'Advance to Engaged',cls:'pill-green',missing:[]};
+  }
+  if(issues.length){
+    return{decision:'hold',label:'Hold — criteria not met',cls:'pill-red',missing:issues};
+  }
+  return{decision:'hold',label:'Hold — review needed',cls:'pill-amber',missing:['Outcome unclear — check next step']};
+}
+
+// Discovery → advance to Demo Booked?
+function discoveryExit(c){
+  const issues=[];
+  if(c.score<4.0)issues.push('Overall score below 4.0');
+  if(c.CH<4)issues.push('Champion / DM not confirmed (CH<4)');
+  if(c.NS<4)issues.push('Next step not locked — demo not booked with date and right people');
+  if(c.DA<3)issues.push('Access to decision moment too low (DA<3)');
+  if(c.CB<3)issues.push('Customer base not confirmed (CB<3)');
+  if(c.PC<3)issues.push('No pre-call objective — outcome match unclear');
+  if(!issues.length){
+    return{decision:'advance',label:'Advance to Demo Booked',cls:'pill-green',missing:[]};
+  }
+  // Hard block: NS<4 means no demo booked regardless of score
+  if(c.NS<4){
+    return{decision:'flag',label:'Flag — demo not locked',cls:'pill-red',missing:issues};
+  }
+  return{decision:'hold',label:'Hold — missing criteria',cls:'pill-amber',missing:issues};
+}
+
+// Demo → advance to Partnership Validation?
+function demoExit(c){
+  const issues=[];
+  // UC<4 is a hard block per skill — use case is the foundation
+  if(c.UC<4)issues.push('HARD BLOCK: Use case not confirmed (UC<4) — do not advance regardless of other signals');
+  if(c.CO<3)issues.push('Commitment signal too low — partner has not signalled willingness to refer');
+  if(c.VA<3)issues.push('Value recognition not confirmed — partner did not explicitly confirm relevance');
+  if(c.WF<3)issues.push('Workflow fit unclear — activation may be hard');
+  if(c.NS<3)issues.push('Next step not concrete — no clear path toward MAP or agreement');
+  if(c.PC<3)issues.push('No pre-call objective — outcome match unclear');
+  if(c.score<4.0)issues.push('Overall score below 4.0');
+  if(!issues.length){
+    return{decision:'advance',label:'Advance to Validation',cls:'pill-green',missing:[]};
+  }
+  if(c.UC<4){
+    return{decision:'flag',label:'Flag — hard block on use case',cls:'pill-red',missing:issues};
+  }
+  return{decision:'hold',label:'Hold — missing criteria',cls:'pill-amber',missing:issues};
+}
+
+function exitPill(result){
+  const tip=result.missing.length?`title="${result.missing.join(' | ')}"` :'';
+  return`<span class="pill ${result.cls}" ${tip} style="cursor:${result.missing.length?'help':'default'}">${result.label}</span>`;
+}
+
 /* ══════ SOURCING ══════ */
 function getSourcing(){const from=document.getElementById('sf-from').value,to=document.getElementById('sf-to').value,ctry=document.getElementById('sf-country').value,rep=document.getElementById('sf-rep').value;return SOURCING.filter(c=>{if(from&&c.date<from)return false;if(to&&c.date>to)return false;if(ctry!=='all'&&c.country!==ctry)return false;if(rep!=='all'&&c.rep!==rep)return false;return true;});}
 function renderSourcing(){
@@ -170,7 +231,7 @@ function renderSourcing(){
   document.getElementById('s-upcoming').innerHTML=upcomingHtml(UPCOMING.sourcing,rep);
   const reps={};data.forEach(c=>{if(!reps[c.rep])reps[c.rep]={n:0,s:0,O:0,Q:0,H:0,M:0,country:c.country};reps[c.rep].n++;reps[c.rep].s+=c.score;reps[c.rep].O+=c.O;reps[c.rep].Q+=c.Q;reps[c.rep].H+=c.H;reps[c.rep].M+=c.M;});
   document.getElementById('s-reps').innerHTML=Object.entries(reps).sort((a,b)=>b[1].n-a[1].n).map(([name,d],i)=>{const a=d.s/d.n,v=[d.O/d.n,d.Q/d.n,d.H/d.n,d.M/d.n];const cr=['Opening','Qualification','Objection','Meeting'];return`<tr><td class="td-muted">${i+1}</td><td style="font-weight:600">${name}</td><td class="td-muted">${d.country}</td><td style="font-weight:600">${d.n}</td><td><span class="td-score ${cls(a)}">${a.toFixed(1)}</span></td><td><span class="pill pill-green">${cr[v.indexOf(Math.max(...v))]}</span></td><td><span class="pill pill-red">${cr[v.indexOf(Math.min(...v))]}</span></td>${v.map(x=>`<td style="color:${sc(x)};font-family:var(--mono);font-size:12px">${x.toFixed(1)}</td>`).join('')}</tr>`;}).join('');
-  document.getElementById('s-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>`<tr><td style="font-weight:500;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.title}</td><td class="td-muted">${c.rep}</td><td class="td-muted">${c.date.slice(5)}</td><td class="td-muted">${c.dur}</td><td style="color:${sc(c.O)};font-family:var(--mono);font-size:12px">${c.O}</td><td style="color:${sc(c.Q)};font-family:var(--mono);font-size:12px">${c.Q}</td><td style="color:${sc(c.H)};font-family:var(--mono);font-size:12px">${c.H}</td><td style="color:${sc(c.M)};font-family:var(--mono);font-size:12px">${c.M}</td><td><span class="td-score ${cls(c.score)}">${c.score.toFixed(1)}</span></td><td>${outPill(c.outcome)}</td><td>${c.score<3?'<span class="pill pill-red">Review</span>':''}</td><td>${barHtml(c.score)}</td></tr>`).join('');
+  document.getElementById('s-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>{const ex=sourcingExit(c);return`<tr><td style="font-weight:500;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.title}</td><td class="td-muted">${c.rep}</td><td class="td-muted">${c.date.slice(5)}</td><td class="td-muted">${c.dur}</td><td style="color:${sc(c.O)};font-family:var(--mono);font-size:12px">${c.O}</td><td style="color:${sc(c.Q)};font-family:var(--mono);font-size:12px">${c.Q}</td><td style="color:${sc(c.H)};font-family:var(--mono);font-size:12px">${c.H}</td><td style="color:${sc(c.M)};font-family:var(--mono);font-size:12px">${c.M}</td><td><span class="td-score ${cls(c.score)}">${c.score.toFixed(1)}</span></td><td>${outPill(c.outcome)}</td><td>${exitPill(ex)}</td><td>${barHtml(c.score)}</td></tr>`;}).join('');
 }
 
 /* ══════ DISCOVERY ══════ */
@@ -189,7 +250,7 @@ function renderDiscovery(){
   document.getElementById('d-upcoming').innerHTML=upcomingHtml(UPCOMING.discovery,rep);
   const reps={};data.forEach(c=>{if(!reps[c.rep])reps[c.rep]={n:0,s:0,CB:0,DA:0,CH:0,GE:0,NS:0,PC:0};reps[c.rep].n++;reps[c.rep].s+=c.score;['CB','DA','CH','GE','NS','PC'].forEach(k=>reps[c.rep][k]+=c[k]);});
   document.getElementById('d-reps').innerHTML=Object.entries(reps).sort((a,b)=>b[1].n-a[1].n).map(([name,d],i)=>{const a=d.s/d.n;return`<tr><td class="td-muted">${i+1}</td><td style="font-weight:600">${name}</td><td style="font-weight:600">${d.n}</td><td><span class="td-score ${cls(a)}">${a.toFixed(1)}</span></td>${['CB','DA','CH','GE','NS','PC'].map(k=>`<td style="color:${sc(d[k]/d.n)};font-family:var(--mono);font-size:12px">${(d[k]/d.n).toFixed(1)}</td>`).join('')}</tr>`;}).join('');
-  document.getElementById('d-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>`<tr><td style="font-weight:500;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.title}</td><td class="td-muted">${c.rep}</td><td class="td-muted">${c.date.slice(5)}</td><td class="td-muted">${c.dur}</td>${['CB','DA','CH','GE','NS'].map(k=>`<td style="color:${sc(c[k])};font-family:var(--mono);font-size:12px">${c[k]}</td>`).join('')}<td style="font-family:var(--mono);font-size:12px;color:${sc(c.PC)}">${c.PC}</td><td><span class="td-score ${cls(c.score)}">${c.score.toFixed(1)}</span></td><td>${outPill(c.outcome)}</td><td>${barHtml(c.score)}</td></tr>`).join('');
+  document.getElementById('d-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>{const ex=discoveryExit(c);return`<tr><td style="font-weight:500;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.title}</td><td class="td-muted">${c.rep}</td><td class="td-muted">${c.date.slice(5)}</td><td class="td-muted">${c.dur}</td>${['CB','DA','CH','GE','NS'].map(k=>`<td style="color:${sc(c[k])};font-family:var(--mono);font-size:12px">${c[k]}</td>`).join('')}<td style="font-family:var(--mono);font-size:12px;color:${sc(c.PC)}">${c.PC}</td><td><span class="td-score ${cls(c.score)}">${c.score.toFixed(1)}</span></td><td>${outPill(c.outcome)}</td><td>${exitPill(ex)}</td><td>${barHtml(c.score)}</td></tr>`;}).join('');
 }
 
 /* ══════ DEMO ══════ */
@@ -208,7 +269,7 @@ function renderDemo(){
   document.getElementById('em-upcoming').innerHTML=upcomingHtml(UPCOMING.demo,rep);
   const reps={};data.forEach(c=>{if(!reps[c.rep])reps[c.rep]={n:0,s:0,UC:0,VA:0,WF:0,CO:0,NS:0,PC:0};reps[c.rep].n++;reps[c.rep].s+=c.score;['UC','VA','WF','CO','NS','PC'].forEach(k=>reps[c.rep][k]+=c[k]);});
   document.getElementById('em-reps').innerHTML=Object.entries(reps).sort((a,b)=>b[1].n-a[1].n).map(([name,d],i)=>{const a=d.s/d.n;return`<tr><td class="td-muted">${i+1}</td><td style="font-weight:600">${name}</td><td style="font-weight:600">${d.n}</td><td><span class="td-score ${cls(a)}">${a.toFixed(1)}</span></td>${['UC','VA','WF','CO','NS','PC'].map(k=>`<td style="color:${sc(d[k]/d.n)};font-family:var(--mono);font-size:12px">${(d[k]/d.n).toFixed(1)}</td>`).join('')}</tr>`;}).join('');
-  document.getElementById('em-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>`<tr><td style="font-weight:500;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.title}</td><td class="td-muted">${c.rep}</td><td class="td-muted">${c.date.slice(5)}</td><td class="td-muted">${c.dur}</td>${['UC','VA','WF','CO','NS'].map(k=>`<td style="color:${sc(c[k])};font-family:var(--mono);font-size:12px">${c[k]}</td>`).join('')}<td style="font-family:var(--mono);font-size:12px;color:${sc(c.PC)}">${c.PC}</td><td><span class="td-score ${cls(c.score)}">${c.score.toFixed(1)}</span></td><td>${outPill(c.outcome)}</td><td>${barHtml(c.score)}</td></tr>`).join('');
+  document.getElementById('em-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>{const ex=demoExit(c);return`<tr><td style="font-weight:500;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.title}</td><td class="td-muted">${c.rep}</td><td class="td-muted">${c.date.slice(5)}</td><td class="td-muted">${c.dur}</td>${['UC','VA','WF','CO','NS'].map(k=>`<td style="color:${sc(c[k])};font-family:var(--mono);font-size:12px">${c[k]}</td>`).join('')}<td style="font-family:var(--mono);font-size:12px;color:${sc(c.PC)}">${c.PC}</td><td><span class="td-score ${cls(c.score)}">${c.score.toFixed(1)}</span></td><td>${outPill(c.outcome)}</td><td>${exitPill(ex)}</td><td>${barHtml(c.score)}</td></tr>`;}).join('');
 }
 
 /* ══════ MANAGEMENT ══════ */
