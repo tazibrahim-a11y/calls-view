@@ -284,6 +284,38 @@ const REPS = {
     pipeline:{market:"AT/DE",june_sqls:{DE:{actual:11,target:38}},
       insight:"Your 2 agreements this week (Beke, Stephan) should appear as SQLs in July-August. Quality is excellent. The only gap is volume — more sourcing calls now = more SQLs in Q3."}
   },
+  niels: {
+    name:"Niels Dalenoord", initials:"ND", role:"Partnerships Manager", market:"NL", isTL:false,
+    calls:1, avg_score:3.4, pc_avg:4.0,
+    best_call:"Vulkan Benelux (Discovery, 3.4 — pre-call 4)", worst_call:null,
+    sourcing:[], discovery:[
+      {t:"Vulkan Benelux x Moss",s:3.4,pc:4,out:"No next step — product fit gap",gap:"No demo booked. Next step is 6 months. No competitive landscape explored."}
+    ], demo:[], management:[],
+    next_steps:[
+      {p:"Vulkan Benelux",a:"Follow up in 6 months when DATEV/CSV integration improves — Paul to update Andries + Kars",od:false},
+      {p:"Jordan / Cijfermeester",a:"Send e-commerce focused marketing material; agree first pilot client",od:false},
+      {p:"Staxxer / Jeffrey",a:"Confirm partnership model and referral process after Wed meeting",od:false},
+      {p:"PwC",a:"Follow up post check-ins with Elvera and Jeffrey — define referral commitment",od:false},
+    ],
+    upcoming:[
+      {call:"Roy / De Beer Check-in",date:"Wed Jun 17, 10am",type:"partner-management",flag:"warn",note:"Back from vacation. Set MAP review agenda — what was agreed last time?"},
+      {call:"Elvera / PwC Check-in",date:"Wed Jun 17, 10:30am",type:"partner-management",flag:"warn",note:"PwC NL. Define referral ask: which client is ready to refer?"},
+      {call:"Dave / Your First CFO",date:"Wed Jun 17, 11:30am",type:"partner-management",flag:"warn",note:"Back from vacation — update MAP and ask which client to refer first."},
+      {call:"Jeffrey / Staxxer Partnership",date:"Wed Jun 17, 2pm",type:"partner-management",flag:"ok",note:"Agenda set. jeffrey@staxxer.com confirmed. Define commitment ask."},
+      {call:"Jordan / Cijfermeester Check-in",date:"Wed Jun 17, 3pm",type:"partner-management",flag:"warn",note:"E-commerce pilot agreed. Ask: which client is ready to start?"},
+      {call:"Guy / Taskforce Partnership",date:"Wed Jun 17, 3pm",type:"partner-management",flag:"ok",note:"Agenda set. Define referral commitment ask for end of call."},
+      {call:"Jeffrey / PwC Check-in",date:"Wed Jun 17, 4pm",type:"partner-management",flag:"warn",note:"PwC NL. Define MAP review and referral ask."},
+      {call:"Vanamersfoortracing x Moss",date:"Wed Jun 17, 4:45pm",type:"prospect-sourcing",flag:"ok",note:"Referred by Simon Twisk. Nathalie Perlee attending. Qualify and define next step."},
+    ],
+    coaching:{
+      focus:"Back from vacation Wed Jun 17 with 8 partner calls. Prep is critical — set MAP review and referral ask for every management call before joining.",
+      strength:"Pre-call clarity avg 4.0 — highest among reps with scored calls. Vulkan Benelux was thorough discovery with honest fit assessment.",
+      map_gap:"Only 1 scored call this period — vacation. Wed return is a full partner management day. Start every call with: last time we agreed X — has that happened?",
+      pc_insight:"Vulkan Benelux had pre-call clarity 4 — you set a clear objective and the outcome matched the direction. Apply the same to all 8 calls on Wed. Write one objective sentence before each."
+    },
+    pipeline:{market:"NL",june_sqls:{NL:{actual:7,target:16}},
+      insight:"NL at 7/16 SQLs — best relative performance of any market. Your partner base is active. 8 management calls on Wed are the direct lever to drive NL SQLs for July. MAP review and explicit referral ask on every call."}
+  },
   markus: {
     name:"Markus Kretschmer", initials:"MK", role:"Partnerships Manager (AT/DE)", market:"AT / DE", isTL:false,
     calls:0, avg_score:null, pc_avg:null,
@@ -318,6 +350,7 @@ const REPS = {
       {name:"Jara",calls:13,avg:4.1,pc:3.2,mgmt:7,flag:"IBB Ventures lunch overdue",highlight:"Most active. Strong management volume. MAP gap on 3 calls. Pre-call below 3 on management calls."},
       {name:"Nicola",calls:8,avg:4.1,pc:2.8,mgmt:6,flag:null,highlight:"Strong discovery. Pre-call avg 2.8 — lowest on team. MAP missing on all management calls."},
       {name:"Alex",calls:5,avg:3.9,pc:3.0,mgmt:0,flag:null,highlight:"AMT agreement sent. Zedra pricing unsent. No management calls. Sourcing pre-call research weak."},
+      {name:"Niels",calls:1,avg:3.4,pc:4.0,mgmt:0,flag:"On vacation until Jun 17",highlight:"NL at 7/16 SQLs — best relative market. Back Wed with 8 partner calls. Strong pre-call clarity."},
       {name:"Markus",calls:0,avg:null,pc:null,mgmt:0,flag:"Calls not in Attention",highlight:"4 calls this week incl. CFO Lab demo. Not appearing in Attention — no scores available."},
       {name:"Ezer",calls:5,avg:3.7,pc:2.4,mgmt:0,flag:"Hotglue going cold",highlight:"APA demo today — most important call this week. No management calls = no GB pipeline path."}
     ],
@@ -346,6 +379,7 @@ const SUGGESTIONS = {
   ezer:["Should I advance Justis Vercoe?","What is at risk this week?","Tell me about the APA demo today","What happened with Hotglue?","What is coming up this week?"],
   alex:["Should I advance Zedra?","Should I advance AMT?","Why are my sourcing calls scoring low?","What is coming up this week?"],
   aurel:["Should I advance Beke Kratzmann?","Should I advance Stephan Grad?","How do I increase my call volume?","When will my agreements show as SQLs?"],
+  niels:["What should I focus on for my return from vacation?","How do I run MAP review?","What is my pipeline context?","How do I prep for 8 calls in one day?","Which partner should I prioritise?"],
   markus:["What should I focus on this week?","How do I get my calls into Attention?","What should I prep for the CFO Lab demo?","What is the partnership model to pitch?","How do I set a pre-call objective?"],
   taz:["Which partners are ready to advance?","Who had the best week?","What is the biggest coaching priority?","Why is GB so far behind?","Which rep needs the most 1:1 attention?","What calls should I watch this week?"]
 };
@@ -368,6 +402,7 @@ function exitCheck(rep) {
       'Justis Vercoe':{type:'discovery',decision:'hold',label:'Hold — DM not on next call',missing:['CH=4 but decision maker not confirmed on demo call','DA=3 — access to decision moment not fully validated']},
       'Hotglue Partnership':{type:'discovery',decision:'flag',label:'Flag — no next step, outcome did not match',missing:['NS=3 — no demo locked','PC=2 — no pre-call objective','Outcome was info sent, not demo booked']},
     },
+    niels:{'Vulkan Benelux':{type:'discovery',decision:'hold',label:'Hold — no next step, product fit gap',missing:['NS=2 — no demo booked, next follow-up is 6 months away','Product gap: DATEV/CSV integration not ready for their needs']}},
     markus:{},
     alex:{
       'AMT / Moss Commercials':{type:'demo',decision:'advance',label:'Advance to Partnership Validation',missing:[]},
