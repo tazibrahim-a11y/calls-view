@@ -7,6 +7,8 @@ const SOURCING=[
   {title:"Wußler & Schmid",rep:"Nicola",country:"DE",date:"2026-06-08",dur:"15m",O:4,Q:4,H:3,M:3,score:3.7,outcome:"follow_up_call_booked",well:"Clear qualification, partnership discussed, next steps agreed.",wrong:"No specific demo time confirmed."},
   {title:"Ronnie Patel",rep:"Ezer",country:"UK",date:"2026-06-05",dur:"3m",O:4,Q:2,H:3,M:3,score:2.9,outcome:"referred_to_contact",well:"Polite, got direct referral to decision maker.",wrong:"No qualification, no meeting confirmed."},
   {title:"Aalia Rangrez",rep:"Ezer",country:"UK",date:"2026-06-01",dur:"7m",O:4,Q:4,H:3,M:1,score:2.7,outcome:"info_sent_no_meeting",well:"Clear explanation, good rapport, permission for info.",wrong:"No meeting booked, limited qualification depth."},
+  {title:"Ryan Harris / Sansa Solutions",rep:"Jara",country:"UK",date:"2026-06-12",dur:"4m",O:5,Q:4,H:3,M:4,score:3.5,outcome:"follow_up_call_booked",well:"Strong existing relationship, clear ICP understanding, intro to Catalyst facilitated.",wrong:"No direct conversation with end decision maker yet."},
+  {title:"Peter Connon / Colin Associates",rep:"Ezer",country:"UK",date:"2026-06-12",dur:"2m",O:3,Q:2,H:3,M:1,score:2.1,outcome:"no_next_step",well:"Polite intro, explained Moss briefly.",wrong:"Wrong contact — Peter not the user. No qualification, no next step confirmed."},
 ];
 
 const DISCOVERY=[
@@ -23,6 +25,8 @@ const DISCOVERY=[
   {title:"Norman Sadlo / DHPG",rep:"Nicola",date:"2026-06-11",dur:"9m",CB:3,DA:4,CH:3,GE:5,NS:4,PC:3,score:3.8,outcome:"demo_booked",well:"Advisor portal demo booked Jul 17. DATEV interface discussed, pricing shared.",wrong:"No DM champion confirmed. Gustav not on the call."},
   {title:"Chris Barnard / Collective Concepts",rep:"Ezer",date:"2026-06-05",dur:"8m",CB:4,DA:3,CH:3,GE:5,NS:3,PC:2,score:3.3,outcome:"follow_up_call_booked",well:"ICP fit discussed, CRM integration need surfaced, next call with Rupert agreed.",wrong:"No specific meeting time. CRM dependency is a potential blocker."},
   {title:"Michelle Bycraft / MB Accounting",rep:"Ezer",date:"2026-06-02",dur:"4m",CB:3,DA:2,CH:2,GE:5,NS:2,PC:2,score:2.7,outcome:"info_sent_no_meeting",well:"Clear intro, explained Moss value prop.",wrong:"Clients too small — no meeting confirmed, one-pager sent only."},
+  {title:"Chris Chan / Leap Accounts",rep:"Ezer",date:"2026-06-12",dur:"5m",CB:3,DA:3,CH:3,GE:5,NS:4,PC:4,score:3.8,outcome:"follow_up_call_booked",well:"Good rapport, Moss value prop explained clearly, follow-up booked Thu 10:30am.",wrong:"No deep discovery into client base or decision process. Pricing explanation vague."},
+  {title:"Lucy Cardew / Greenstones",rep:"Ezer",date:"2026-06-12",dur:"27m",CB:4,DA:3,CH:4,GE:5,NS:4,PC:3,score:3.9,outcome:"follow_up_call_booked",well:"Strong rapport, detailed pain point discovery (multi-currency, mileage, VAT), demo booked Tue 2-3pm.",wrong:"No explicit pre-call agenda. Several unresolved product gaps surfaced — Ezer needs product support before demo."},
 ];
 
 const DEMO=[
@@ -54,28 +58,34 @@ const MANAGEMENT=[
 
 const UPCOMING={
   sourcing:[
-    {rep:"Ezer",call:"Portswigger // Moss",date:"Fri Jun 12, 9am",type:"prospect",prepFlag:"missing",prepNote:"No agenda — add objective before joining"},
-    {rep:"Ezer",call:"Ashdale Care // Moss",date:"Fri Jun 12, 10am",type:"prospect",prepFlag:"missing",prepNote:"No agenda — add objective before joining"},
-    {rep:"Ezer",call:"MW Finman // Moss intro",date:"Mon Jun 15, 4:30pm",type:"prospect",prepFlag:"missing",prepNote:"No agenda — first contact, set ICP objective"},
-    {rep:"Jara",call:"Ryan / Jara (Sansa Solutions)",date:"Fri Jun 12, 11:45am",type:"prospect",prepFlag:"missing",prepNote:"No agenda — set ICP qualification objective before call"},
-    {rep:"Nicola",call:"Limetax // Moss",date:"Tue Jun 16, 11am",type:"prospect",prepFlag:"missing",prepNote:"No agenda in invite"},
+    {rep:"Markus",call:"Moss Partnership (22ug.de)",date:"Mon Jun 15, 11am",type:"prospect",prepFlag:"missing",prepNote:"No agenda — info@22ug.de attending. Set ICP qualification objective before joining. Not yet in Attention."},
+    {rep:"Markus+Aurel",call:"Adina Stampa / game.de",date:"Mon Jun 15, 11:30am",type:"prospect",prepFlag:"missing",prepNote:"30 min sourcing meeting. No agenda. Define ICP objective and partnership model before joining."},
+    {rep:"Ezer",call:"Sam @ Incorpwise",date:"Mon Jun 15, 10:15am",type:"prospect",prepFlag:"missing",prepNote:"No prep noted. Set ICP qualification objective before joining."},
+    {rep:"Ezer",call:"Bethnal Green Ventures // Moss",date:"Mon Jun 15, 4pm",type:"prospect",prepFlag:"warn",prepNote:"Ezer optional attendee. New prospect — define your role and ICP qualification objective."},
+    {rep:"Ezer+Alex",call:"MW Finman // Moss intro",date:"Mon Jun 15, 3:30pm",type:"prospect",prepFlag:"missing",prepNote:"No agenda. First contact with Mike Wong. Set ICP objective and talking points before joining."},
+    {rep:"Nicola",call:"Limetax // Moss",date:"Tue Jun 16, 11am",type:"prospect",prepFlag:"missing",prepNote:"No prep. Set ICP qualification objective — what does qualified look like for Limetax?"},
+    {rep:"Ezer",call:"Lucy Cardew / Greenstones follow-up",date:"Tue Jun 16, 2-3pm",type:"prospect",prepFlag:"warn",prepNote:"Product gaps flagged (multi-currency, mileage, VAT). Resolve with product team before joining."},
+    {rep:"Ezer",call:"Chris Chan / Leap Accounts",date:"Thu Jun 18, 10:30am",type:"prospect",prepFlag:"warn",prepNote:"Discovery shallow. Prep ICP qualification and pricing clarity before joining."},
   ],
   discovery:[
-    {rep:"Ezer+Jara",call:"AAB // Moss",date:"Fri Jun 12, 1:15pm",type:"prospect",prepFlag:"missing",prepNote:"No agenda — define what qualified looks like before joining"},
-    {rep:"Nicola",call:"sonnenschutz.de - B1 AG",date:"Tue Jun 16, 9am",type:"prospect",prepFlag:"ok",prepNote:"AE (Alexander van der Hoff) co-attending — good structure signal"},
+    {rep:"Nicola",call:"sonnenschutz.de - B1 AG",date:"Tue Jun 16, 9am",type:"prospect",prepFlag:"ok",prepNote:"AE (Alexander van der Hoff) + Felix Schmitt attending. Define DM and ICP objective before joining."},
   ],
   demo:[
-    {rep:"Ezer",call:"APA // Moss demo",date:"Fri Jun 12, 1:15pm",type:"partner",prepFlag:"warn",prepNote:"Follow-up from 4.7 sourcing call. Define use case and commitment ask before joining."},
-    {rep:"Ezer+Alex",call:"AAT x Moss: Demo",date:"Mon Jun 15, 11:15am",type:"prospect",prepFlag:"ok",prepNote:"Anish Tailor (AAT) + Charlotte Lenman attending. Agenda appears set."},
-    {rep:"Jara",call:"Moss Demo & Naechste Schritte",date:"Mon Jun 15, 2pm",type:"prospect",prepFlag:"missing",prepNote:"No agenda. Define use case and commitment ask before joining."},
+    {rep:"Ezer",call:"AAT x Moss Demo",date:"Mon Jun 15, 10:15am",type:"prospect",prepFlag:"ok",prepNote:"Anish Tailor (AAT) + Charlotte Lenman (Redactive) confirmed. Agenda set."},
+    {rep:"Ezer",call:"APA // Moss demo",date:"Mon Jun 15, 2pm",type:"partner",prepFlag:"warn",prepNote:"Ross Batten (tentative). Define use case and explicit commitment ask before joining — which client will Ross refer first?"},
+    {rep:"Aurel",call:"Nico Doehrn / Tax-Automate Demo",date:"Tue Jun 16, 11am",type:"prospect",prepFlag:"warn",prepNote:"NEW demo not in previous analysis. n.doehrn@tax-automate.com confirmed. Define use case and commitment ask before joining."},
+    {rep:"Markus",call:"Moss Plattform Demo / CFO Lab",date:"Wed Jun 17, 9:30am",type:"prospect",prepFlag:"warn",prepNote:"alexis@cfo-lab.com confirmed, AE Malte Kaehne attending. New demo — not yet in Attention. Define use case and commitment ask."},
+    {rep:"Jara",call:"Moss Demo & Nachste Schritte",date:"Mon Jun 15, 2pm",type:"prospect",prepFlag:"missing",prepNote:"No agenda. ilias.baltzis@outlook.com attending. Define use case and commitment ask before joining."},
+    {rep:"Jara",call:"Klostermann Gruppe",date:"Tue Jun 16, 1pm",type:"prospect",prepFlag:"warn",prepNote:"Booked from Jun 11 discovery (4.2/5). David Hilpert also attending. Prep use case and integration requirements."},
   ],
   management:[
-    {rep:"Jara",call:"Niedling & Partner x Moss: Monthly",date:"Mon Jun 15, 10:30am",type:"partner",prepFlag:"warn",prepNote:"Monthly recurring. Last call had no MAP review. Add MAP as first agenda item."},
-    {rep:"Jara",call:"Poool GTM",date:"Mon Jun 15, 4pm",type:"partner",prepFlag:"missing",prepNote:"Scored 3.2 last time — no new pipeline. Set specific objective before joining."},
-    {rep:"Nicola",call:"Pape & Co. Monthly",date:"Tue Jun 16, 9:30am",type:"partner",prepFlag:"warn",prepNote:"Monthly recurring. MAP missing last call. Add MAP + specific client ask to agenda."},
-    {rep:"Nicola",call:"Done!Financials",date:"Tue Jun 16, 10:15am",type:"partner",prepFlag:"missing",prepNote:"No agenda. Define MAP review + pipeline ask before joining."},
-    {rep:"Nicola",call:"ba tax Session",date:"Wed Jun 17, 10am",type:"partner",prepFlag:"ok",prepNote:"30+ attendees — enablement/management. Define referral commitment ask for end."},
-    {rep:"Nicola",call:"Roedl Weekly CheckIn",date:"Mon Jun 15, 5:15pm",type:"partner",prepFlag:"warn",prepNote:"Weekly with AE. Set agenda: MAP review first, then which client to refer next."},
+    {rep:"Jara",call:"Niedling & Partner Monthly",date:"Mon Jun 15, 11:30am",type:"partner",prepFlag:"ok",prepNote:"Agenda set (referrals, clients, webinar, commissions). Confirm MAP review is first item."},
+    {rep:"Jara",call:"Poool GTM",date:"Mon Jun 15, 4pm",type:"partner",prepFlag:"missing",prepNote:"Scored 3.2 last time. No agenda. Set objective: which client will they refer this month?"},
+    {rep:"Nicola",call:"Pape & Co. Monthly",date:"Tue Jun 16, 9:30am",type:"partner",prepFlag:"warn",prepNote:"Monthly recurring. MAP missing last call. Add MAP + specific client ask."},
+    {rep:"Nicola",call:"Done!Financials",date:"Tue Jun 16, 10:15am",type:"partner",prepFlag:"missing",prepNote:"Scored 3.3 last time. No agenda. Define MAP review and pipeline ask."},
+    {rep:"Nicola",call:"ba tax Session",date:"Wed Jun 17, 10am",type:"partner",prepFlag:"ok",prepNote:"30+ ba-group.de attendees on Teams. Enablement = management. Define referral commitment ask for end."},
+    {rep:"Nicola",call:"Roedl Weekly CheckIn",date:"Mon Jun 15, 5:15pm",type:"partner",prepFlag:"warn",prepNote:"Weekly with AE. MAP review first, then which client to refer next."},
+    {rep:"Markus+Aurel",call:"iwoca / Nikolai von Stempel",date:"Tue Jun 16, 1:30pm",type:"prospect",prepFlag:"warn",prepNote:"15 min catchup with Head of Partner Acquisition at iwoca. Define partnership objective and next step before joining."},
   ]
 };
 
@@ -314,9 +324,9 @@ function renderPipeline(){
   mkChart('p-sql','bar',{
     labels:['Jan','Feb','Mar','Apr','May','Jun'],
     datasets:[
-      {label:'DE',data:[25,34,36,28,25,8],backgroundColor:'#52b788',borderWidth:0,borderRadius:3},
-      {label:'GB',data:[4,4,5,4,1,1],backgroundColor:'#c05c3a',borderWidth:0,borderRadius:3},
-      {label:'NL',data:[9,9,15,9,9,4],backgroundColor:'#4a8ec2',borderWidth:0,borderRadius:3}
+      {label:'DE',data:[25,34,36,28,25,11],backgroundColor:'#52b788',borderWidth:0,borderRadius:3},
+      {label:'GB',data:[4,4,5,4,1,2],backgroundColor:'#c05c3a',borderWidth:0,borderRadius:3},
+      {label:'NL',data:[9,9,15,9,9,7],backgroundColor:'#4a8ec2',borderWidth:0,borderRadius:3}
     ]
   },{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{font:{size:10},boxWidth:10}}},scales:{y:{beginAtZero:true,ticks:{font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'ps');
   mkChart('p-pre','bar',{

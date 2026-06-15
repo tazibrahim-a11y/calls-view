@@ -148,7 +148,7 @@ const REPS = {
       map_gap:"MAP scored below 3 on 3 of 7 management calls.",
       pc_insight:"Calls with pre-call clarity 4+ (IBB Ventures, Arthur Liebrecht, score business) consistently produced better outcomes. Calls at 2-3 had unclear objectives and outcomes that did not fully match."
     },
-    pipeline:{market:"UK/DE",june_sqls:{DE:{actual:8,target:38},GB:{actual:1,target:10}},
+    pipeline:{market:"UK/DE",june_sqls:{DE:{actual:11,target:38},GB:{actual:2,target:10}},
       insight:"June DE SQLs at 8/38, GB at 1/10. Your management calls are the direct lever. MAP review and pre-call clarity are the two gaps — partners are not being held to commitments and calls lack a defined referral ask."}
   },
   nicola: {
@@ -190,7 +190,7 @@ const REPS = {
       map_gap:"MAP scored below 3 on 4 of 6 management calls.",
       pc_insight:"Every management call this period had a pre-call clarity score of 2 or 3. None had a defined agenda. This is directly linked to low MAP scores — you cannot review commitments if you did not set them as the agenda objective before joining."
     },
-    pipeline:{market:"DE",june_sqls:{DE:{actual:8,target:38}},
+    pipeline:{market:"DE",june_sqls:{DE:{actual:11,target:38}},
       insight:"DE is at 8/38 SQLs. Your 6 management calls are active but MAP is the gap across all of them. Partners have not been reminded of their referral commitments. Fix pre-call clarity first — it unlocks MAP."}
   },
   ezer: {
@@ -226,7 +226,7 @@ const REPS = {
       map_gap:"No management calls this period — no active partners to manage yet.",
       pc_insight:"Pre-call clarity avg is 2.4. Hotglue and Justis Vercoe both had no defined objective before the call — outcomes reflected that. For the APA demo today: write one sentence before joining — the outcome of this call should be X."
     },
-    pipeline:{market:"UK",june_sqls:{GB:{actual:1,target:10}},
+    pipeline:{market:"UK",june_sqls:{GB:{actual:2,target:10}},
       insight:"GB is at 1/10 SQLs. You have no management calls this period because you do not have active partners yet. APA demo today is the most important call this week — if it goes well, APA could become your first active management relationship. That is the path to GB SQLs."}
   },
   alex: {
@@ -259,7 +259,7 @@ const REPS = {
       map_gap:"No management calls this period.",
       pc_insight:"AMT had a pre-call clarity of 4 — you set a clear objective and the outcome matched. Zedra had a pre-call clarity of 2 — no objective, and the outcome did not match. The pattern is clear: prepare a single-sentence objective before every call."
     },
-    pipeline:{market:"UK",june_sqls:{GB:{actual:1,target:10}},
+    pipeline:{market:"UK",june_sqls:{GB:{actual:2,target:10}},
       insight:"GB is at 1/10 SQLs. Like Ezer, you have no active management relationships yet. AMT agreement sent this week — once that closes, AMT becomes your first active partner to manage. That is the path to GB SQLs."}
   },
   aurel: {
@@ -281,8 +281,33 @@ const REPS = {
       map_gap:"No management calls this period — as Beke and Stephan activate, start building MAP review habits now before the first management call.",
       pc_insight:"You are the only rep with a pre-call clarity average of 5. Both calls had a clear agenda and outcomes matched exactly. This is the standard the rest of the team should be aiming for — share how you prepare."
     },
-    pipeline:{market:"AT/DE",june_sqls:{DE:{actual:8,target:38}},
+    pipeline:{market:"AT/DE",june_sqls:{DE:{actual:11,target:38}},
       insight:"Your 2 agreements this week (Beke, Stephan) should appear as SQLs in July-August. Quality is excellent. The only gap is volume — more sourcing calls now = more SQLs in Q3."}
+  },
+  markus: {
+    name:"Markus Kretschmer", initials:"MK", role:"Partnerships Manager (AT/DE)", market:"AT / DE", isTL:false,
+    calls:0, avg_score:null, pc_avg:null,
+    best_call:"No scored calls yet — calls not appearing in Attention this period", worst_call:null,
+    sourcing:[], discovery:[], demo:[], management:[],
+    next_steps:[
+      {p:"22ug.de",a:"Follow up from today's call — confirm ICP fit and next step",od:false},
+      {p:"Adina Stampa / game.de",a:"Follow up from today's intro — send partnership overview",od:false},
+      {p:"CFO Lab / Alexis",a:"Send demo follow-up and next step after Wed demo",od:false},
+    ],
+    upcoming:[
+      {call:"Moss Partnership (22ug.de)",date:"Mon Jun 15, 11am",type:"prospect-sourcing",flag:"missing",note:"No agenda — info@22ug.de attending. Set ICP qualification objective before joining."},
+      {call:"Adina Stampa / game.de",date:"Mon Jun 15, 11:30am",type:"prospect-sourcing",flag:"missing",note:"30 min sourcing meeting with Aurel. Define ICP objective and partnership model."},
+      {call:"iwoca / Nikolai von Stempel",date:"Tue Jun 16, 1:30pm",type:"prospect-sourcing",flag:"warn",note:"15 min catchup — Head of Partner Acquisition at iwoca. Define objective and next step."},
+      {call:"Moss Plattform Demo / CFO Lab",date:"Wed Jun 17, 9:30am",type:"prospect-demo",flag:"warn",note:"alexis@cfo-lab.com confirmed, AE Malte attending. Define use case and commitment ask before joining."},
+    ],
+    coaching:{
+      focus:"Calls not appearing in Attention this period — check Attention is recording your calls so they can be scored.",
+      strength:"4 external calls booked this week including a platform demo. Strong pipeline activity.",
+      map_gap:"No management calls this period — as new partners activate, build MAP review habits from day one.",
+      pc_insight:"No scored calls yet. For this week: write one sentence objective before each call — what does success look like? That is the pre-call clarity habit to build."
+    },
+    pipeline:{market:"AT/DE",june_sqls:{DE:{actual:11,target:38}},
+      insight:"AT/DE pipeline. No scored calls this period as Attention is not recording Markus calls. 4 calls this week including a CFO Lab demo — these need to be captured in Attention to flow into the analysis."}
   },
   taz: {
     name:"Taz Ibrahim", initials:"TI", role:"Partnerships Team Lead", market:"All markets", isTL:true,
@@ -293,6 +318,7 @@ const REPS = {
       {name:"Jara",calls:13,avg:4.1,pc:3.2,mgmt:7,flag:"IBB Ventures lunch overdue",highlight:"Most active. Strong management volume. MAP gap on 3 calls. Pre-call below 3 on management calls."},
       {name:"Nicola",calls:8,avg:4.1,pc:2.8,mgmt:6,flag:null,highlight:"Strong discovery. Pre-call avg 2.8 — lowest on team. MAP missing on all management calls."},
       {name:"Alex",calls:5,avg:3.9,pc:3.0,mgmt:0,flag:null,highlight:"AMT agreement sent. Zedra pricing unsent. No management calls. Sourcing pre-call research weak."},
+      {name:"Markus",calls:0,avg:null,pc:null,mgmt:0,flag:"Calls not in Attention",highlight:"4 calls this week incl. CFO Lab demo. Not appearing in Attention — no scores available."},
       {name:"Ezer",calls:5,avg:3.7,pc:2.4,mgmt:0,flag:"Hotglue going cold",highlight:"APA demo today — most important call this week. No management calls = no GB pipeline path."}
     ],
     wins:["2 partner agreements sent this week (Beke via Aurel 4.9, AMT via Alex 4.6) — both had pre-call clarity 4+","IBB Ventures and Argus Search both close to agreement","Aurel is the pre-call clarity benchmark — both calls scored 5, both outcomes matched exactly","Management engagement is strong team-wide (4.5 avg)"],
@@ -307,8 +333,8 @@ const REPS = {
       {rep:"Ezer+Alex",call:"AAT x Moss: Demo",date:"Mon Jun 15, 11:15am",flag:"ok",note:"Agenda set. Good prep signal. Both reps attending."}
     ],
     pipeline:{
-      june_sqls:{DE:{actual:8,target:38},GB:{actual:1,target:10},NL:{actual:4,target:16}},
-      june_total:{actual:13,target:64,forecast:17},
+      june_sqls:{DE:{actual:11,target:38},GB:{actual:2,target:10},NL:{actual:7,target:16}},
+      june_total:{actual:20,target:64,forecast:16},
       insight:"June at 13/64 SQLs. The gap is management call quality — MAP below 3 on 8 of 13 calls, pre-call clarity below 3 on the same 8. Partners are not being held to referral commitments. GB at 1/10 because Ezer and Alex have no active management relationships yet — that is a structural gap, not a quality gap. The 2 agreements signed this week (Beke, AMT) will materialise as SQLs in July-August."
     }
   }
@@ -320,6 +346,7 @@ const SUGGESTIONS = {
   ezer:["Should I advance Justis Vercoe?","What is at risk this week?","Tell me about the APA demo today","What happened with Hotglue?","What is coming up this week?"],
   alex:["Should I advance Zedra?","Should I advance AMT?","Why are my sourcing calls scoring low?","What is coming up this week?"],
   aurel:["Should I advance Beke Kratzmann?","Should I advance Stephan Grad?","How do I increase my call volume?","When will my agreements show as SQLs?"],
+  markus:["What should I focus on this week?","How do I get my calls into Attention?","What should I prep for the CFO Lab demo?","What is the partnership model to pitch?","How do I set a pre-call objective?"],
   taz:["Which partners are ready to advance?","Who had the best week?","What is the biggest coaching priority?","Why is GB so far behind?","Which rep needs the most 1:1 attention?","What calls should I watch this week?"]
 };
 
@@ -341,6 +368,7 @@ function exitCheck(rep) {
       'Justis Vercoe':{type:'discovery',decision:'hold',label:'Hold — DM not on next call',missing:['CH=4 but decision maker not confirmed on demo call','DA=3 — access to decision moment not fully validated']},
       'Hotglue Partnership':{type:'discovery',decision:'flag',label:'Flag — no next step, outcome did not match',missing:['NS=3 — no demo locked','PC=2 — no pre-call objective','Outcome was info sent, not demo booked']},
     },
+    markus:{},
     alex:{
       'AMT / Moss Commercials':{type:'demo',decision:'advance',label:'Advance to Partnership Validation',missing:[]},
       'Zedra // Moss Demo':{type:'demo',decision:'hold',label:'Hold — no commitment, no next meeting',missing:['CO=3 — commitment signal not strong enough','NS=3 — no clear next meeting agreed','PC=2 — no pre-call objective']},
