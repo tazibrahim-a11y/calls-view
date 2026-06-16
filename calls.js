@@ -402,7 +402,7 @@ function renderPipeline(){
     labels:['Jara','Nicola','Ezer','Alex','Aurel'],
     datasets:[
       {label:'Mgmt calls',data:[7,6,0,0,0],backgroundColor:'#52b788',borderWidth:0,borderRadius:3},
-      {label:'Jun SQLs',data:[9,8,1,1,4],backgroundColor:'#4a8ec2',borderWidth:0,borderRadius:3}
+      {label:'Jun SQLs',data:[9,8,2,1,4],backgroundColor:'#4a8ec2',borderWidth:0,borderRadius:3}
     ]
   },{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{font:{size:10},boxWidth:10}}},scales:{y:{beginAtZero:true,ticks:{font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'pv');
   mkChart('p-map','bar',{
@@ -412,7 +412,7 @@ function renderPipeline(){
   mkChart('p-sql','bar',{
     labels:['Jan','Feb','Mar','Apr','May','Jun'],
     datasets:[
-      {label:'DE',data:[25,35,36,28,25,11],backgroundColor:'#52b788',borderWidth:0,borderRadius:3},
+      {label:'DE',data:[25,35,36,28,25,12],backgroundColor:'#52b788',borderWidth:0,borderRadius:3},
       {label:'GB',data:[4,4,5,4,1,2],backgroundColor:'#c05c3a',borderWidth:0,borderRadius:3},
       {label:'NL',data:[9,9,15,9,9,7],backgroundColor:'#4a8ec2',borderWidth:0,borderRadius:3}
     ]
