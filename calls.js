@@ -22,6 +22,9 @@ const DISCOVERY=[
   {title:"Hotglue Partnership",rep:"Ezer",date:"2026-06-01",dur:"34m",CB:3,DA:4,CH:4,GE:5,NS:3,PC:2,score:3.4,outcome:"info_sent_no_meeting",well:"Clear value prop, good champion, product intro.",wrong:"No agenda, no objective. Outcome did not match — no next meeting."},
   {title:"Org // Moss intro",rep:"Jara",date:"2026-06-10",dur:"25m",CB:4,DA:3,CH:3,GE:5,NS:3,PC:2,score:3.1,outcome:"follow_up_call_booked",well:"Good fit identified, pain points discussed.",wrong:"No DM confirmed, unclear client needs. No agenda set."},
   {title:"Klostermann Gruppe // Moss",rep:"Jara",date:"2026-06-11",dur:"20m",CB:4,DA:4,CH:4,GE:5,NS:5,PC:4,score:4.2,outcome:"demo_booked",well:"Good qualification, pain points surfaced, demo booked Tue 16 13:00.",wrong:"No deep dive into integration requirements yet."},
+  {title:"Rob Howard / Ramsden & Smith",rep:"Ezer",date:"2026-06-15",dur:"8m",CB:4,DA:4,CH:4,GE:5,NS:4,PC:4,score:4.3,outcome:"follow_up_call_booked",well:"Strong rapport, Clio vs Moss positioning, identified Danny Stone as right next contact.",wrong:"No specific date for next step yet."},
+  {title:"Lauren MacIver / Lodestar",rep:"Ezer",date:"2026-06-15",dur:"21m",CB:5,DA:4,CH:4,GE:4,NS:4,PC:5,score:4.5,outcome:"follow_up_call_booked",well:"Excellent rapport, deep pain point discovery (invoice duplication, Xero locks, approval delays). Clear next step proposed.",wrong:"Next step not fully confirmed — Lauren checking with FD."},
+  {title:"Adina Stampa / game.de",rep:"Markus",date:"2026-06-15",dur:"25m",CB:5,DA:4,CH:5,GE:4,NS:4,PC:5,score:4.5,outcome:"follow_up_call_booked",well:"Strong discovery, member needs mapped, exclusivity discussed, clear next steps agreed.",wrong:"No fixed date due to Gamescom. Buchhaltung DM (Alex) not present."},
   {title:"Norman Sadlo / DHPG",rep:"Nicola",date:"2026-06-11",dur:"9m",CB:3,DA:4,CH:3,GE:5,NS:4,PC:3,score:3.8,outcome:"demo_booked",well:"Advisor portal demo booked Jul 17. DATEV interface discussed, pricing shared.",wrong:"No DM champion confirmed. Gustav not on the call."},
   {title:"Chris Barnard / Collective Concepts",rep:"Ezer",date:"2026-06-05",dur:"8m",CB:4,DA:3,CH:3,GE:5,NS:3,PC:2,score:3.3,outcome:"follow_up_call_booked",well:"ICP fit discussed, CRM integration need surfaced, next call with Rupert agreed.",wrong:"No specific meeting time. CRM dependency is a potential blocker."},
   {title:"Vulkan Benelux x Moss",rep:"Niels",date:"2026-06-01",dur:"24m",CB:4,DA:3,CH:4,GE:4,NS:2,PC:4,score:3.4,outcome:"no_next_step",well:"Strong business model discovery, clear fit assessment, good rapport. Named stakeholders (Andries + Kars).",wrong:"No demo booked. Next step is 6 months away — product fit gap. No competitive landscape explored."},
@@ -35,6 +38,8 @@ const DEMO=[
   {title:"AMT / Moss Commercials",rep:"Alex",date:"2026-06-05",dur:"40m",UC:5,VA:4,WF:4,CO:4,NS:5,PC:4,score:4.6,outcome:"agreement_sent",well:"Clear use cases, strong value, next steps agreed. Agenda partially set.",wrong:"Some uncertainty on supplier communication feature."},
   {title:"Supy x Moss",rep:"Jara",date:"2026-06-03",dur:"45m",UC:5,VA:4,WF:4,CO:3,NS:4,PC:3,score:4.1,outcome:"follow_up_call_booked",well:"Clear product walkthrough, mutual fit, next steps discussed.",wrong:"No explicit agenda. Integration details unclear, petty cash workflow unresolved."},
   {title:"Zedra // Moss Demo",rep:"Alex",date:"2026-06-04",dur:"64m",UC:5,VA:4,WF:4,CO:3,NS:3,PC:2,score:3.9,outcome:"info_sent_no_meeting",well:"Deep use case fit, strong workflow discussion, pricing covered.",wrong:"No agenda set. No clear next meeting — outcome did not match."},
+  {title:"Modjo / WWS x Moss",rep:"Markus",date:"2026-06-15",dur:"39m",UC:5,VA:5,WF:5,CO:5,NS:3,PC:4,score:4.5,outcome:"follow_up_call_booked",well:"Excellent demo — Reisekosten, Kaufanfragen, Rechnungseingang all covered. DATEV concerns addressed. Strong value articulation.",wrong:"No concrete next step or date set. No commitment from Herr Kandler."},
+  {title:"Moss Demo & Nachste Schritte",rep:"Jara",date:"2026-06-15",dur:"32m",UC:5,VA:5,WF:5,CO:5,NS:5,PC:5,score:5.0,outcome:"follow_up_call_booked",well:"Perfect demo — tailored to client base (manufacturing, handwerk). All use cases covered. Follow-up Thu 25th 10am locked.",wrong:null},
   {title:"EY AT x Moss Demo",rep:"Aurel",date:"2026-06-11",dur:"64m",UC:4,VA:4,WF:4,CO:3,NS:4,PC:4,score:4.3,outcome:"follow_up_call_booked",well:"Full platform walkthrough, clear agenda, technical questions addressed.",wrong:"Some technical questions deferred. No explicit referral commitment made."},
 ];
 
@@ -54,6 +59,8 @@ const MANAGEMENT=[
   {title:"Alta Via x Moss",rep:"Jara",date:"2026-06-11",dur:"39m",P:3,M:2,B:3,E:4,C:3,N:3,PC:2,score:3.4,well:"Open discussion, partner tiering reviewed.",wrong:"No MAP review. No pre-call objective. Next steps pushed to July — at risk of going cold."},
   {title:"ba tax / Nicola",rep:"Nicola",date:"2026-06-03",dur:"12m",P:3,M:3,B:4,E:4,C:3,N:4,PC:2,score:3.5,well:"Feature clarification, demo with Nils planned, next steps agreed.",wrong:"No agenda. No explicit pipeline or MAP review."},
   {title:"Done!Financials",rep:"Nicola",date:"2026-06-09",dur:"5m",P:3,M:2,B:3,E:4,C:3,N:4,PC:2,score:3.3,well:"Partner planning call, action plan discussed, next meeting scheduled.",wrong:"No agenda. MAP not reviewed."},
+  {title:"Niedling & Partner Monthly",rep:"Jara",date:"2026-06-15",dur:"16m",P:5,M:4,B:4,E:5,C:5,N:5,PC:4,score:4.6,well:"Workshop date set (Jul 1), recurring call scheduled, new referrals agreed (Webinar). MAP agenda set — strongest management call this period.",wrong:"Metrics not deeply quantified."},
+  {title:"Carlos Trejo / Vennance",rep:"Aurel",date:"2026-06-15",dur:"12m",P:3,M:2,B:3,E:4,C:3,N:3,PC:3,score:3.0,well:"Austrian market potential discussed. Aurel offered legal/partner support.",wrong:"Contract objection (lead protection) not resolved. No MAP, no pipeline named, no referral ask."},
   {title:"n.a. (Sue / Lunar X)",rep:"Ezer",date:"2026-06-11",dur:"8m",P:3,M:3,B:3,E:5,C:3,N:3,PC:3,score:3.6,well:"Positive feedback on RPC, referral opportunity uncovered.",wrong:"No specific follow-up date set for partnership call."},
 ];
 
@@ -309,6 +316,80 @@ function renderMgmt(){
   document.getElementById('m-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>`<tr><td style="font-weight:500;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.title}</td><td class="td-muted">${c.rep}</td><td class="td-muted">${c.date.slice(5)}</td><td class="td-muted">${c.dur}</td>${['P','M','B','E','C','N'].map(k=>`<td style="color:${sc(c[k])};font-family:var(--mono);font-size:12px">${c[k]}</td>`).join('')}<td style="font-family:var(--mono);font-size:12px;color:${sc(c.PC)}">${c.PC}</td><td><span class="td-score ${cls(c.score)}">${c.score.toFixed(1)}</span></td><td>${barHtml(c.score)}</td></tr>`).join('');
 }
 
+/* ══════ REFERRAL PARTNER QUALIFICATION ══════ */
+// Scored against AE Discovery scorecard
+// MET=Metrics, EB=Economic Buyer, DC=Decision Criteria, DP=Decision Process, PA=Pain, CH=Champion, PC=Pre-call
+// Formula: (MET×3 + EB×3 + DC×3 + DP×2 + PA×3 + CH×2 + PC×2) ÷ 90 × 5
+const RPQ=[
+  {title:"Klostermann Gruppe // Moss",rep:"Jara",date:"2026-06-11",dur:"20m",MET:3,EB:3,DC:3,DP:3,PA:4,CH:4,PC:4,score:3.7,outcome:"follow_up_call_booked",ae_handoff:false,well:"Good rapport, pain points surfaced (expense management for own business), champion (avd@klostermann-gruppe.de) identified.",wrong:"No economic buyer confirmed. Decision process not mapped. No AE handoff agreed on call."},
+];
+
+const RPQ_WELL=[
+  {l:"Pain / business impact confirmed",k:["pain","expense","management","challenge","need","process"]},
+  {l:"Champion or DM identified",k:["champion","decision","dm","contact","key person"]},
+  {l:"Pre-call objective set, outcome matched",k:["agenda","objective","outcome matched","prep"]}
+];
+const RPQ_WRONG=[
+  {l:"Economic buyer not confirmed",k:["no economic","budget","not confirmed","not present","authority"]},
+  {l:"No AE handoff agreed",k:["no handoff","no ae","no next step","no referral","no demo"]},
+  {l:"Decision process not mapped",k:["no process","no timeline","no decision","not mapped"]}
+];
+
+function rpqExit(c){
+  const issues=[];
+  if(c.score<4.0)issues.push('Overall score below 4.0 — not fully qualified');
+  if(c.EB<4)issues.push('Economic buyer not confirmed (EB<4)');
+  if(c.PA<4)issues.push('Pain / business consequence not fully established (PA<4)');
+  if(!c.ae_handoff)issues.push('No AE handoff agreed on the call');
+  if(!issues.length) return{decision:'advance',label:'Ready for AE handoff',cls:'pill-green',missing:[]};
+  if(!c.ae_handoff&&c.score>=4.0) return{decision:'hold',label:'Hold — handoff not agreed',cls:'pill-amber',missing:issues};
+  return{decision:'hold',label:'Hold — incomplete qualification',cls:'pill-red',missing:issues};
+}
+
+function getRPQ(){const from=document.getElementById('rpqf-from').value,to=document.getElementById('rpqf-to').value,rep=document.getElementById('rpqf-rep').value;return RPQ.filter(c=>{if(from&&c.date<from)return false;if(to&&c.date>to)return false;if(rep!=='all'&&c.rep!==rep)return false;return true;});}
+
+function renderRPQ(){
+  const data=getRPQ(),rep=document.getElementById('rpqf-rep').value;
+  const handoffs=data.filter(c=>c.ae_handoff).length;
+  const pcAvg=data.length?avg(data.map(c=>c.PC)):0;
+
+  // Commentary
+  const noHandoff=data.filter(c=>!c.ae_handoff).length;
+  document.getElementById('rpq-commentary').innerHTML=`
+    <div class="commentary-card win"><div class="commentary-label">What this tab tracks</div><div class="commentary-text">Calls where a PM was speaking with someone evaluating Moss for their own business — not as a referral partner. These should result in a qualified AE handoff. Score reflects how well the PM qualified the opportunity before handing off.</div></div>
+    <div class="commentary-card gap"><div class="commentary-label">Current period</div><div class="commentary-text">${data.length} call${data.length!==1?'s':''} labelled Referral Partner Qualification. ${handoffs} AE handoff${handoffs!==1?'s':''} confirmed. ${noHandoff>0?`${noHandoff} call${noHandoff!==1?'s':''} had no handoff agreed — opportunity at risk of going cold.`:''} As the new label rolls out, expect more calls to appear here.</div></div>
+    <div class="commentary-card focus"><div class="commentary-label">The standard</div><div class="commentary-text">A well-run RPQ call confirms: the pain and business consequence, the economic buyer, the decision criteria, and ends with a confirmed AE handoff. Score 4+ = warm handoff. Score below 3 = the AE is going in cold.</div></div>`;
+
+  if(!data.length){
+    document.getElementById('rpq-kpis').innerHTML=`<div class="kpi"><div class="kpi-label">Calls</div><div class="kpi-value">0</div></div><div class="kpi"><div class="kpi-label">Note</div><div class="kpi-value amber" style="font-size:13px">Label live</div></div>`;
+    document.getElementById('rpq-insights').innerHTML='<div class="insight-card" style="grid-column:1/-1"><div class="insight-title blue">No calls yet</div><div class="insight-row">The Referral Partner Qualification label is now live in Attention. Calls will appear here automatically as reps have them and Attention classifies them.</div></div>';
+    document.getElementById('rpq-reps').innerHTML='';
+    document.getElementById('rpq-calls').innerHTML='';
+    return;
+  }
+
+  const panel=document.getElementById('rpq-rep-panel');
+  if(rep!=='all'){panel.innerHTML=repPanelHtml(rep);panel.classList.add('visible');}else panel.classList.remove('visible');
+
+  document.getElementById('rpq-kpis').innerHTML=`
+    <div class="kpi"><div class="kpi-label">Calls</div><div class="kpi-value">${data.length}</div></div>
+    <div class="kpi"><div class="kpi-label">Avg score</div><div class="kpi-value ${cls(avg(data.map(c=>c.score)))}">${avg(data.map(c=>c.score)).toFixed(1)}</div></div>
+    <div class="kpi"><div class="kpi-label">AE handoffs</div><div class="kpi-value ${handoffs>0?'green':'red'}">${handoffs}/${data.length}</div></div>
+    <div class="kpi"><div class="kpi-label">Scored 4+</div><div class="kpi-value green">${data.filter(c=>c.score>=4).length}</div></div>
+    <div class="kpi"><div class="kpi-label">Pre-call avg</div><div class="kpi-value ${cls(pcAvg)}">${pcAvg.toFixed(1)}</div></div>`;
+
+  mkChart('rpq-dist','bar',{labels:DL,datasets:[{data:distBands(data),backgroundColor:DC,borderWidth:0,borderRadius:3}]},{...base,scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'rpqd');
+  const cV=[avg(data.map(c=>c.MET)),avg(data.map(c=>c.EB)),avg(data.map(c=>c.DC)),avg(data.map(c=>c.DP)),avg(data.map(c=>c.PA)),avg(data.map(c=>c.CH)),avg(data.map(c=>c.PC))].map(v=>+v.toFixed(1));
+  mkChart('rpq-crit','bar',{labels:['Metrics (w3)','Econ buyer (w3)','Dec criteria (w3)','Dec process (w2)','Pain (w3)','Champion (w2)','Pre-call (w2)'],datasets:[{data:cV,backgroundColor:['#52b788','#4a8ec2','#c05c3a','#c07a14','#7c5cbf','#0e7490','#2c5f7a'],borderWidth:0,borderRadius:3}]},{...base,indexAxis:'y',scales:{x:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},y:{ticks:{font:{size:10}},grid:{display:false}}}},'rpqc');
+
+  document.getElementById('rpq-insights').innerHTML=insightsHtml(data,RPQ_WELL,RPQ_WRONG);
+
+  const reps={};data.forEach(c=>{if(!reps[c.rep])reps[c.rep]={n:0,s:0,MET:0,EB:0,DC:0,DP:0,PA:0,CH:0,PC:0};reps[c.rep].n++;reps[c.rep].s+=c.score;['MET','EB','DC','DP','PA','CH','PC'].forEach(k=>reps[c.rep][k]+=c[k]);});
+  document.getElementById('rpq-reps').innerHTML=Object.entries(reps).sort((a,b)=>b[1].n-a[1].n).map(([name,d],i)=>{const a=d.s/d.n;return`<tr><td class="td-muted">${i+1}</td><td style="font-weight:600">${name}</td><td style="font-weight:600">${d.n}</td><td><span class="td-score ${cls(a)}">${a.toFixed(1)}</span></td>${['MET','EB','DC','DP','PA','CH','PC'].map(k=>`<td style="color:${sc(d[k]/d.n)};font-family:var(--mono);font-size:12px">${(d[k]/d.n).toFixed(1)}</td>`).join('')}</tr>`;}).join('');
+
+  document.getElementById('rpq-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>{const ex=rpqExit(c);return`<tr><td style="font-weight:500;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.title}</td><td class="td-muted">${c.rep}</td><td class="td-muted">${c.date.slice(5)}</td><td class="td-muted">${c.dur}</td>${['MET','EB','DC','DP','PA','CH'].map(k=>`<td style="color:${sc(c[k])};font-family:var(--mono);font-size:12px">${c[k]}</td>`).join('')}<td style="font-family:var(--mono);font-size:12px;color:${sc(c.PC)}">${c.PC}</td><td><span class="td-score ${cls(c.score)}">${c.score.toFixed(1)}</span></td><td>${c.ae_handoff?'<span class="pill pill-green">AE handoff</span>':'<span class="pill pill-red">No handoff</span>'}</td><td>${exitPill(ex)}</td><td>${barHtml(c.score)}</td></tr>`;}).join('');
+}
+
 /* ══════ PIPELINE ══════ */
 function renderPipeline(){
   mkChart('p-vol','bar',{
@@ -325,7 +406,7 @@ function renderPipeline(){
   mkChart('p-sql','bar',{
     labels:['Jan','Feb','Mar','Apr','May','Jun'],
     datasets:[
-      {label:'DE',data:[25,34,36,28,25,11],backgroundColor:'#52b788',borderWidth:0,borderRadius:3},
+      {label:'DE',data:[25,35,36,28,25,11],backgroundColor:'#52b788',borderWidth:0,borderRadius:3},
       {label:'GB',data:[4,4,5,4,1,2],backgroundColor:'#c05c3a',borderWidth:0,borderRadius:3},
       {label:'NL',data:[9,9,15,9,9,7],backgroundColor:'#4a8ec2',borderWidth:0,borderRadius:3}
     ]
@@ -350,10 +431,13 @@ document.querySelectorAll('.nav-tab').forEach(tab=>{tab.addEventListener('click'
   if(tab.dataset.tab==='discovery')renderDiscovery();
   if(tab.dataset.tab==='demo')renderDemo();
   if(tab.dataset.tab==='management')renderMgmt();
+  if(tab.dataset.tab==='rpq')renderRPQ();
   if(tab.dataset.tab==='pipeline')renderPipeline();
 });});
 ['sf-from','sf-to','sf-country','sf-rep'].forEach(id=>document.getElementById(id).addEventListener('change',renderSourcing));
 ['df-from','df-to','df-rep'].forEach(id=>document.getElementById(id).addEventListener('change',renderDiscovery));
 ['emf-from','emf-to','emf-rep'].forEach(id=>document.getElementById(id).addEventListener('change',renderDemo));
 ['mf-from','mf-to','mf-rep'].forEach(id=>document.getElementById(id).addEventListener('change',renderMgmt));
+['rpqf-from','rpqf-to','rpqf-rep'].forEach(id=>document.getElementById(id).addEventListener('change',renderRPQ));
+populateFilter('rpqf-rep',RPQ,'rep');
 renderSourcing();

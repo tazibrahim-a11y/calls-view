@@ -318,9 +318,9 @@ const REPS = {
   },
   markus: {
     name:"Markus Kretschmer", initials:"MK", role:"Partnerships Manager (AT/DE)", market:"AT / DE", isTL:false,
-    calls:0, avg_score:null, pc_avg:null,
-    best_call:"No scored calls yet — calls not appearing in Attention this period", worst_call:null,
-    sourcing:[], discovery:[], demo:[], management:[],
+    calls:2, avg_score:4.0, pc_avg:4.5,
+    best_call:"Modjo/WWS Demo (4.5 — pre-call 4) — calls not appearing in Attention this period", worst_call:null,
+    sourcing:[], discovery:[{t:"Adina Stampa / game.de",s:4.5,pc:5,out:"Follow-up booked",gap:"No fixed date due to Gamescom. DM not present."}], demo:[{t:"Modjo/WWS x Moss",s:4.5,pc:4,out:"Follow-up booked",gap:"No next step/date confirmed. No commitment from Herr Kandler."}], management:[],
     next_steps:[
       {p:"22ug.de",a:"Follow up from today's call — confirm ICP fit and next step",od:false},
       {p:"Adina Stampa / game.de",a:"Follow up from today's intro — send partnership overview",od:false},
@@ -333,7 +333,7 @@ const REPS = {
       {call:"Moss Plattform Demo / CFO Lab",date:"Wed Jun 17, 9:30am",type:"prospect-demo",flag:"warn",note:"alexis@cfo-lab.com confirmed, AE Malte attending. Define use case and commitment ask before joining."},
     ],
     coaching:{
-      focus:"Calls not appearing in Attention this period — check Attention is recording your calls so they can be scored.",
+      focus:"Good start this week — 2 scored calls. WWS/Modjo demo strong but no next step confirmed. game.de discovery solid but DM not on call.",
       strength:"4 external calls booked this week including a platform demo. Strong pipeline activity.",
       map_gap:"No management calls this period — as new partners activate, build MAP review habits from day one.",
       pc_insight:"No scored calls yet. For this week: write one sentence objective before each call — what does success look like? That is the pre-call clarity habit to build."
@@ -351,7 +351,7 @@ const REPS = {
       {name:"Nicola",calls:8,avg:4.1,pc:2.8,mgmt:6,flag:null,highlight:"Strong discovery. Pre-call avg 2.8 — lowest on team. MAP missing on all management calls."},
       {name:"Alex",calls:5,avg:3.9,pc:3.0,mgmt:0,flag:null,highlight:"AMT agreement sent. Zedra pricing unsent. No management calls. Sourcing pre-call research weak."},
       {name:"Niels",calls:1,avg:3.4,pc:4.0,mgmt:0,flag:"On vacation until Jun 17",highlight:"NL at 7/16 SQLs — best relative market. Back Wed with 8 partner calls. Strong pre-call clarity."},
-      {name:"Markus",calls:0,avg:null,pc:null,mgmt:0,flag:"Calls not in Attention",highlight:"4 calls this week incl. CFO Lab demo. Not appearing in Attention — no scores available."},
+      {name:"Markus",calls:2,avg:4.0,pc:4.5,mgmt:0,flag:null,highlight:"First scored calls this week. Strong demo (WWS 4.5) and discovery (game.de 4.5). CFO Lab demo Wed."},
       {name:"Ezer",calls:5,avg:3.7,pc:2.4,mgmt:0,flag:"Hotglue going cold",highlight:"APA demo today — most important call this week. No management calls = no GB pipeline path."}
     ],
     wins:["2 partner agreements sent this week (Beke via Aurel 4.9, AMT via Alex 4.6) — both had pre-call clarity 4+","IBB Ventures and Argus Search both close to agreement","Aurel is the pre-call clarity benchmark — both calls scored 5, both outcomes matched exactly","Management engagement is strong team-wide (4.5 avg)"],
@@ -366,7 +366,7 @@ const REPS = {
       {rep:"Ezer+Alex",call:"AAT x Moss: Demo",date:"Mon Jun 15, 11:15am",flag:"ok",note:"Agenda set. Good prep signal. Both reps attending."}
     ],
     pipeline:{
-      june_sqls:{DE:{actual:11,target:38},GB:{actual:2,target:10},NL:{actual:7,target:16}},
+      june_sqls:{DE:{actual:11,target:38,forecast:14},GB:{actual:2,target:10,forecast:0},NL:{actual:7,target:16,forecast:2}},
       june_total:{actual:20,target:64,forecast:16},
       insight:"June at 13/64 SQLs. The gap is management call quality — MAP below 3 on 8 of 13 calls, pre-call clarity below 3 on the same 8. Partners are not being held to referral commitments. GB at 1/10 because Ezer and Alex have no active management relationships yet — that is a structural gap, not a quality gap. The 2 agreements signed this week (Beke, AMT) will materialise as SQLs in July-August."
     }

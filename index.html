@@ -118,6 +118,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--surface2)}
     <div class="nav-tab" data-tab="discovery">Discovery</div>
     <div class="nav-tab" data-tab="demo">Demo</div>
     <div class="nav-tab" data-tab="management">Management</div>
+    <div class="nav-tab" data-tab="rpq">Referral Qualification</div>
     <div class="nav-tab" data-tab="pipeline">Pipeline</div>
   </div>
 </nav>
@@ -138,16 +139,10 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--surface2)}
       <span style="font-size:11px;color:var(--danger);font-weight:600">Below 3.0 Needs review</span>
     </div>
   </div>
-  <div class="mtd-badge">June 2026 MTD — updated Jun 15 · 46 of 82 calls included · 36 excluded (see below)</div>
+  <div class="mtd-badge">June 2026 MTD — updated Jun 15 · 53 of 98 calls included · 45 excluded (see below)</div>
   <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:.7rem 1.1rem;margin-bottom:1rem;font-size:11px;color:var(--text-secondary);line-height:1.7">
     <strong style="color:var(--text-primary)">Excluded calls (36 of 77):</strong>
-    Voicemails (5) · Under 2 mins (9) · Internal only — no external participant (2) ·
-    CSM/existing customer calls — not partner acquisition (3) ·
-    No partnership context — gatekeepers, unknown contacts (8) ·
-    Commercials calls — not partnership (3) ·
-    Duplicate session recordings of the same call (2) ·
-    Wrong rep — not tracked PM (2) ·
-    Scheduling only — no substance (1)
+    Voicemails (7) · Under 2 mins (15) · Internal only — no external participant (2) · CSM/existing customer calls — not partner acquisition (4) · No partnership context — gatekeepers, unknown contacts (10) · Commercials calls — not partnership (2) · Duplicate session recordings of the same call (2) · No substance — scheduling only (1)
   </div>
   <div class="filters">
     <div class="filter-group"><label>From</label><input type="date" id="sf-from" value="2026-06-01"></div>
@@ -189,7 +184,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--surface2)}
       <div class="legend-item"><div class="legend-dot" style="background:#2c5f7a"></div><div class="legend-item-text"><strong>Pre-call clarity (w2)</strong> — Objective set before call? Did outcome match? 5=yes/yes, 3=partial, 1=no.</div></div>
     </div>
   </div>
-  <div class="mtd-badge">June 2026 MTD — updated Jun 15 · 46 of 82 calls included · 36 excluded</div>
+  <div class="mtd-badge">June 2026 MTD — updated Jun 15 · 53 of 98 calls included · 45 excluded</div>
   <div class="filters">
     <div class="filter-group"><label>From</label><input type="date" id="df-from" value="2026-06-01"></div>
     <div class="filter-group"><label>To</label><input type="date" id="df-to" value="2026-06-11"></div>
@@ -224,7 +219,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--surface2)}
       <div class="legend-item"><div class="legend-dot" style="background:#2c5f7a"></div><div class="legend-item-text"><strong>Pre-call clarity (w2)</strong> — Objective set before call? Did outcome match? 5=yes/yes, 3=partial, 1=no.</div></div>
     </div>
   </div>
-  <div class="mtd-badge">June 2026 MTD — updated Jun 15 · 46 of 82 calls included · 36 excluded</div>
+  <div class="mtd-badge">June 2026 MTD — updated Jun 15 · 53 of 98 calls included · 45 excluded</div>
   <div class="filters">
     <div class="filter-group"><label>From</label><input type="date" id="emf-from" value="2026-06-01"></div>
     <div class="filter-group"><label>To</label><input type="date" id="emf-to" value="2026-06-11"></div>
@@ -260,7 +255,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--surface2)}
       <div class="legend-item"><div class="legend-dot" style="background:#2c5f7a"></div><div class="legend-item-text"><strong>Pre-call clarity (w2)</strong> — Agenda set before call? Did outcome match? 5=yes/yes, 3=partial, 1=no.</div></div>
     </div>
   </div>
-  <div class="mtd-badge">June 2026 MTD — updated Jun 15 · 46 of 82 calls included · 36 excluded</div>
+  <div class="mtd-badge">June 2026 MTD — updated Jun 15 · 53 of 98 calls included · 45 excluded</div>
   <div class="filters">
     <div class="filter-group"><label>From</label><input type="date" id="mf-from" value="2026-06-01"></div>
     <div class="filter-group"><label>To</label><input type="date" id="mf-to" value="2026-06-11"></div>
@@ -281,6 +276,48 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--surface2)}
   <div class="table-card"><table><thead><tr><th>#</th><th>Rep</th><th>Calls</th><th>Avg</th><th>Pipeline</th><th>MAP</th><th>Blocker</th><th>Engage</th><th>Compet</th><th>Next</th><th>Pre-call</th></tr></thead><tbody id="m-reps"></tbody></table></div>
   <div class="section-divider">All calls</div>
   <div class="table-card"><table><thead><tr><th>Call</th><th>Rep</th><th>Date</th><th>Dur</th><th>Pipe</th><th>MAP</th><th>Block</th><th>Eng</th><th>Comp</th><th>Next</th><th>Pre</th><th>Score</th><th style="width:72px"></th></tr></thead><tbody id="m-calls"></tbody></table></div>
+</section>
+
+<!-- REFERRAL PARTNER QUALIFICATION -->
+<section id="tab-rpq" class="section">
+  <div class="legend-block">
+    <div class="legend-title">Referral Partner Qualification — scored against AE Discovery scorecard · Calls where contact is being qualified as a direct Moss customer, not a referral partner</div>
+    <div class="legend-grid">
+      <div class="legend-item"><div class="legend-dot" style="background:#52b788"></div><div class="legend-item-text"><strong>Metrics / Business Impact (w3)</strong> — Measurable business impact identified? Quantified pain?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4a8ec2"></div><div class="legend-item-text"><strong>Economic Buyer Identified (w3)</strong> — Person who controls budget confirmed on the call?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c05c3a"></div><div class="legend-item-text"><strong>Decision Criteria (w3)</strong> — What does the contact need to see to say yes?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c07a14"></div><div class="legend-item-text"><strong>Decision Process Mapped (w2)</strong> — Steps, timeline, and stakeholders to reach a decision confirmed?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#7c5cbf"></div><div class="legend-item-text"><strong>Pain / Business Consequence (w3)</strong> — Current pain articulated with business consequence if not solved?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#0e7490"></div><div class="legend-item-text"><strong>Champion Identified (w2)</strong> — Internal advocate confirmed who will push for Moss?</div></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#2c5f7a"></div><div class="legend-item-text"><strong>Pre-call clarity (w2)</strong> — Objective set before call? Did outcome match? 5=yes/yes, 3=partial, 1=no.</div></div>
+    </div>
+    <div style="margin-top:.8rem;padding:.65rem .9rem;background:var(--warn-bg);border:1px solid #e0c98a;border-radius:var(--radius-sm);font-size:12px;color:var(--warn)">
+      <strong>AE Handoff:</strong> These calls should result in a qualified AE handoff. A high score without a confirmed handoff is a gap — the rep qualified well but did not convert to pipeline.
+    </div>
+    <div style="display:flex;gap:1.5rem;margin-top:.6rem;flex-wrap:wrap">
+      <span style="font-size:11px;color:var(--accent);font-weight:600">4.0+ Strong — AE handoff ready</span>
+      <span style="font-size:11px;color:var(--warn);font-weight:600">3.0-3.9 Developing — partial qualification</span>
+      <span style="font-size:11px;color:var(--danger);font-weight:600">Below 3.0 Needs review</span>
+    </div>
+  </div>
+  <div class="mtd-badge">June 2026 MTD — updated Jun 15 · 53 of 98 calls included · 45 excluded</div>
+  <div class="filters">
+    <div class="filter-group"><label>From</label><input type="date" id="rpqf-from" value="2026-06-01"></div>
+    <div class="filter-group"><label>To</label><input type="date" id="rpqf-to" value="2026-06-15"></div>
+    <div class="filter-group"><label>Rep</label><select id="rpqf-rep"><option value="all">All reps</option></select></div>
+  </div>
+  <div class="commentary" id="rpq-commentary"></div>
+  <div class="rep-panel" id="rpq-rep-panel"></div>
+  <div class="kpis" id="rpq-kpis"></div>
+  <div class="charts-row">
+    <div class="chart-card"><div class="chart-label">Score distribution</div><div class="chart-hint">RPQ calls scoring 4+ are AE handoff ready.</div><div style="position:relative;height:130px"><canvas id="rpq-dist"></canvas></div></div>
+    <div class="chart-card"><div class="chart-label">Avg score per criterion</div><div class="chart-hint">Economic Buyer and Pain are the critical criteria for a warm AE handoff.</div><div style="position:relative;height:130px"><canvas id="rpq-crit"></canvas></div></div>
+  </div>
+  <div class="insights-grid" id="rpq-insights"></div>
+  <div class="section-divider">Rep rankings</div>
+  <div class="table-card"><table><thead><tr><th>#</th><th>Rep</th><th>Calls</th><th>Avg</th><th>Metrics</th><th>Econ buyer</th><th>Dec criteria</th><th>Dec process</th><th>Pain</th><th>Champion</th><th>Pre-call</th></tr></thead><tbody id="rpq-reps"></tbody></table></div>
+  <div class="section-divider">All calls — sorted by score</div>
+  <div class="table-card"><table><thead><tr><th>Call</th><th>Rep</th><th>Date</th><th>Dur</th><th>Met</th><th>EB</th><th>DC</th><th>DP</th><th>Pain</th><th>CH</th><th>Pre</th><th>Score</th><th>Outcome</th><th>Stage decision</th><th style="width:72px"></th></tr></thead><tbody id="rpq-calls"></tbody></table></div>
 </section>
 
 <!-- PIPELINE -->
@@ -328,6 +365,21 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--surface2)}
       <div class="chart-label">Pre-call clarity avg — management calls</div>
       <div class="chart-hint">Calls without a defined agenda rarely end with a specific referral commitment. Pre-call clarity directly predicts whether a partner will name a client to refer.</div>
       <div style="position:relative;height:160px"><canvas id="p-pre"></canvas></div>
+    </div>
+  </div>
+  <div class="section-divider">Referral Partner Qualification — AE pipeline</div>
+  <div class="insights-grid">
+    <div class="insight-card">
+      <div class="insight-title blue">What this feeds</div>
+      <div class="insight-row"><span class="badge blue">RPQ</span>Calls where PMs qualify direct Moss customer prospects. High score + AE handoff = warm pipeline. Low score = cold handoff or lost opportunity.</div>
+      <div class="insight-row"><span class="badge green">Jun MTD</span>1 RPQ call identified (Klostermann — 3.7/5). No AE handoff confirmed on the call. As the new label rolls out in Attention, this section will populate automatically.</div>
+      <div class="insight-row"><span class="badge amber">Target</span>Every RPQ call scoring 4+ should result in a confirmed AE handoff on the same call.</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-title blue">The two pipeline levers</div>
+      <div class="insight-row"><span class="badge green">Management</span>Partner management quality → referral commitment → SQLs from partners referring their clients</div>
+      <div class="insight-row"><span class="badge blue">RPQ</span>Qualification quality → AE handoff → direct opportunity from contacts using Moss themselves</div>
+      <div class="insight-row"><span class="badge amber">Combined</span>Both matter. Management drives partner-sourced SQLs. RPQ drives direct pipeline from PM conversations that are sales, not partnership calls.</div>
     </div>
   </div>
   <div class="section-divider">Management call quality vs referral likelihood</div>
