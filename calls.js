@@ -1,3 +1,16 @@
+
+/* ══════ NOTION PAGE IDs ══════ */
+const NOTION_PAGES = {
+  jara:   "3821de46-2c03-81d0-be79-e9365e85a064",
+  nicola: "3821de46-2c03-81c6-918e-f7eff9898bee",
+  ezer:   "3821de46-2c03-818c-9f9d-ffba807edd45",
+  aurel:  "3821de46-2c03-815e-a9b6-ec9c4cc8fbe5",
+  alex:   "3821de46-2c03-81f6-aafa-dcae38d605da",
+  markus: "3821de46-2c03-8126-9ad6-cafb79363f80",
+  niels:  "3821de46-2c03-818f-9da0-d6829aad5338",
+  taz:    "3821de46-2c03-8117-b122-e66e478fe728",
+};
+
 /* ══════════════════════ DATA ══════════════════════ */
 const SOURCING=[
   {title:"APA <> Moss",rep:"Ezer",country:"UK",date:"2026-06-08",dur:"20m",O:5,Q:5,H:3,M:5,score:4.7,outcome:"follow_up_call_booked",well:"Strong qualification, clear ICP fit, next meeting booked.",wrong:null},
@@ -7,6 +20,8 @@ const SOURCING=[
   {title:"Wußler & Schmid",rep:"Nicola",country:"DE",date:"2026-06-08",dur:"15m",O:4,Q:4,H:3,M:3,score:3.7,outcome:"follow_up_call_booked",well:"Clear qualification, partnership discussed, next steps agreed.",wrong:"No specific demo time confirmed."},
   {title:"Ronnie Patel",rep:"Ezer",country:"UK",date:"2026-06-05",dur:"3m",O:4,Q:2,H:3,M:3,score:2.9,outcome:"referred_to_contact",well:"Polite, got direct referral to decision maker.",wrong:"No qualification, no meeting confirmed."},
   {title:"Aalia Rangrez",rep:"Ezer",country:"UK",date:"2026-06-01",dur:"7m",O:4,Q:4,H:3,M:1,score:2.7,outcome:"info_sent_no_meeting",well:"Clear explanation, good rapport, permission for info.",wrong:"No meeting booked, limited qualification depth."},
+  {title:"Gary Bell",rep:"Alex",date:"2026-06-18",dur:"3m",O:3,Q:3,H:3,M:3,score:2.8,outcome:"no_next_step",well:"Polite intro, Moss explained briefly.",wrong:"Too short to qualify. No meeting booked."},
+  {title:"SLM // Moss intro",rep:"Alex",date:"2026-06-17",dur:"5m",O:3,Q:3,H:3,M:2,score:2.8,outcome:"follow_up_call_booked",well:"Clear intro, Moss value explained. Follow-up agreed.",wrong:"No specific date for next meeting. Qualification shallow."},
   {title:"Ryan Harris / Sansa Solutions",rep:"Jara",country:"UK",date:"2026-06-12",dur:"4m",O:5,Q:4,H:3,M:4,score:3.5,outcome:"follow_up_call_booked",well:"Strong existing relationship, clear ICP understanding, intro to Catalyst facilitated.",wrong:"No direct conversation with end decision maker yet."},
   {title:"Peter Connon / Colin Associates",rep:"Ezer",country:"UK",date:"2026-06-12",dur:"2m",O:3,Q:2,H:3,M:1,score:2.1,outcome:"no_next_step",well:"Polite intro, explained Moss briefly.",wrong:"Wrong contact — Peter not the user. No qualification, no next step confirmed."},
 ];
@@ -28,6 +43,14 @@ const DISCOVERY=[
   {title:"Norman Sadlo / DHPG",rep:"Nicola",date:"2026-06-11",dur:"9m",CB:3,DA:4,CH:3,GE:5,NS:4,PC:3,score:3.8,outcome:"demo_booked",well:"Advisor portal demo booked Jul 17. DATEV interface discussed, pricing shared.",wrong:"No DM champion confirmed. Gustav not on the call."},
   {title:"Chris Barnard / Collective Concepts",rep:"Ezer",date:"2026-06-05",dur:"8m",CB:4,DA:3,CH:3,GE:5,NS:3,PC:2,score:3.3,outcome:"follow_up_call_booked",well:"ICP fit discussed, CRM integration need surfaced, next call with Rupert agreed.",wrong:"No specific meeting time. CRM dependency is a potential blocker."},
   {title:"Vulkan Benelux x Moss",rep:"Niels",date:"2026-06-01",dur:"24m",CB:4,DA:3,CH:4,GE:4,NS:2,PC:4,score:3.4,outcome:"no_next_step",well:"Strong business model discovery, clear fit assessment, good rapport. Named stakeholders (Andries + Kars).",wrong:"No demo booked. Next step is 6 months away — product fit gap. No competitive landscape explored."},
+  {title:"Scott McInnes / RSM UK",rep:"Ezer",date:"2026-06-18",dur:"15m",CB:5,DA:4,CH:5,GE:5,NS:5,PC:4,score:4.7,outcome:"demo_booked",well:"Exceptional discovery — deep RSM context, buying process mapped, demo booked for today 2pm. Scott's candour about committee process and risk aversion is exactly what Ezer needed to prepare.",wrong:"Decision authority not fully mapped. No budget or timeline qualification."},
+  {title:"Iscoseles Finance / Moss",rep:"Alex",date:"2026-06-18",dur:"29m",CB:5,DA:4,CH:5,GE:5,NS:5,PC:4,score:4.7,outcome:"follow_up_call_booked",well:"Excellent — deep client background, partnership commercial terms discussed, agreement to send and demo booked Mon/Wed next week.",wrong:"Technical follow-up needed (custom fields, sandbox, two-way sync). No firm demo date locked."},
+  {title:"Xeinadin x Moss",rep:"Jara",date:"2026-06-18",dur:"32m",CB:4,DA:3,CH:5,GE:4,NS:4,PC:3,score:4.0,outcome:"follow_up_call_booked",well:"Strong rapport, clear articulation of tech adoption challenges, honest positioning vs Apron.",wrong:"Decision authority not fully mapped. Next step lacks a firm date — Russell returning next week."},
+  {title:"Fintua Partnership Intro",rep:"Alex",date:"2026-06-18",dur:"52m",CB:5,DA:5,CH:4,GE:5,NS:4,PC:3,score:4.3,outcome:"follow_up_call_booked",well:"Thorough mutual discovery of business models and partnership fit. Both parties transparent about limitations and expectations.",wrong:"No pre-call objective set. Next steps agreed but not time-bound."},
+  {title:"Roy / De Beer Check-in",rep:"Niels",date:"2026-06-17",dur:"9m",CB:3,DA:3,CH:3,GE:3,NS:3,PC:3,score:3.0,outcome:"follow_up_call_booked",well:"Good reconnection after vacation. Pipeline context established.",wrong:"No MAP review. No referral ask. No specific next step date."},
+  {title:"Bart Lammers",rep:"Niels",date:"2026-06-18",dur:"8m",CB:3,DA:3,CH:3,GE:3,NS:3,PC:3,score:3.2,outcome:"follow_up_call_booked",well:"Short but substantive. Good contact qualification.",wrong:"Too short for deep discovery. No next meeting confirmed with date."},
+  {title:"Eelco Houwert",rep:"Niels",date:"2026-06-17",dur:"8m",CB:3,DA:3,CH:3,GE:3,NS:3,PC:3,score:3.1,outcome:"follow_up_call_booked",well:"Valid partnership discovery. Contact engaged.",wrong:"No next step confirmed with date. Decision process not explored."},
+  {title:"IG Immobilien / Aurel",rep:"Aurel",date:"2026-06-16",dur:"36m",CB:5,DA:4,CH:5,GE:5,NS:5,PC:4,score:4.7,outcome:"demo_booked",well:"Exceptional discovery — EY AT partner referral, all stakeholders present, pain points clearly mapped, demo booked Jun 23 11am.",wrong:"Decision authority mapping could be more explicit."},
   {title:"Philip Humphries / Gravita",rep:"Ezer",date:"2026-06-16",dur:"12m",CB:4,DA:4,CH:4,GE:5,NS:5,PC:3,score:4.0,outcome:"follow_up_call_booked",well:"Strong rapport, client context (KYND) established, main challenge surfaced (training + adoption), next step set for portal launch.",wrong:"No explicit pre-call objective. Goals not deeply explored."},
   {title:"Jonathan Carling",rep:"Ezer",date:"2026-06-15",dur:"15m",CB:4,DA:3,CH:4,GE:5,NS:4,PC:2,score:3.5,outcome:"follow_up_call_booked",well:"Good rapport, Moss strengths/weaknesses openly discussed, next step agreed (portal launch).",wrong:"No pre-call objective. Decision authority not explored. No specific date for next step."},
   {title:"Michelle Bycraft / MB Accounting",rep:"Ezer",date:"2026-06-02",dur:"4m",CB:3,DA:2,CH:2,GE:5,NS:2,PC:2,score:2.7,outcome:"info_sent_no_meeting",well:"Clear intro, explained Moss value prop.",wrong:"Clients too small — no meeting confirmed, one-pager sent only."},
@@ -40,8 +63,13 @@ const DEMO=[
   {title:"AMT / Moss Commercials",rep:"Alex",date:"2026-06-05",dur:"40m",UC:5,VA:4,WF:4,CO:4,NS:5,PC:4,score:4.6,outcome:"agreement_sent",well:"Clear use cases, strong value, next steps agreed. Agenda partially set.",wrong:"Some uncertainty on supplier communication feature."},
   {title:"Supy x Moss",rep:"Jara",date:"2026-06-03",dur:"45m",UC:5,VA:4,WF:4,CO:3,NS:4,PC:3,score:4.1,outcome:"follow_up_call_booked",well:"Clear product walkthrough, mutual fit, next steps discussed.",wrong:"No explicit agenda. Integration details unclear, petty cash workflow unresolved."},
   {title:"Zedra // Moss Demo",rep:"Alex",date:"2026-06-04",dur:"64m",UC:5,VA:4,WF:4,CO:3,NS:3,PC:2,score:3.9,outcome:"info_sent_no_meeting",well:"Deep use case fit, strong workflow discussion, pricing covered.",wrong:"No agenda set. No clear next meeting — outcome did not match."},
+  {title:"OFSGroep Demo",rep:"Niels",date:"2026-06-18",dur:"60m",UC:5,VA:4,WF:4,CO:4,NS:4,PC:4,score:4.2,outcome:"follow_up_call_booked",well:"Strong interactive demo tailored to OFS context. AFAS integration and credit card module well received. Follow-up with written answers committed.",wrong:"Several technical questions left open (timing AFAS export, lease facturen). No hard next step date."},
+  {title:"Elvera / PwC Demo",rep:"Niels",date:"2026-06-17",dur:"32m",UC:5,VA:5,WF:5,CO:4,NS:4,PC:3,score:4.3,outcome:"follow_up_call_booked",well:"Excellent — deep mapping of PwC client needs, Exact Online integration demonstrated, strong value alignment.",wrong:"Next step tentative (Jul/Aug). No pre-call objective explicitly stated."},
+  {title:"Accountability // Moss demo",rep:"Ezer",date:"2026-06-17",dur:"46m",UC:4,VA:4,WF:5,CO:4,NS:3,PC:3,score:4.0,outcome:"follow_up_call_booked",well:"Strong workflow demo, responsive to Octopus Money needs, Xero integration discussed.",wrong:"No firm next step date. Pre-call objective not set. CSM/Solutions follow-up deferred."},
+  {title:"De Coop & Haegen",rep:"Niels",date:"2026-06-18",dur:"7m",UC:3,VA:3,WF:3,CO:4,NS:3,PC:3,score:3.5,outcome:"follow_up_call_booked",well:"Short demo/check-in, positive engagement.",wrong:"Too short for full demo assessment. No committed next step."},
   {title:"Nico Doehrn / Tax-Automate",rep:"Aurel",date:"2026-06-16",dur:"42m",UC:5,VA:5,WF:5,CO:4,NS:4,PC:4,score:4.5,outcome:"follow_up_call_booked",well:"Highly tailored demo — E-com, marketing, engineering use cases covered. Strong value and workflow demonstration. Freemium test agreed.",wrong:"No fixed follow-up date. No explicit pre-call objective stated."},
   {title:"Modjo / WWS x Moss",rep:"Markus",date:"2026-06-15",dur:"39m",UC:5,VA:5,WF:5,CO:5,NS:3,PC:4,score:4.5,outcome:"follow_up_call_booked",well:"Excellent demo — Reisekosten, Kaufanfragen, Rechnungseingang all covered. DATEV concerns addressed. Strong value articulation.",wrong:"No concrete next step or date set. No commitment from Herr Kandler."},
+  {title:"Moss / Catalyst Introduction",rep:"Jara",date:"2026-06-16",dur:"34m",UC:4,VA:4,WF:4,CO:4,NS:4,PC:4,score:4.2,outcome:"follow_up_call_booked",well:"Strong demo with Luke Howe (NetSuite Catalyst ERP). Clear use case fit for mid-market clients, workflow integration discussed.",wrong:"No explicit commitment to refer. Next step not fully locked."},
   {title:"Moss Demo & Nachste Schritte",rep:"Jara",date:"2026-06-15",dur:"32m",UC:5,VA:5,WF:5,CO:5,NS:5,PC:5,score:5.0,outcome:"follow_up_call_booked",well:"Perfect demo — tailored to client base (manufacturing, handwerk). All use cases covered. Follow-up Thu 25th 10am locked.",wrong:null},
   {title:"EY AT x Moss Demo",rep:"Aurel",date:"2026-06-11",dur:"64m",UC:4,VA:4,WF:4,CO:3,NS:4,PC:4,score:4.3,outcome:"follow_up_call_booked",well:"Full platform walkthrough, clear agenda, technical questions addressed.",wrong:"Some technical questions deferred. No explicit referral commitment made."},
 ];
@@ -64,6 +92,12 @@ const MANAGEMENT=[
   {title:"Done!Financials",rep:"Nicola",date:"2026-06-09",dur:"5m",P:3,M:2,B:3,E:4,C:3,N:4,PC:2,score:3.3,well:"Partner planning call, action plan discussed, next meeting scheduled.",wrong:"No agenda. MAP not reviewed."},
   {title:"Pape & Co. Monthly",rep:"Nicola",date:"2026-06-16",dur:"40m",P:5,M:5,B:4,E:5,C:5,N:4,PC:3,score:4.5,well:"Strong partnership call — mandates reviewed, workflow issues discussed, advisor portal demo booked Jun 23 9am. Next call Jul 21.",wrong:"No explicit pre-call objective. Some needs (team training, Penny Lane) still pending."},
   {title:"Done!Financials Jun 16",rep:"Nicola",date:"2026-06-16",dur:"4m",P:5,M:5,B:3,E:5,C:5,N:3,PC:5,score:4.3,well:"Action plan prepared, meeting rescheduled with all stakeholders. Next step confirmed (tomorrow 15:00).",wrong:"Limited business depth — mainly logistical."},
+  {title:"Done!Financials Jun 17",rep:"Nicola",date:"2026-06-17",dur:"32m",P:4,M:5,B:3,E:4,C:3,N:5,PC:4,score:4.1,well:"Excellent — bi-weekly cadence set, responsibilities assigned, enablement planned. MOS experts identified for training.",wrong:"No formal business review. Pre-call objective not explicitly stated."},
+  {title:"Milad Bazzaz",rep:"Nicola",date:"2026-06-18",dur:"28m",P:4,M:4,B:3,E:4,C:3,N:4,PC:3,score:3.8,well:"Good partner engagement. Pipeline discussed, next steps agreed.",wrong:"Pre-call objective not set. MAP not formally reviewed."},
+  {title:"Katerina Nichols",rep:"Nicola",date:"2026-06-18",dur:"4m",P:3,M:3,B:2,E:3,C:2,N:3,PC:2,score:3.2,well:"Brief but valid management touchpoint.",wrong:"Too short for meaningful MAP review. No referral ask."},
+  {title:"Jouke / Niels Check-in",rep:"Niels",date:"2026-06-18",dur:"15m",P:3,M:4,B:3,E:4,C:3,N:4,PC:3,score:3.5,well:"Good reconnection after vacation. Greyt partnership status reviewed.",wrong:"No explicit referral ask. MAP not formally reviewed."},
+  {title:"FYBE / Niels Kennismaking",rep:"Niels",date:"2026-06-18",dur:"22m",P:3,M:3,B:3,E:4,C:3,N:4,PC:3,score:3.3,well:"Good intro to FYBE partnership potential, mutual benefit discussed.",wrong:"No MAP. No referral commitment. Relationship early stage."},
+  {title:"Nathalie Perlee Check-in",rep:"Niels",date:"2026-06-17",dur:"20m",P:3,M:3,B:2,E:3,C:3,N:3,PC:2,score:3.0,well:"Good reconnection after vacation. Contact engaged.",wrong:"No MAP review. No referral ask. No pre-call objective."},
   {title:"Niedling & Partner Monthly",rep:"Jara",date:"2026-06-15",dur:"16m",P:5,M:4,B:4,E:5,C:5,N:5,PC:4,score:4.6,well:"Workshop date set (Jul 1), recurring call scheduled, new referrals agreed (Webinar). MAP agenda set — strongest management call this period.",wrong:"Metrics not deeply quantified."},
   {title:"Carlos Trejo / Vennance",rep:"Aurel",date:"2026-06-15",dur:"12m",P:3,M:2,B:3,E:4,C:3,N:3,PC:3,score:3.0,well:"Austrian market potential discussed. Aurel offered legal/partner support.",wrong:"Contract objection (lead protection) not resolved. No MAP, no pipeline named, no referral ask."},
   {title:"n.a. (Sue / Lunar X)",rep:"Ezer",date:"2026-06-11",dur:"8m",P:3,M:3,B:3,E:5,C:3,N:3,PC:3,score:3.6,well:"Positive feedback on RPC, referral opportunity uncovered.",wrong:"No specific follow-up date set for partnership call."},
@@ -71,34 +105,22 @@ const MANAGEMENT=[
 
 const UPCOMING={
   sourcing:[
-    {rep:"Markus",call:"Moss Partnership (22ug.de)",date:"Mon Jun 15, 11am",type:"prospect",prepFlag:"missing",prepNote:"No agenda — info@22ug.de attending. Set ICP qualification objective before joining. Not yet in Attention."},
-    {rep:"Markus+Aurel",call:"Adina Stampa / game.de",date:"Mon Jun 15, 11:30am",type:"prospect",prepFlag:"missing",prepNote:"30 min sourcing meeting. No agenda. Define ICP objective and partnership model before joining."},
-    {rep:"Ezer",call:"Sam @ Incorpwise",date:"Mon Jun 15, 10:15am",type:"prospect",prepFlag:"missing",prepNote:"No prep noted. Set ICP qualification objective before joining."},
-    {rep:"Ezer",call:"Bethnal Green Ventures // Moss",date:"Mon Jun 15, 4pm",type:"prospect",prepFlag:"warn",prepNote:"Ezer optional attendee. New prospect — define your role and ICP qualification objective."},
-    {rep:"Ezer+Alex",call:"MW Finman // Moss intro",date:"Mon Jun 15, 3:30pm",type:"prospect",prepFlag:"missing",prepNote:"No agenda. First contact with Mike Wong. Set ICP objective and talking points before joining."},
-    {rep:"Nicola",call:"Limetax // Moss",date:"Tue Jun 16, 11am",type:"prospect",prepFlag:"missing",prepNote:"No prep. Set ICP qualification objective — what does qualified look like for Limetax?"},
-    {rep:"Ezer",call:"Lucy Cardew / Greenstones follow-up",date:"Tue Jun 16, 2-3pm",type:"prospect",prepFlag:"warn",prepNote:"Product gaps flagged (multi-currency, mileage, VAT). Resolve with product team before joining."},
-    {rep:"Ezer",call:"Chris Chan / Leap Accounts",date:"Thu Jun 18, 10:30am",type:"prospect",prepFlag:"warn",prepNote:"Discovery shallow. Prep ICP qualification and pricing clarity before joining."},
+    {rep:"Ezer",call:"RSM UK Demo — Scott McInnes",date:"Fri Jun 19, 2pm",type:"prospect",prepFlag:"ok",prepNote:"Booked from today's discovery (4.7/5). Ross Batten also confirmed. Define use case and commitment ask before joining. Best lead of the week."},
+    {rep:"Ezer+Alex",call:"APA // Moss demo",date:"Fri Jun 19, 3pm",type:"partner",prepFlag:"ok",prepNote:"Ross Batten confirmed. Long-awaited APA demo. Define commitment ask: which client will Ross refer first?"},
   ],
   discovery:[
-    {rep:"Nicola",call:"sonnenschutz.de - B1 AG",date:"Tue Jun 16, 9am",type:"prospect",prepFlag:"ok",prepNote:"AE (Alexander van der Hoff) + Felix Schmitt attending. Define DM and ICP objective before joining."},
+    {rep:"Aurel",call:"IG Immobilien Demo",date:"Tue Jun 23, 11am",type:"prospect",prepFlag:"ok",prepNote:"Booked from Jun 16 discovery (4.7/5). 25+ IG Immobilien stakeholders + EY AT team. Prep Eingangsrechnungsmanagement and workflow demo."},
+    {rep:"Alex",call:"Iscoseles Finance demo",date:"Mon/Wed Jun 22/24 (TBC)",type:"prospect",prepFlag:"warn",prepNote:"Booked from today's discovery (4.7/5). No firm date yet — send agreement and lock date today."},
   ],
   demo:[
-    {rep:"Ezer",call:"AAT x Moss Demo",date:"Mon Jun 15, 10:15am",type:"prospect",prepFlag:"ok",prepNote:"Anish Tailor (AAT) + Charlotte Lenman (Redactive) confirmed. Agenda set."},
-    {rep:"Ezer",call:"APA // Moss demo",date:"Mon Jun 15, 2pm",type:"partner",prepFlag:"warn",prepNote:"Ross Batten (tentative). Define use case and explicit commitment ask before joining — which client will Ross refer first?"},
-    {rep:"Aurel",call:"Nico Doehrn / Tax-Automate Demo",date:"Tue Jun 16, 11am",type:"prospect",prepFlag:"warn",prepNote:"NEW demo not in previous analysis. n.doehrn@tax-automate.com confirmed. Define use case and commitment ask before joining."},
-    {rep:"Markus",call:"Moss Plattform Demo / CFO Lab",date:"Wed Jun 17, 9:30am",type:"prospect",prepFlag:"warn",prepNote:"alexis@cfo-lab.com confirmed, AE Malte Kaehne attending. New demo — not yet in Attention. Define use case and commitment ask."},
-    {rep:"Jara",call:"Moss Demo & Nachste Schritte",date:"Mon Jun 15, 2pm",type:"prospect",prepFlag:"missing",prepNote:"No agenda. ilias.baltzis@outlook.com attending. Define use case and commitment ask before joining."},
-    {rep:"Jara",call:"Klostermann Gruppe",date:"Tue Jun 16, 1pm",type:"prospect",prepFlag:"warn",prepNote:"Booked from Jun 11 discovery (4.2/5). David Hilpert also attending. Prep use case and integration requirements."},
+    {rep:"Nicola",call:"Pape & Co Advisor Portal Demo",date:"Mon Jun 22, 9am",type:"partner",prepFlag:"ok",prepNote:"Portal demo booked Jun 23 9am. Prep portal walkthrough and confirm Bettina's specific use cases."},
   ],
   management:[
-    {rep:"Jara",call:"Niedling & Partner Monthly",date:"Mon Jun 15, 11:30am",type:"partner",prepFlag:"ok",prepNote:"Agenda set (referrals, clients, webinar, commissions). Confirm MAP review is first item."},
-    {rep:"Jara",call:"Poool GTM",date:"Mon Jun 15, 4pm",type:"partner",prepFlag:"missing",prepNote:"Scored 3.2 last time. No agenda. Set objective: which client will they refer this month?"},
-    {rep:"Nicola",call:"Pape & Co. Monthly",date:"Tue Jun 16, 9:30am",type:"partner",prepFlag:"warn",prepNote:"Monthly recurring. MAP missing last call. Add MAP + specific client ask."},
-    {rep:"Nicola",call:"Done!Financials",date:"Tue Jun 16, 10:15am",type:"partner",prepFlag:"missing",prepNote:"Scored 3.3 last time. No agenda. Define MAP review and pipeline ask."},
-    {rep:"Nicola",call:"ba tax Session",date:"Wed Jun 17, 10am",type:"partner",prepFlag:"ok",prepNote:"30+ ba-group.de attendees on Teams. Enablement = management. Define referral commitment ask for end."},
-    {rep:"Nicola",call:"Roedl Weekly CheckIn",date:"Mon Jun 15, 5:15pm",type:"partner",prepFlag:"warn",prepNote:"Weekly with AE. MAP review first, then which client to refer next."},
-    {rep:"Markus+Aurel",call:"iwoca / Nikolai von Stempel",date:"Tue Jun 16, 1:30pm",type:"prospect",prepFlag:"warn",prepNote:"15 min catchup with Head of Partner Acquisition at iwoca. Define partnership objective and next step before joining."},
+    {rep:"Jara",call:"Weekly Partnerships Kickoff",date:"Mon Jun 22, 10am",type:"internal",prepFlag:"ok",prepNote:"Full team kickoff — Jara leading UK. EOQ Sprint week. Bring UK pipeline update: APA demo result, RSM next steps, Xeinadin Russell follow-up."},
+    {rep:"Nicola",call:"AMICON / Moss DATEV 2-Way",date:"Mon Jun 22, 11am",type:"prospect",prepFlag:"ok",prepNote:"New — fabian.greykowski@amicon-partners.de confirmed. DATEV 2-way integration session with Nils Schaefer. Define use case and commitment ask."},
+    {rep:"Nicola",call:"Knappworst / Moss",date:"Mon Jun 22, 3:30pm",type:"prospect",prepFlag:"warn",prepNote:"s.kell@knappworst.de. Discovery or sourcing — set ICP qualification objective before joining."},
+    {rep:"Nicola",call:"Limetax / Moss",date:"Mon Jun 22, 4:15pm",type:"prospect",prepFlag:"warn",prepNote:"maximilian@limetax.de. Set qualification objective — what does qualified look like?"},
+    {rep:"Nicola",call:"Roedl Weekly CheckIn",date:"Mon Jun 22, 5:15pm",type:"partner",prepFlag:"warn",prepNote:"Weekly with AE. MAP review first — what was agreed last time? Then referral ask."},
   ]
 };
 
@@ -412,8 +434,8 @@ function renderPipeline(){
   mkChart('p-sql','bar',{
     labels:['Jan','Feb','Mar','Apr','May','Jun'],
     datasets:[
-      {label:'DE',data:[25,35,36,28,25,12],backgroundColor:'#52b788',borderWidth:0,borderRadius:3},
-      {label:'GB',data:[4,4,5,4,1,2],backgroundColor:'#c05c3a',borderWidth:0,borderRadius:3},
+      {label:'DE',data:[25,35,36,28,25,14],backgroundColor:'#52b788',borderWidth:0,borderRadius:3},
+      {label:'GB',data:[4,4,5,4,1,3],backgroundColor:'#c05c3a',borderWidth:0,borderRadius:3},
       {label:'NL',data:[9,9,15,9,9,7],backgroundColor:'#4a8ec2',borderWidth:0,borderRadius:3}
     ]
   },{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{font:{size:10},boxWidth:10}}},scales:{y:{beginAtZero:true,ticks:{font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'ps');
