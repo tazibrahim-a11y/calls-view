@@ -118,7 +118,30 @@ const UPCOMING={
   ]
 };
 
-function sc(v){return v>=4?'var(--accent)':v>=3?'var(--warn)':'var(--danger)';}
+const COMMENTARY={
+  sourcing:{
+    win:"Niels leading volume (28 calls) with consistent sourcing across NL market. Eduard Hoekstra RA scored 3.8 — best sourcing call of the period.",
+    gap:"Pre-call clarity avg 2.5 across sourcing calls — most calls open without a stated objective. Short calls (under 5 mins) dominate: 14 of 22 sourcing calls are under 5 mins.",
+    focus:"For every sourcing call this week: state your objective in the first 30 seconds. 'I'm calling because...' → 'My goal for this call is to...'"},
+  discovery:{
+    win:"AAT Partnership (Alex, 4.0) and Blue People IT (Niels, 4.0) are the strongest discovery calls of the period — both had DMs present, full qualification, and agreed next steps.",
+    gap:"Pre-call clarity avg 2.5 — lowest criterion across all discovery calls. 14 of 18 discovery calls had no stated objective at the start.",
+    focus:"One sentence before every discovery call: 'By the end of this call I want to know X and agree Y.' That sentence doubles the chance of a confirmed next step."},
+  demo:{
+    win:"Patrick Bodner Demo (Aurel, 4.3) and taavas Advisor Portal (Nicola, 4.2) — both had full solutions team, mapped workflow, and strong engagement. Demo quality is the team's strongest area.",
+    gap:"Commitment signal (CO) averaging 3.5 — partners engage with the demo but rarely commit to referring on the call. Next step quality (NS) at 3.8 — demos end with a next step but rarely a firm date.",
+    focus:"Every demo should end with a specific referral ask: 'Which client would you introduce us to first?' Not 'Do you think this could work for your clients?' — the first gets a name, the second gets a maybe."},
+  management:{
+    win:"AMT Next Steps (Alex, 4.0) — Kate engaged, referral clients discussed, marketing collab agreed. Best management call of the period.",
+    gap:"MAP below 3 on 8 of 12 management calls. Pre-call clarity avg 2.3 — lowest of any call type. Most management calls start as catch-ups with no stated agenda.",
+    focus:"Open every management call with: 'Last time we agreed X — has that happened?' That one sentence is the MAP review. Everything else follows from it."},
+  rpq:{
+    win:"3 RPQ calls this period — all correctly identified as direct customer prospects rather than referral partners.",
+    gap:"No AE handoffs confirmed on any RPQ call. All 3 contacts are progressing without an AE involved.",
+    focus:"Any RPQ call scoring 3.5+ should end with an explicit AE handoff: 'I'm going to connect you with [AE name] who can walk you through the next steps.' Name the AE on the call."},
+};
+
+{return v>=4?'var(--accent)':v>=3?'var(--warn)':'var(--danger)';}
 function bc(v){return v>=4?'#52b788':v>=3?'#c07a14':'#c05c3a';}
 function cls(v){return v>=4?'green':v>=3?'amber':'red';}
 function avg(arr){return arr.length?arr.reduce((a,b)=>a+b,0)/arr.length:0;}
