@@ -47,6 +47,14 @@ const SOURCING=[
 ];
 
 const DISCOVERY=[
+  {title:"Manthey & Manthey / Aurel",rep:"Aurel",date:"2026-07-09",dur:"24m",CB:4,DA:4,CH:4,GE:4,NS:4,PC:3,score:3.9,outcome:"demo_booked",well:"Strong discovery. Tax advisor, DATEV users, 30 employees confirmed. Johannes is DM. Demo Thu 11-12 booked.",wrong:"No pre-call objective. Product feedback noted but not deeply explored."},
+  {title:"FYBE Max Zeegers",rep:"Niels",date:"2026-07-09",dur:"25m",CB:3,DA:3,CH:3,GE:4,NS:3,PC:2,score:3.1,outcome:"follow_up_booked",well:"Interim finance professional network. Max engaged. FYBE structure understood.",wrong:"No pre-call objective. Client base still unclear (freelance intermediary). No firm next step."},
+  {title:"FYBE Jeroen Glebbeek",rep:"Niels",date:"2026-07-08",dur:"22m",CB:4,DA:3,CH:4,GE:4,NS:4,PC:2,score:3.5,outcome:"demo_booked",well:"Strong discovery. Jeroen engaged. FYBE client base understood. Demo next step agreed.",wrong:"No pre-call objective. Partnership Call Type N/A — retag to Discovery."},
+  {title:"De Coop Milena",rep:"Niels",date:"2026-07-08",dur:"20m",CB:4,DA:4,CH:4,GE:4,NS:4,PC:3,score:3.8,outcome:"follow_up_booked",well:"Strong discovery of De Coop accountancy client base. Milena is key contact. Good fit confirmed.",wrong:"No pre-call objective."},
+  {title:"BDU x Moss / Aurel",rep:"Aurel",date:"2026-07-08",dur:"22m",CB:4,DA:4,CH:4,GE:4,NS:5,PC:3,score:4.0,outcome:"demo_booked",well:"Excellent discovery. BDU is a major consulting association (550 member firms). Business-Partnership model explored. Demo Thu booked.",wrong:"No pre-call objective. Commission model not yet agreed."},
+  {title:"Lisa Schuler / WTK Kufstein",rep:"Aurel",date:"2026-07-08",dur:"31m",CB:4,DA:4,CH:4,GE:4,NS:4,PC:3,score:3.9,outcome:"demo_booked",well:"Strong discovery. Tax consultancy, DATEV users, Austrian market. Lisa is DM. Demo booked.",wrong:"No pre-call objective."},
+  {title:"Eleonore De Ridder",rep:"Aurel",date:"2026-07-07",dur:"3m",CB:2,DA:2,CH:2,GE:3,NS:2,PC:1,score:2.1,outcome:"no_next_step",well:"Contact made. SAP Business One integration angle.",wrong:"Very short. No discovery. No next step. No pre-call objective."},
+  {title:"DDA / Fenna Vervolg",rep:"Niels",date:"2026-07-07",dur:"17m",CB:3,DA:3,CH:3,GE:4,NS:3,PC:2,score:3.1,outcome:"follow_up_booked",well:"Negotiation progressing. Budget discussed (€1,000 vs €15,000). Creative partnership model being explored.",wrong:"No pre-call objective. Commercial terms not resolved. No firm next step."},
   {title:"Kock+Hellmold / Aurel",rep:"Aurel",date:"2026-07-07",dur:"19m",CB:4,DA:4,CH:4,GE:4,NS:4,PC:3,score:3.8,outcome:"follow_up_call_booked",well:"Strong discovery — accounting firm, DATEV users, client base confirmed. Felix Kumpers (Solutions) added value. Demo booked.",wrong:"No explicit pre-call objective stated."},
   {title:"Ishant Sharma",rep:"Ezer",date:"2026-07-06",dur:"10m",CB:3,DA:3,CH:3,GE:5,NS:3,PC:2,score:3.2,outcome:"follow_up_call_booked",well:"Good rapport. UK confirmed. Partnership concept understood.",wrong:"No pre-call objective. Client base not fully explored. No demo booked."},
   {title:"Franz Salzmann",rep:"Nicola",date:"2026-07-03",dur:"7m",CB:3,DA:3,CH:3,GE:4,NS:3,PC:2,score:3.0,outcome:"follow_up_call_booked",well:"Contact engaged. AT market confirmed.",wrong:"Short. No deep qualification. No pre-call objective."},
@@ -68,6 +76,9 @@ const DISCOVERY=[
 ];
 
 const DEMO=[
+  {title:"FYBE Kitty / Niels Demo",rep:"Niels",date:"2026-07-08",dur:"45m",UC:4,VA:4,WF:4,CO:4,NS:4,PC:2,score:3.8,outcome:"follow_up_booked",well:"Strong demo. FYBE interim finance professional network. Kitty engaged. Product fit confirmed.",wrong:"No pre-call objective. Partnership Call Type N/A — retag to Demo. No explicit commitment."},
+  {title:"FYBE Ewout Demo",rep:"Niels",date:"2026-07-08",dur:"32m",UC:4,VA:4,WF:4,CO:3,NS:4,PC:3,score:3.7,outcome:"follow_up_booked",well:"Good demo. CFO/controller use case mapped. Software license automation resonated.",wrong:"No pre-call objective. Commitment signal moderate."},
+  {title:"FYBE Alain Demo",rep:"Niels",date:"2026-07-08",dur:"29m",UC:4,VA:4,WF:4,CO:3,NS:4,PC:2,score:3.6,outcome:"follow_up_booked",well:"Good demo to interim CFO. Product fit for Vibe network confirmed.",wrong:"No pre-call objective."},
   {title:"taavas Advisor Portal",rep:"Nicola",date:"2026-07-03",dur:"61m",UC:5,VA:4,WF:4,CO:3,NS:4,PC:3,score:4.2,outcome:"follow_up_booked",well:"Excellent 61-min advisor portal demo with Milad Bazzaz (taavas) + solutions team. DATEV workflow mapped. Technical depth impressive.",wrong:"No explicit referral commitment. No pre-call objective stated."},
   {title:"Patrick Bodner Demo",rep:"Aurel",date:"2026-06-30",dur:"53m",UC:5,VA:4,WF:4,CO:4,NS:4,PC:3,score:4.3,outcome:"follow_up_booked",well:"Strong demo to Patrick Bodner (NorthBridge BI). Use case validated. Commitment signal positive. Follow-up agreed.",wrong:"No pre-call objective. Next step not time-bound."},
   {title:"alltax Demo",rep:"Nicola",date:"2026-06-30",dur:"47m",UC:4,VA:4,WF:4,CO:4,NS:4,PC:3,score:4.0,outcome:"follow_up_booked",well:"Strong demo with ADDISON Tse:nit integration context. Both DMs (Rebecca + Daniel) present.",wrong:"No explicit pre-call objective."},
@@ -82,6 +93,17 @@ const DEMO=[
 ];
 
 const MANAGEMENT=[
+  {title:"One Company x Moss (Jul 10)",rep:"Jara",date:"2026-07-10",dur:"25m",P:4,M:3,B:4,E:4,C:3,N:4,PC:3,score:3.6,well:"Strong relationship. API roadmap, CamelGlass migration, case study discussed. Remi engaged.",wrong:"No referral ask. No explicit MAP review. Pre-call objective not stated."},
+  {title:"Aaff / Rutger Check-in",rep:"Niels",date:"2026-07-10",dur:"20m",P:3,M:3,B:3,E:4,C:2,N:3,PC:2,score:3.1,well:"Good partner relationship. Marketing case (Van Amersfoort Racing) progressing.",wrong:"No MAP review. No referral ask. No pre-call objective."},
+  {title:"Van Amersfoort Racing / Nathalie",rep:"Niels",date:"2026-07-10",dur:"30m",P:3,M:4,B:3,E:4,C:3,N:4,PC:3,score:3.5,well:"Marketing case collaboration progressing. Next steps agreed (content, exposure).",wrong:"No referral ask made. Partnership commercial terms not clarified."},
+  {title:"Kevin Merken / Deniz",rep:"Deniz",date:"2026-07-10",dur:"6m",P:2,M:2,B:2,E:3,C:2,N:3,PC:2,score:2.4,well:"First Deniz call in analysis. Partner context established.",wrong:"Very short. No MAP, no pipeline, no referral ask. No pre-call objective."},
+  {title:"Timo / Shortcommerce Check-in",rep:"Niels",date:"2026-07-09",dur:"20m",P:3,M:3,B:3,E:4,C:2,N:3,PC:2,score:3.0,well:"Good relationship. TikTok Shop developments shared. Mutual update.",wrong:"No MAP review. No referral ask. No pre-call objective."},
+  {title:"Aurel / Nikolai Catchup (iwoca)",rep:"Aurel",date:"2026-07-09",dur:"40m",P:3,M:3,B:3,E:5,C:4,N:4,PC:3,score:3.6,well:"Strong relationship depth. Evoca/iwoca lending partnership potential explored. Competitive signals (Payhawk) discussed. Follow-up agreed.",wrong:"No MAP review. No explicit referral ask. No pipeline named."},
+  {title:"De Coop / Ivan Check-in",rep:"Niels",date:"2026-07-08",dur:"21m",P:3,M:3,B:3,E:4,C:3,N:3,PC:3,score:3.2,well:"Relationship maintained. NL partner check-in.",wrong:"No MAP review. No referral ask."},
+  {title:"SANSA CSM Enablement",rep:"Jara",date:"2026-07-07",dur:"26m",P:3,M:3,B:3,E:4,C:3,N:4,PC:3,score:3.4,well:"Good partnership intro. Ryan Harris (SANSA) engaged. Referral incentives explained. CSM UK present adding value.",wrong:"No specific referral ask. No pipeline names from SANSA yet."},
+  {title:"CharlieHR Deep-Dive",rep:"Jara",date:"2026-07-07",dur:"7m",P:3,M:3,B:2,E:3,C:2,N:3,PC:2,score:2.8,well:"Campaign idea (client list deep-dive) agreed. API integration potential surfaced.",wrong:"Very short. No MAP review. No referral ask. No pre-call objective."},
+  {title:"Barry Hoogendijk Check-in",rep:"Niels",date:"2026-07-07",dur:"6m",P:2,M:2,B:2,E:3,C:2,N:3,PC:2,score:2.5,well:"Contact maintained.",wrong:"Very short. No MAP, no pipeline, no referral ask."},
+  {title:"Twigger // Moss intro",rep:"Fred",date:"2026-07-07",dur:"9m",P:2,M:2,B:2,E:3,C:2,N:3,PC:2,score:2.6,well:"First Fred external call. Intro made. Partnership concept explained.",wrong:"No discovery depth. No qualification. Labelled Management but is effectively a Sourcing intro."},
   {title:"DRK // Moss 2026",rep:"Jara",date:"2026-07-07",dur:"28m",P:4,M:4,B:3,E:4,C:3,N:4,PC:3,score:3.5,well:"Pipeline reviewed. P.Müller engaged. Next step confirmed.",wrong:"MAP not formally reviewed. No explicit referral ask."},
   {title:"Leandro Binder (Jul 6)",rep:"Aurel",date:"2026-07-06",dur:"4m",P:2,M:2,B:2,E:3,C:2,N:3,PC:2,score:2.5,well:"Contact maintained.",wrong:"Very short. No MAP, no pipeline, no referral ask."},
   {title:"Roshan/Niels Greyt",rep:"Niels",date:"2026-07-06",dur:"23m",P:4,M:3,B:4,E:4,C:3,N:4,PC:3,score:3.5,well:"Good Greyt management. Roshan engaged. Case study discussed.",wrong:"No explicit referral ask. Pre-call objective not stated."},
@@ -99,6 +121,8 @@ const MANAGEMENT=[
 const RPQ=[
   {title:"Yuko Nuijts",rep:"Niels",date:"2026-07-03",dur:"23m",MET:3,EB:3,DC:3,DP:3,PA:4,CH:3,PC:3,score:3.4,outcome:"follow_up_booked",ae_handoff:false,well:"Good qualification. Pain confirmed. NL context. Follow-up agreed.",wrong:"No AE handoff. Economic buyer not fully confirmed."},
   {title:"Stone & Bridges RPQ",rep:"Niels",date:"2026-07-02",dur:"12m",MET:3,EB:3,DC:3,DP:3,PA:3,CH:3,PC:2,score:3.2,outcome:"follow_up_booked",ae_handoff:false,well:"Contact engaging with Moss directly (not as referral partner).",wrong:"Short. No AE handoff. Economic buyer unclear."},
+  {title:"Teijin Europe",rep:"Niels",date:"2026-07-09",dur:"19m",MET:3,EB:4,DC:3,DP:3,PA:3,CH:4,PC:2,score:3.3,outcome:"follow_up_booked",ae_handoff:false,well:"Direct customer eval. Iwan (AE) present. Pain confirmed (batch payments, receipt management).",wrong:"No AE handoff agreed on call. Decision process not fully mapped."},
+  {title:"Stone & Bridges Demo",rep:"Niels",date:"2026-07-10",dur:"28m",MET:3,EB:3,DC:3,DP:3,PA:3,CH:3,PC:2,score:3.2,outcome:"follow_up_booked",ae_handoff:false,well:"Customer evaluation demo. Timothy (AE) present. Product fit partially confirmed.",wrong:"No AE handoff. Decision process not mapped. Partnership Call Type N/A needs retag."},
   {title:"Gurucharan Singh RPQ",rep:"Alex",date:"2026-06-29",dur:"12m",MET:3,EB:3,DC:3,DP:2,PA:3,CH:3,PC:2,score:3.2,outcome:"follow_up_booked",ae_handoff:false,well:"Guy Hobson present (AE). accubooks context. RPQ correctly identified.",wrong:"No formal AE handoff agreed. Decision process not mapped."},
 ];
 
@@ -141,7 +165,13 @@ const COMMENTARY={
     focus:"Any RPQ call scoring 3.5+ should end with an explicit AE handoff: 'I'm going to connect you with [AE name] who can walk you through the next steps.' Name the AE on the call."},
 };
 
-{return v>=4?'var(--accent)':v>=3?'var(--warn)':'var(--danger)';}
+const DC=['#c05c3a','#e8a99a','#c07a14','#74c69d','#2d6a4f'];
+const DL=['<2','2-3','3-4','4-5','5'];
+const gc='rgba(0,0,0,0.05)';
+const base={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
+const charts={};
+
+function sc(v){return v>=4?'var(--accent)':v>=3?'var(--warn)':'var(--danger)';}
 function bc(v){return v>=4?'#52b788':v>=3?'#c07a14':'#c05c3a';}
 function cls(v){return v>=4?'green':v>=3?'amber':'red';}
 function avg(arr){return arr.length?arr.reduce((a,b)=>a+b,0)/arr.length:0;}
