@@ -272,23 +272,27 @@ function renderSourcing(){
   const from=document.getElementById('sf-from').value;
   const to=document.getElementById('sf-to').value;
   const rep=document.getElementById('sf-rep').value;
-  let data=filterByDate(SOURCING,from,to).filter(c=>c.score>0);
-  if(rep!=='all')data=data.filter(c=>c.rep===rep);
-
-  const scores=data.map(c=>c.score);
-  const a=avg(scores);
+  const allDate=filterByDate(SOURCING,from,to).filter(c=>c.score>0);
+  const teamAvg=avg(allDate.map(c=>c.score));
+  let data=rep==='all'?allDate:allDate.filter(c=>c.rep===rep);
+  const repAvg=avg(data.map(c=>c.score));
   const mtg=data.filter(c=>c.outcome==='discovery_booked'||c.outcome==='demo_booked').length;
+  const isFiltered=rep!=='all';
 
   document.getElementById('s-kpis').innerHTML=`
-    <div class="kpi"><div class="kpi-label">Valid calls</div><div class="kpi-value">${data.length}</div><div class="kpi-sub">scored conversations</div></div>
-    <div class="kpi"><div class="kpi-label">Team avg</div><div class="kpi-value ${cls(a)}">${fmt(a)}</div><div class="kpi-sub">Q3 baseline</div></div>
-    <div class="kpi"><div class="kpi-label">Scored ≥3.0</div><div class="kpi-value green">${data.filter(c=>c.score>=3).length}</div><div class="kpi-sub">${data.length?Math.round(data.filter(c=>c.score>=3).length/data.length*100):0}% of valid</div></div>
-    <div class="kpi"><div class="kpi-label">Meetings booked</div><div class="kpi-value green">${mtg}</div><div class="kpi-sub">discovery / demo</div></div>
+    <div class="kpi"><div class="kpi-label">Calls ${isFiltered?'('+rep+')':'(all reps)'}</div><div class="kpi-value">${data.length}</div><div class="kpi-sub">of ${allDate.length} total in period</div></div>
+    <div class="kpi"><div class="kpi-label">${isFiltered?rep+' avg':'Team avg'}</div><div class="kpi-value ${cls(repAvg)}">${fmt(repAvg)}</div><div class="kpi-sub">Q3 · selected period</div></div>
+    ${isFiltered?`<div class="kpi"><div class="kpi-label">Team avg (same period)</div><div class="kpi-value ${cls(teamAvg)}">${fmt(teamAvg)}</div><div class="kpi-sub">${repAvg&&teamAvg?(repAvg>teamAvg?'↑ '+((repAvg-teamAvg).toFixed(1))+' above team':'↓ '+((teamAvg-repAvg).toFixed(1))+' below team'):''}</div></div>`:''}
+    <div class="kpi"><div class="kpi-label">Scored ≥3.0</div><div class="kpi-value green">${data.filter(c=>c.score>=3).length}</div><div class="kpi-sub">${data.length?Math.round(data.filter(c=>c.score>=3).length/data.length*100):0}% of calls</div></div>
     <div class="kpi"><div class="kpi-label">Avg Research (R)</div><div class="kpi-value ${cls(avg(data.map(c=>c.R)))}"><span style="font-size:16px">${fmt(avg(data.map(c=>c.R)))}</span></div><div class="kpi-sub">key coaching lever</div></div>`;
 
   mkChart('s-dist','bar',{labels:DL,datasets:[{data:distBands(data),backgroundColor:DC,borderWidth:0,borderRadius:3}]},{...base,scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'sd');
   const cAvg=[avg(data.map(c=>c.O)),avg(data.map(c=>c.R)),avg(data.map(c=>c.Q)),avg(data.map(c=>c.VP)),avg(data.filter(c=>c.OBJ!=null).map(c=>c.OBJ)),avg(data.map(c=>c.MTG))].map(v=>v||0);
-  mkChart('s-crit','bar',{labels:['O (w2)','R (w3)','Q (w3)','VP (w2)','OBJ (w2)','MTG (w3)'],datasets:[{data:cAvg,backgroundColor:['#4a8ec2','#c07a14','#52b788','#9b6ea8','#c05c3a','#2d6a4f'],borderWidth:0,borderRadius:3}]},{...base,scales:{y:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'sc');
+  const tAvg=isFiltered?[avg(allDate.map(c=>c.O)),avg(allDate.map(c=>c.R)),avg(allDate.map(c=>c.Q)),avg(allDate.map(c=>c.VP)),avg(allDate.filter(c=>c.OBJ!=null).map(c=>c.OBJ)),avg(allDate.map(c=>c.MTG))].map(v=>v||0):null;
+  mkChart('s-crit','bar',{labels:['O (w2)','R (w3)','Q (w3)','VP (w2)','OBJ (w2)','MTG (w3)'],datasets:[
+    {label:isFiltered?rep:'Team',data:cAvg,backgroundColor:['#4a8ec2','#c07a14','#52b788','#9b6ea8','#c05c3a','#2d6a4f'],borderWidth:0,borderRadius:3},
+    ...(tAvg?[{label:'Team avg',data:tAvg,backgroundColor:'rgba(0,0,0,0.08)',borderWidth:0,borderRadius:3}]:[])
+  ]},{...base,plugins:{...base.plugins,legend:{display:isFiltered,labels:{font:{size:9},boxWidth:8}}},scales:{y:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'sc');
 
   document.getElementById('s-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>`
     <tr>
@@ -312,21 +316,27 @@ function renderDiscovery(){
   const to=document.getElementById('df-to').value;
   const rep=document.getElementById('df-rep').value;
   const path=document.getElementById('df-path').value;
-  let data=filterByDate(DISCOVERY,from,to);
-  if(rep!=='all')data=data.filter(c=>c.rep===rep);
-  if(path!=='all')data=data.filter(c=>c.path===path);
+  let allDate=filterByDate(DISCOVERY,from,to);
+  if(path!=='all')allDate=allDate.filter(c=>c.path===path);
+  const teamAvg=avg(allDate.map(c=>c.score));
+  let data=rep==='all'?allDate:allDate.filter(c=>c.rep===rep);
+  const repAvg=avg(data.map(c=>c.score));
+  const isFiltered=rep!=='all';
 
-  const a=avg(data.map(c=>c.score));
   document.getElementById('d-kpis').innerHTML=`
-    <div class="kpi"><div class="kpi-label">Calls</div><div class="kpi-value">${data.length}</div></div>
-    <div class="kpi"><div class="kpi-label">Team avg</div><div class="kpi-value ${cls(a)}">${fmt(a)}</div></div>
+    <div class="kpi"><div class="kpi-label">Calls ${isFiltered?'('+rep+')':'(all reps)'}</div><div class="kpi-value">${data.length}</div><div class="kpi-sub">of ${allDate.length} total in period</div></div>
+    <div class="kpi"><div class="kpi-label">${isFiltered?rep+' avg':'Team avg'}</div><div class="kpi-value ${cls(repAvg)}">${fmt(repAvg)}</div><div class="kpi-sub">selected period</div></div>
+    ${isFiltered?`<div class="kpi"><div class="kpi-label">Team avg (same period)</div><div class="kpi-value ${cls(teamAvg)}">${fmt(teamAvg)}</div><div class="kpi-sub">${repAvg&&teamAvg?(repAvg>=teamAvg?'↑ '+((repAvg-teamAvg).toFixed(1))+' above':'↓ '+((teamAvg-repAvg).toFixed(1))+' below'):''}</div></div>`:''}
     <div class="kpi"><div class="kpi-label">Demo booked</div><div class="kpi-value green">${data.filter(c=>c.outcome==='demo_booked').length}</div></div>
-    <div class="kpi"><div class="kpi-label">PA Handover</div><div class="kpi-value">${data.filter(c=>c.path==='pa_handover').length}</div></div>
-    <div class="kpi"><div class="kpi-label">PM Direct</div><div class="kpi-value">${data.filter(c=>c.path==='pm_direct').length}</div></div>`;
+    <div class="kpi"><div class="kpi-label">PA / PM Direct</div><div class="kpi-value">${data.filter(c=>c.path==='pa_handover').length} / ${data.filter(c=>c.path==='pm_direct').length}</div></div>`;
 
   mkChart('d-dist','bar',{labels:DL,datasets:[{data:distBands(data),backgroundColor:DC,borderWidth:0,borderRadius:3}]},{...base,scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'dd');
   const cA=[avg(data.map(c=>c.RAP)),avg(data.map(c=>c.R)),avg(data.map(c=>c.CB)),avg(data.map(c=>c.ADM)),avg(data.map(c=>c.CH)),avg(data.map(c=>c.NS))].map(v=>v||0);
-  mkChart('d-crit','bar',{labels:['RAP','R','CB','ADM','CH','NS'],datasets:[{data:cA,backgroundColor:['#4a8ec2','#c07a14','#52b788','#c05c3a','#9b6ea8','#2d6a4f'],borderWidth:0,borderRadius:3}]},{...base,scales:{y:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'dc');
+  const tA=isFiltered?[avg(allDate.map(c=>c.RAP)),avg(allDate.map(c=>c.R)),avg(allDate.map(c=>c.CB)),avg(allDate.map(c=>c.ADM)),avg(allDate.map(c=>c.CH)),avg(allDate.map(c=>c.NS))].map(v=>v||0):null;
+  mkChart('d-crit','bar',{labels:['RAP','R','CB','ADM','CH','NS'],datasets:[
+    {label:isFiltered?rep:'Team',data:cA,backgroundColor:['#4a8ec2','#c07a14','#52b788','#c05c3a','#9b6ea8','#2d6a4f'],borderWidth:0,borderRadius:3},
+    ...(tA?[{label:'Team avg',data:tA,backgroundColor:'rgba(0,0,0,0.08)',borderWidth:0,borderRadius:3}]:[])
+  ]},{...base,plugins:{...base.plugins,legend:{display:isFiltered,labels:{font:{size:9},boxWidth:8}}},scales:{y:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'dc');
 
   document.getElementById('d-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>`
     <tr>
@@ -345,20 +355,26 @@ function renderDemo(){
   const from=document.getElementById('emf-from').value;
   const to=document.getElementById('emf-to').value;
   const rep=document.getElementById('emf-rep').value;
-  let data=filterByDate(DEMO,from,to);
-  if(rep!=='all')data=data.filter(c=>c.rep===rep);
+  const allDate=filterByDate(DEMO,from,to);
+  const teamAvg=avg(allDate.map(c=>c.score));
+  let data=rep==='all'?allDate:allDate.filter(c=>c.rep===rep);
+  const repAvg=avg(data.map(c=>c.score));
+  const isFiltered=rep!=='all';
 
-  const a=avg(data.map(c=>c.score));
   document.getElementById('em-kpis').innerHTML=`
-    <div class="kpi"><div class="kpi-label">Calls</div><div class="kpi-value">${data.length}</div></div>
-    <div class="kpi"><div class="kpi-label">Team avg</div><div class="kpi-value ${cls(a)}">${fmt(a)}</div></div>
-    <div class="kpi"><div class="kpi-label">Scored ≥3.5</div><div class="kpi-value green">${data.filter(c=>c.score>=3.5).length}</div></div>
+    <div class="kpi"><div class="kpi-label">Calls ${isFiltered?'('+rep+')':'(all reps)'}</div><div class="kpi-value">${data.length}</div><div class="kpi-sub">of ${allDate.length} total in period</div></div>
+    <div class="kpi"><div class="kpi-label">${isFiltered?rep+' avg':'Team avg'}</div><div class="kpi-value ${cls(repAvg)}">${fmt(repAvg)}</div><div class="kpi-sub">selected period</div></div>
+    ${isFiltered?`<div class="kpi"><div class="kpi-label">Team avg (same period)</div><div class="kpi-value ${cls(teamAvg)}">${fmt(teamAvg)}</div><div class="kpi-sub">${repAvg&&teamAvg?(repAvg>=teamAvg?'↑ '+((repAvg-teamAvg).toFixed(1))+' above':'↓ '+((teamAvg-repAvg).toFixed(1))+' below'):''}</div></div>`:''}
     <div class="kpi"><div class="kpi-label">Avg REF score</div><div class="kpi-value ${cls(avg(data.map(c=>c.REF)))}"><span style="font-size:16px">${fmt(avg(data.map(c=>c.REF)))}</span></div><div class="kpi-sub">referral moment</div></div>
     <div class="kpi"><div class="kpi-label">Avg NS score</div><div class="kpi-value ${cls(avg(data.map(c=>c.NS)))}"><span style="font-size:16px">${fmt(avg(data.map(c=>c.NS)))}</span></div><div class="kpi-sub">next step quality</div></div>`;
 
   mkChart('em-dist','bar',{labels:DL,datasets:[{data:distBands(data),backgroundColor:DC,borderWidth:0,borderRadius:3}]},{...base,scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'emd');
   const cA=[avg(data.map(c=>c.TLR)),avg(data.map(c=>c.REF)),avg(data.map(c=>c.COM)),avg(data.filter(c=>c.OBJ!=null).map(c=>c.OBJ)),avg(data.map(c=>c.ENG)),avg(data.map(c=>c.NS))].map(v=>v||0);
-  mkChart('em-crit','bar',{labels:['TLR','REF','COM','OBJ','ENG','NS'],datasets:[{data:cA,backgroundColor:['#52b788','#c05c3a','#4a8ec2','#c07a14','#9b6ea8','#2d6a4f'],borderWidth:0,borderRadius:3}]},{...base,scales:{y:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'emc');
+  const tAe=isFiltered?[avg(allDate.map(c=>c.TLR)),avg(allDate.map(c=>c.REF)),avg(allDate.map(c=>c.COM)),avg(allDate.filter(c=>c.OBJ!=null).map(c=>c.OBJ)),avg(allDate.map(c=>c.ENG)),avg(allDate.map(c=>c.NS))].map(v=>v||0):null;
+  mkChart('em-crit','bar',{labels:['TLR','REF','COM','OBJ','ENG','NS'],datasets:[
+    {label:isFiltered?rep:'Team',data:cA,backgroundColor:['#52b788','#c05c3a','#4a8ec2','#c07a14','#9b6ea8','#2d6a4f'],borderWidth:0,borderRadius:3},
+    ...(tAe?[{label:'Team avg',data:tAe,backgroundColor:'rgba(0,0,0,0.08)',borderWidth:0,borderRadius:3}]:[])
+  ]},{...base,plugins:{...base.plugins,legend:{display:isFiltered,labels:{font:{size:9},boxWidth:8}}},scales:{y:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'emc');
 
   document.getElementById('em-calls').innerHTML=[...data].sort((a,b)=>b.score-a.score).map(c=>`
     <tr>
@@ -390,20 +406,21 @@ function renderMgmt(){
   const from=document.getElementById('mf-from').value;
   const to=document.getElementById('mf-to').value;
   const rep=document.getElementById('mf-rep').value;
-  let data=filterByDate(MANAGEMENT,from,to);
-  if(rep!=='all')data=data.filter(c=>c.rep===rep);
-  if(activeSub!=='all')data=data.filter(c=>c.subtype===activeSub);
-
-  const a=avg(data.map(c=>c.score));
+  let allDate=filterByDate(MANAGEMENT,from,to);
+  if(activeSub!=='all')allDate=allDate.filter(c=>c.subtype===activeSub);
+  const teamAvg=avg(allDate.map(c=>c.score));
+  let data=rep==='all'?allDate:allDate.filter(c=>c.rep===rep);
+  const repAvg=avg(data.map(c=>c.score));
+  const isFiltered=rep!=='all';
   const subtypeCounts={checkin:0,pipeline_review:0,product_enablement:0,qbr:0};
-  MANAGEMENT.filter(c=>c.date>=from&&c.date<=to).forEach(c=>{subtypeCounts[c.subtype]=(subtypeCounts[c.subtype]||0)+1;});
+  filterByDate(MANAGEMENT,from,to).forEach(c=>{subtypeCounts[c.subtype]=(subtypeCounts[c.subtype]||0)+1;});
 
   document.getElementById('m-kpis').innerHTML=`
-    <div class="kpi"><div class="kpi-label">Calls shown</div><div class="kpi-value">${data.length}</div></div>
-    <div class="kpi"><div class="kpi-label">Team avg</div><div class="kpi-value ${cls(a)}">${fmt(a)}</div></div>
+    <div class="kpi"><div class="kpi-label">Calls ${isFiltered?'('+rep+')':'(all reps)'}</div><div class="kpi-value">${data.length}</div><div class="kpi-sub">of ${allDate.length} total in period</div></div>
+    <div class="kpi"><div class="kpi-label">${isFiltered?rep+' avg':'Team avg'}</div><div class="kpi-value ${cls(repAvg)}">${fmt(repAvg)}</div><div class="kpi-sub">selected period</div></div>
+    ${isFiltered?`<div class="kpi"><div class="kpi-label">Team avg (same period)</div><div class="kpi-value ${cls(teamAvg)}">${fmt(teamAvg)}</div><div class="kpi-sub">${repAvg&&teamAvg?(repAvg>=teamAvg?'↑ '+((repAvg-teamAvg).toFixed(1))+' above':'↓ '+((teamAvg-repAvg).toFixed(1))+' below'):''}</div></div>`:''}
     <div class="kpi"><div class="kpi-label">Check-ins</div><div class="kpi-value">${subtypeCounts.checkin}</div></div>
-    <div class="kpi"><div class="kpi-label">Pipeline reviews</div><div class="kpi-value green">${subtypeCounts.pipeline_review}</div></div>
-    <div class="kpi"><div class="kpi-label">Enablements</div><div class="kpi-value amber">${subtypeCounts.product_enablement}</div></div>`;
+    <div class="kpi"><div class="kpi-label">Pipeline Rev / Enablements</div><div class="kpi-value">${subtypeCounts.pipeline_review} / ${subtypeCounts.product_enablement}</div></div>`;
 
   // Legend
   const sub=activeSub==='all'?'checkin':activeSub;
@@ -418,7 +435,11 @@ function renderMgmt(){
   const keys=activeSub==='all'?['WRM','HLT','REF','NS']:subLegends[activeSub==='all'?'checkin':activeSub].keys;
   const keyLabels=activeSub==='all'?['WRM','HLT','REF','NS']:subLegends[activeSub==='all'?'checkin':activeSub].labels.map(l=>l.split(' — ')[0]);
   const cA=keys.map(k=>avg(data.filter(c=>c[k]!=null).map(c=>c[k]))||0);
-  mkChart('m-crit','bar',{labels:keyLabels,datasets:[{data:cA,backgroundColor:Object.values(subColors),borderWidth:0,borderRadius:3}]},{...base,scales:{y:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'mc');
+  const tAm=isFiltered?keys.map(k=>avg(allDate.filter(c=>c[k]!=null).map(c=>c[k]))||0):null;
+  mkChart('m-crit','bar',{labels:keyLabels,datasets:[
+    {label:isFiltered?rep:'Team',data:cA,backgroundColor:Object.values(subColors),borderWidth:0,borderRadius:3},
+    ...(tAm?[{label:'Team avg',data:tAm,backgroundColor:'rgba(0,0,0,0.08)',borderWidth:0,borderRadius:3}]:[])
+  ]},{...base,plugins:{...base.plugins,legend:{display:isFiltered,labels:{font:{size:9},boxWidth:8}}},scales:{y:{min:0,max:5,ticks:{stepSize:1,font:{size:10}},grid:{color:gc}},x:{ticks:{font:{size:10}},grid:{display:false}}}},'mc');
 
   // Table header by sub-type
   const thead=document.getElementById('m-thead').querySelector('tr')||document.getElementById('m-thead').insertRow();
