@@ -72,12 +72,12 @@ button.send svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2;stro
     </div>
   </div>
   <div style="display:flex;gap:8px;align-items:center">
-    <span style="font-size:11px;font-weight:500;color:var(--text-tertiary);font-family:var(--mono);padding:4px 8px;background:var(--bg);border:1px solid var(--border);border-radius:5px">Q3 · w/c Jul 21</span>
+    <span style="font-size:11px;font-weight:500;color:var(--text-tertiary);font-family:var(--mono);padding:4px 8px;background:var(--bg);border:1px solid var(--border);border-radius:5px">Q3 · w/c Jul 28</span>
     <a class="dash-link" href="index.html" target="_blank">Dashboard</a>
   </div>
 </header>
 <div class="stats-bar" id="stats-bar"></div>
-<div class="baseline-note">⚠ New scorecards active from Jul 21. Q3 baseline week — scores not comparable to Q2.</div>
+<div class="baseline-note">⚠ Q3 Week 2 · w/c Jul 28. New scorecards active — Q3 baseline established W1.</div>
 <div class="chat-area" id="chat-area"></div>
 <div class="suggestions" id="suggestions"></div>
 <div class="input-area">
@@ -331,7 +331,7 @@ function buildSystemPrompt(rep){
 
   return `You are a Partnerships coaching assistant for the Moss/Nufin partnerships team. You are coaching ${r.name}, ${r.role} (${r.market} market).
 
-WEEK: w/c Jul 21, 2026 — Q3 Week 1
+WEEK: w/c Jul 28, 2026 — Q3 Week 2
 IMPORTANT: These are the first scores under new scorecards. This is the Q3 baseline. Scores are NOT comparable to Q2.
 
 SCORECARD OVERVIEW (new from Jul 21):
@@ -464,7 +464,7 @@ function openingMessage(){
   const avg=allScores.length?(allScores.reduce((a,b)=>a+b,0)/allScores.length).toFixed(1):null;
   const highlights=rep.highlights.slice(0,2).join('<br>');
   const flags=rep.flags.slice(0,2).join('<br>');
-  let msg=`<strong>Q3 Week 1 — w/c Jul 21, 2026</strong><br>`;
+  let msg=`<strong>Q3 Week 2 — w/c Jul 28, 2026</strong><br>`;
   msg+=`<em>First run on new scorecards. This is your Q3 baseline — not comparable to Q2.</em><br><br>`;
   if(avg)msg+=`<strong>Your avg this week:</strong> ${avg}/5 across ${allScores.length} scored calls.<br><br>`;
   if(highlights)msg+=`<strong>Highlights:</strong><br>${highlights}<br><br>`;

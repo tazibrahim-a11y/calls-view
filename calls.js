@@ -1,7 +1,7 @@
 /* ══════════════════════════════════════════════════
    PARTNERSHIPS CALL ANALYSIS — Q3 2026
    Team: Jara · Nicola · Ezer · Aurel · Alex · Markus · Niels · Fred · Mees · Deniz
-   Updated: Jul 29, 2026 — NEW SCORECARDS from Jul 21
+   Updated: Aug 03, 2026 — w/c Jul 28 (Q3 Week 2)
    ══════════════════════════════════════════════════ */
 
 const NOTION_PAGES = {
@@ -34,6 +34,17 @@ const REP_AVGS = [
   { week:"Jul 21", rep:"Deniz",  Sourcing:2.5,  Discovery:3.0, Demo:null, Checkin:3.0, PipelineReview:null, ProductEnablement:null, QBR:null },
   { week:"Jul 21", rep:"Mees",   Sourcing:null, Discovery:null, Demo:null, Checkin:null, PipelineReview:null, ProductEnablement:null, QBR:null },
   { week:"Jul 21", rep:"Markus", Sourcing:null, Discovery:null, Demo:null, Checkin:null, PipelineReview:null, ProductEnablement:null, QBR:null },
+  // ── Week 2: Jul 28 ──
+  { week:"Jul 28", rep:"Jara",   Sourcing:null, Discovery:3.5, Demo:3.0, Checkin:3.2, PipelineReview:3.0, ProductEnablement:3.5, QBR:null },
+  { week:"Jul 28", rep:"Nicola", Sourcing:3.0,  Discovery:null, Demo:3.0, Checkin:2.0, PipelineReview:4.0, ProductEnablement:4.0, QBR:null },
+  { week:"Jul 28", rep:"Ezer",   Sourcing:2.2,  Discovery:null, Demo:null, Checkin:4.0, PipelineReview:null, ProductEnablement:null, QBR:null },
+  { week:"Jul 28", rep:"Aurel",  Sourcing:2.7,  Discovery:3.5, Demo:3.0, Checkin:null, PipelineReview:null, ProductEnablement:null, QBR:null },
+  { week:"Jul 28", rep:"Alex",   Sourcing:1.3,  Discovery:3.5, Demo:3.0, Checkin:null, PipelineReview:null, ProductEnablement:null, QBR:null },
+  { week:"Jul 28", rep:"Niels",  Sourcing:2.0,  Discovery:2.0, Demo:null, Checkin:3.3, PipelineReview:3.0, ProductEnablement:3.7, QBR:null },
+  { week:"Jul 28", rep:"Fred",   Sourcing:1.5,  Discovery:null, Demo:null, Checkin:null, PipelineReview:null, ProductEnablement:4.0, QBR:null },
+  { week:"Jul 28", rep:"Deniz",  Sourcing:2.0,  Discovery:null, Demo:null, Checkin:3.0, PipelineReview:null, ProductEnablement:null, QBR:null },
+  { week:"Jul 28", rep:"Mees",   Sourcing:null, Discovery:null, Demo:null, Checkin:null, PipelineReview:null, ProductEnablement:null, QBR:null },
+  { week:"Jul 28", rep:"Markus", Sourcing:null, Discovery:null, Demo:null, Checkin:null, PipelineReview:null, ProductEnablement:null, QBR:null },
 ];
 
 /* ══ SOURCING — new criteria: O·R·Q·VP·OBJ·MTG ══
@@ -64,6 +75,29 @@ const SOURCING = [
   {title:"Rachael Woosey",rep:"Ezer",date:"2026-07-27",dur:"2m",O:2,R:1,Q:1,VP:2,OBJ:null,MTG:1,HO:null,score:1.5,outcome:"no_next_step",well:"Contact made.",wrong:"No research. No qualification. No next step."},
   {title:"Jonathan Carr ACA",rep:"Ezer",date:"2026-07-28",dur:"2m",O:2,R:2,Q:1,VP:2,OBJ:null,MTG:1,HO:null,score:1.6,outcome:"no_next_step",well:"ACA contact — right profile.",wrong:"Gatekeeper dynamic. No DM reached. No next step."},
   {title:"Lisa Colwill",rep:"Ezer",date:"2026-07-28",dur:"2m",O:2,R:1,Q:1,VP:2,OBJ:null,MTG:1,HO:null,score:1.4,outcome:"no_next_step",well:"Contact made.",wrong:"No research. No qualification. No meeting."},
+  // ── Week 2: Jul 28 ──
+  {title:"Inez Buitenwerf",rep:"Niels",date:"2026-07-30",dur:"5m",O:2,R:2,Q:2,VP:2,OBJ:null,MTG:2,HO:null,score:2.0,outcome:"follow_up_agreed",well:"Accountant contact reached.",wrong:"Short. No qualification depth. No meeting booked."},
+  {title:"Katinka den Braber",rep:"Niels",date:"2026-07-30",dur:"3m",O:2,R:2,Q:2,VP:2,OBJ:null,MTG:1,HO:null,score:2.0,outcome:"no_next_step",well:"Contact made.",wrong:"Too short. No qualification. No next step."},
+  {title:"Martin Gugel",rep:"Nicola",date:"2026-07-30",dur:"5m",O:3,R:3,Q:2,VP:3,OBJ:null,MTG:3,HO:null,score:2.8,outcome:"follow_up_agreed",well:"Accounting contact. Relevant hook. Follow-up agreed.",wrong:"No client base confirmation. No date locked."},
+  {title:"Joep van der Vliet",rep:"Niels",date:"2026-07-29",dur:"3m",O:3,R:3,Q:2,VP:3,OBJ:null,MTG:2,HO:null,score:2.6,outcome:"follow_up_agreed",well:"Contact made. Cards area confirmed.",wrong:"Short. No qualification. No date."},
+  {title:"Joey Bont",rep:"Niels",date:"2026-07-29",dur:"3m",O:1,R:1,Q:1,VP:1,OBJ:null,MTG:1,HO:null,score:1.0,outcome:"no_next_step",well:"Contact attempted.",wrong:"No research. No qualification. No next step."},
+  {title:"Dennis Hilgefort",rep:"Deniz",date:"2026-07-29",dur:"3m",O:2,R:2,Q:2,VP:2,OBJ:null,MTG:2,HO:null,score:2.0,outcome:"follow_up_agreed",well:"Contact made.",wrong:"Short. No qualification depth."},
+  {title:"Ronan Shally",rep:"Alex",date:"2026-07-29",dur:"1m",O:1,R:1,Q:1,VP:1,OBJ:null,MTG:1,HO:null,score:1.0,outcome:"no_next_step",well:"Contact attempted.",wrong:"Under 1 min. No substance."},
+  {title:"James Piper",rep:"Alex",date:"2026-07-29",dur:"1m",O:1,R:1,Q:1,VP:1,OBJ:null,MTG:1,HO:null,score:1.0,outcome:"no_next_step",well:"Contact attempted.",wrong:"Under 1 min. No substance."},
+  {title:"Nipun Gupta",rep:"Alex",date:"2026-07-29",dur:"1m",O:2,R:1,Q:1,VP:2,OBJ:null,MTG:2,HO:null,score:1.6,outcome:"no_next_step",well:"Accounting contact reached.",wrong:"Gatekeeper. No qualification. No next step."},
+  {title:"Frank Schmidt",rep:"Aurel",date:"2026-07-28",dur:"7m",O:3,R:3,Q:3,VP:3,OBJ:null,MTG:3,HO:null,score:3.0,outcome:"follow_up_agreed",well:"Relevant contact. Partnership relevance confirmed.",wrong:"No specific date."},
+  {title:"Martin Huber",rep:"Aurel",date:"2026-07-28",dur:"2m",O:3,R:2,Q:2,VP:2,OBJ:null,MTG:2,HO:null,score:2.4,outcome:"callback_agreed",well:"Contact made.",wrong:"Too short. Gatekeeper dynamic."},
+  {title:"Christian Neidl",rep:"Aurel",date:"2026-07-28",dur:"4m",O:2,R:2,Q:2,VP:2,OBJ:null,MTG:2,HO:null,score:2.0,outcome:"no_next_step",well:"Accounting contact.",wrong:"Gatekeeper. No qualification. No next step."},
+  {title:"Cerith Williams",rep:"Ezer",date:"2026-07-28",dur:"4m",O:2,R:1,Q:1,VP:2,OBJ:null,MTG:1,HO:null,score:1.5,outcome:"no_next_step",well:"Contact made.",wrong:"No research. No qualification. No next step."},
+  {title:"Jonathan Carr ACA",rep:"Ezer",date:"2026-07-28",dur:"2m",O:2,R:2,Q:1,VP:2,OBJ:null,MTG:1,HO:null,score:1.6,outcome:"no_next_step",well:"ACA contact.",wrong:"Gatekeeper. No next step."},
+  {title:"Lisa Colwill (W2)",rep:"Ezer",date:"2026-07-29",dur:"2m",O:2,R:1,Q:1,VP:2,OBJ:null,MTG:1,HO:null,score:1.4,outcome:"no_next_step",well:"Contact made.",wrong:"No research. No qualification. No next step."},
+  {title:"Jean Freeman",rep:"Alex",date:"2026-07-28",dur:"1m",O:1,R:1,Q:1,VP:1,OBJ:null,MTG:1,HO:null,score:1.0,outcome:"no_next_step",well:"Contact attempted.",wrong:"1 min. No substance."},
+  {title:"Paul Norris",rep:"Alex",date:"2026-07-28",dur:"1m",O:2,R:1,Q:1,VP:1,OBJ:null,MTG:2,HO:null,score:1.4,outcome:"no_next_step",well:"Accounting firm reached.",wrong:"Gatekeeper. No conversation."},
+  {title:"Chris Callow",rep:"Alex",date:"2026-07-28",dur:"1m",O:1,R:1,Q:1,VP:1,OBJ:null,MTG:1,HO:null,score:1.0,outcome:"no_next_step",well:"Contact attempted.",wrong:"1 min. No substance."},
+  {title:"Fred Sourcing A",rep:"Fred",date:"2026-07-28",dur:"5m",O:3,R:3,Q:2,VP:3,OBJ:null,MTG:3,HO:null,score:2.8,outcome:"follow_up_agreed",well:"Cards area confirmed. Follow-up agreed.",wrong:"No specific date. No qualification depth."},
+  {title:"James Ripley",rep:"Fred",date:"2026-07-28",dur:"2m",O:1,R:1,Q:1,VP:1,OBJ:null,MTG:1,HO:null,score:1.0,outcome:"no_next_step",well:"Contact attempted.",wrong:"Gatekeeper. No substance."},
+  {title:"Charles Adams",rep:"Fred",date:"2026-07-28",dur:"2m",O:1,R:1,Q:1,VP:1,OBJ:null,MTG:1,HO:null,score:1.0,outcome:"no_next_step",well:"Contact attempted.",wrong:"Gatekeeper. No substance."},
+  {title:"Hannah Roome (W2)",rep:"Fred",date:"2026-07-28",dur:"1m",O:1,R:1,Q:1,VP:1,OBJ:null,MTG:1,HO:null,score:1.0,outcome:"no_next_step",well:"Contact attempted.",wrong:"1 min. No substance."},
 ];
 
 /* ══ DISCOVERY — new criteria: RAP·R·CB·ADM·CH·NS ══
@@ -90,6 +124,14 @@ const DISCOVERY = [
   {title:"Gerwin Koning Discovery",rep:"Niels",date:"2026-07-23",dur:"6m",path:"pm_direct",RAP:3,R:3,CB:3,ADM:2,CH:2,NS:3,score:2.7,outcome:"follow_up_agreed",well:"Good intro. Accounting context confirmed.",wrong:"Too short for full qualification. Access to decision moment not explored."},
   {title:"Odoo Experts - Erwin",rep:"Niels",date:"2026-07-28",dur:"19m",path:"pm_direct",RAP:2,R:2,CB:2,ADM:2,CH:2,NS:2,score:2.0,outcome:"no_next_step",well:"ERP integration angle relevant.",wrong:"Score 2/5 — qualification incomplete. No clear next step."},
   {title:"BePe Hamburg",rep:"Jara",date:"2026-07-21",dur:"13m",path:"pm_direct",RAP:1,R:1,CB:1,ADM:1,CH:1,NS:1,score:1.0,outcome:"no_next_step",well:"Contact present.",wrong:"No prior context. No qualification. No access to decision moment. No next step."},
+  // ── Week 2: Jul 28 ──
+  {title:"Fabian Gewald Discovery",rep:"Aurel",date:"2026-07-29",dur:"40m",path:"pm_direct",RAP:4,R:4,CB:4,ADM:4,CH:4,NS:4,score:4.0,outcome:"demo_booked",well:"Strong qualification. ADM confirmed with specific example. Priscilla as champion identified. Demo booked.",wrong:"Nothing significant."},
+  {title:"AHW Digital W2",rep:"Jara",date:"2026-07-28",dur:"31m",path:"pm_direct",RAP:4,R:4,CB:4,ADM:3,CH:3,NS:3,score:3.5,outcome:"follow_up_agreed",well:"Good qualification. Product feedback surfaced. Multiple areas explored.",wrong:"ADM stated but not validated with specific example."},
+  {title:"Tech Enable W2",rep:"Alex",date:"2026-07-28",dur:"25m",path:"pm_direct",RAP:4,R:4,CB:4,ADM:4,CH:3,NS:3,score:3.8,outcome:"follow_up_agreed",well:"Strong second discovery. Integration use case deepened. Prior context referenced.",wrong:"Champion not fully confirmed. Next step exploratory rather than demo."},
+  {title:"NAS Conception",rep:"Aurel",date:"2026-07-29",dur:"27m",path:"pm_direct",RAP:3,R:3,CB:3,ADM:3,CH:3,NS:3,score:3.0,outcome:"follow_up_agreed",well:"Tax advisory firm with SMB clients. Cards/reimbursements relevant. Follow-up agreed.",wrong:"ADM not validated with example. Champion not identified."},
+  {title:"Finban x Moss",rep:"Jara",date:"2026-07-30",dur:"20m",path:"pm_direct",RAP:3,R:3,CB:3,ADM:3,CH:3,NS:3,score:3.0,outcome:"follow_up_agreed",well:"Good rapport. Product feedback surfaced. Competitive intel gathered.",wrong:"ADM claimed but not validated. No demo booked."},
+  {title:"Mike Wong",rep:"Alex",date:"2026-07-31",dur:"22m",path:"pm_direct",RAP:3,R:3,CB:3,ADM:3,CH:3,NS:3,score:3.0,outcome:"follow_up_agreed",well:"AI + intelligence angle explored. Multiple product areas relevant.",wrong:"ADM not probed with example. Champion not confirmed."},
+  {title:"Odoo Experts W2",rep:"Niels",date:"2026-07-28",dur:"19m",path:"pm_direct",RAP:2,R:2,CB:2,ADM:2,CH:2,NS:2,score:2.0,outcome:"no_next_step",well:"ERP integration angle relevant.",wrong:"Qualification incomplete. ADM not explored. No clear next step."},
 ];
 
 /* ══ DEMO — new criteria: TLR·REF·COM·OBJ·ENG·NS ══
@@ -105,6 +147,11 @@ const DEMO = [
   {title:"Pape & Co Advisor Portal",rep:"Nicola",date:"2026-07-28",dur:"75m",TLR:3,REF:3,COM:3,OBJ:3,ENG:3,NS:3,score:3.0,outcome:"follow_up_agreed",well:"Product areas relevant. Partner engaged. Concerns addressed.",wrong:"Referral moment not explicitly coached. Long but next step soft."},
   {title:"Martijn FYBE Demo",rep:"Niels",date:"2026-07-23",dur:"19m",TLR:3,REF:3,COM:3,OBJ:null,ENG:3,NS:3,score:3.0,outcome:"follow_up_agreed",well:"Good intro demo for new FYBE contact.",wrong:"Short. Referral moment not coached. Commercial not covered."},
   {title:"Happy Days MK Demo",rep:"Fred",date:"2026-07-24",dur:"45m",TLR:2,REF:2,COM:2,OBJ:null,ENG:2,NS:2,score:2.0,outcome:"no_next_step",well:"Long call. Multiple product areas shown.",wrong:"Not tailored. Referral moment not discussed. No commercial. No next step."},
+  // ── Week 2: Jul 28 ──
+  {title:"Blubooks Demo",rep:"Alex",date:"2026-07-30",dur:"33m",TLR:3,REF:3,COM:3,OBJ:null,ENG:3,NS:3,score:3.0,outcome:"follow_up_agreed",well:"Product areas covered for bookkeeping clients. Engagement decent.",wrong:"Referral moment not explicitly coached. Commercial not proactively raised."},
+  {title:"Benedikt Ebert BDU",rep:"Aurel",date:"2026-07-30",dur:"45m",TLR:3,REF:3,COM:3,OBJ:null,ENG:3,NS:3,score:3.0,outcome:"follow_up_agreed",well:"Long session. Product areas relevant to consulting clients.",wrong:"Tailoring surface-level. Referral moment not coached."},
+  {title:"Catalyst Demo",rep:"Jara",date:"2026-07-29",dur:"47m",TLR:3,REF:3,COM:3,OBJ:3,ENG:3,NS:3,score:3.0,outcome:"follow_up_agreed",well:"Concerns addressed. Product areas covered. ERP integration angle explored.",wrong:"Referral moment not coached. Next step soft."},
+  {title:"Pape & Co Demo W2",rep:"Nicola",date:"2026-07-28",dur:"75m",TLR:3,REF:3,COM:3,OBJ:3,ENG:3,NS:3,score:3.0,outcome:"follow_up_agreed",well:"Long structured demo. Advisor portal angle. Partner engaged.",wrong:"Referral moment not explicitly coached. Next step vague."},
 ];
 
 /* ══ MANAGEMENT — sub-typed ══
@@ -162,15 +209,45 @@ const MANAGEMENT = [
   {title:"Pape & Co Monthly",rep:"Nicola",date:"2026-07-21",dur:"24m",subtype:"checkin",WRM:2,HLT:2,REF:2,NS:2,score:2.0,outcome:"no_next_step",well:"Monthly cadence maintained. Product feedback.",wrong:"No referral signal. No specific next step."},
   {title:"Sebastian Haidn",rep:"Deniz",date:"2026-07-28",dur:"10m",subtype:"checkin",WRM:3,HLT:2,REF:2,NS:2,score:2.3,outcome:"follow_up_agreed",well:"Contact made.",wrong:"Gatekeeper dynamic. No referral signal. No specific next step."},
   {title:"Dirk Seeger",rep:"Deniz",date:"2026-07-28",dur:"3m",subtype:"checkin",WRM:2,HLT:1,REF:1,NS:1,score:1.3,outcome:"no_next_step",well:"Contact attempted.",wrong:"Gatekeeper. No meaningful conversation."},
+  // ── Week 2: Jul 28 ──
+  {title:"Greyt & Moss - Bert",rep:"Niels",date:"2026-07-31",dur:"33m",subtype:"product_enablement",GAP:5,PRD:5,UND:5,RMC:5,NS2:5,score:5.0,outcome:"follow_up_agreed",well:"Exceptional 33-min enablement. All product areas covered. Understanding confirmed. Referral moment explicitly coached. Specific next step.",wrong:"Nothing significant."},
+  {title:"Praevo Partners",rep:"Fred",date:"2026-07-31",dur:"54m",subtype:"product_enablement",GAP:4,PRD:4,UND:4,RMC:4,NS2:4,score:4.0,outcome:"follow_up_agreed",well:"Thorough 54-min enablement. Product areas well covered. Understanding confirmed. Ezer present as well.",wrong:"Knowledge gap not fully confirmed upfront."},
+  {title:"4PointZero Enablement",rep:"Jara",date:"2026-07-29",dur:"35m",subtype:"product_enablement",GAP:4,PRD:4,UND:4,RMC:4,NS2:4,score:4.0,outcome:"follow_up_agreed",well:"All product areas covered. Referral moment connected. Competitive intel gathered.",wrong:"Knowledge gap not explicitly confirmed before starting."},
+  {title:"Büsra Ecovis",rep:"Nicola",date:"2026-07-29",dur:"14m",subtype:"product_enablement",GAP:4,PRD:4,UND:4,RMC:4,NS2:4,score:4.0,outcome:"follow_up_agreed",well:"Accounting integrations relevant to Ecovis. Understanding confirmed. Specific next step.",wrong:"Nothing significant."},
+  {title:"Peter FYBE W2",rep:"Niels",date:"2026-07-28",dur:"26m",subtype:"product_enablement",GAP:3,PRD:4,UND:3,RMC:4,NS2:4,score:3.8,outcome:"follow_up_agreed",well:"Product areas relevant. Referral moment connected. Specific next step.",wrong:"Knowledge gap not confirmed upfront."},
+  {title:"Moore TK Pipeline",rep:"Nicola",date:"2026-07-30",dur:"28m",subtype:"pipeline_review",REFS:4,BLK:4,STALE:3,NEWREF:4,NS:4,score:3.8,outcome:"follow_up_agreed",well:"Referrals reviewed by name. Blockers actioned. New opportunity surfaced. Clear next step.",wrong:"Stale referrals reactive rather than proactive."},
+  {title:"NA Media Pipeline",rep:"Jara",date:"2026-07-31",dur:"10m",subtype:"pipeline_review",REFS:3,BLK:3,STALE:3,NEWREF:3,NS:3,score:3.0,outcome:"follow_up_agreed",well:"Pipeline reviewed. Follow-up agreed.",wrong:"Short. Not all referrals reviewed systematically."},
+  {title:"Dave YourFirst Pipeline",rep:"Niels",date:"2026-07-30",dur:"17m",subtype:"pipeline_review",REFS:3,BLK:3,STALE:3,NEWREF:3,NS:3,score:3.0,outcome:"follow_up_agreed",well:"Pipeline covered. Referrals discussed.",wrong:"Not fully systematic. Stale referrals not proactively raised."},
+  {title:"Anneleen VAR",rep:"Niels",date:"2026-07-30",dur:"13m",subtype:"checkin",WRM:4,HLT:4,REF:4,NS:4,score:4.0,outcome:"follow_up_agreed",well:"Clear purpose. Partner health surfaced. Referral signal present. Specific next step.",wrong:"Nothing significant."},
+  {title:"Johan van Rest",rep:"Niels",date:"2026-07-30",dur:"7m",subtype:"checkin",WRM:4,HLT:4,REF:4,NS:4,score:4.0,outcome:"follow_up_agreed",well:"Warm call. Referral signal surfaced. Next step agreed.",wrong:"Nothing significant."},
+  {title:"Daan Krosse",rep:"Niels",date:"2026-07-30",dur:"4m",subtype:"checkin",WRM:4,HLT:3,REF:4,NS:4,score:3.8,outcome:"follow_up_agreed",well:"Short but purposeful. Cards area confirmed. Referral signal. Next step.",wrong:"Health check brief."},
+  {title:"Ted Embora",rep:"Niels",date:"2026-07-29",dur:"11m",subtype:"checkin",WRM:4,HLT:3,REF:4,NS:4,score:3.8,outcome:"follow_up_agreed",well:"Purpose clear. Referral signal — Embora client in scope. Specific next step.",wrong:"Health check brief."},
+  {title:"Sabine Sommerfeldt",rep:"Deniz",date:"2026-07-30",dur:"8m",subtype:"checkin",WRM:4,HLT:4,REF:4,NS:4,score:4.0,outcome:"follow_up_agreed",well:"Clear purpose. Partner health probed. Referral signal surfaced. Specific next step.",wrong:"Nothing significant."},
+  {title:"Poool Next Steps",rep:"Jara",date:"2026-07-31",dur:"15m",subtype:"product_enablement",GAP:3,PRD:3,UND:3,RMC:3,NS2:3,score:3.0,outcome:"follow_up_agreed",well:"ERP use case covered. Product feedback gathered.",wrong:"Knowledge gap not confirmed. Referral moment not connected."},
+  {title:"Lars Nijkerk",rep:"Niels",date:"2026-07-29",dur:"5m",subtype:"checkin",WRM:3,HLT:3,REF:3,NS:3,score:3.0,outcome:"follow_up_agreed",well:"Competitive intel surfaced. Check-in completed.",wrong:"No referral signal. Next step soft."},
+  {title:"Bert van der Meer",rep:"Niels",date:"2026-07-29",dur:"1m",subtype:"checkin",WRM:3,HLT:2,REF:2,NS:2,score:2.5,outcome:"no_next_step",well:"Brief contact made.",wrong:"Too short. No referral signal. No next step."},
+  {title:"Wim Boer W2",rep:"Niels",date:"2026-07-28",dur:"5m",subtype:"checkin",WRM:4,HLT:3,REF:3,NS:3,score:3.3,outcome:"follow_up_agreed",well:"Competitive intel. Referral signal present. Follow-up agreed.",wrong:"Next step vague — no date."},
+  {title:"Fabian van der Schee W2",rep:"Niels",date:"2026-07-28",dur:"6m",subtype:"checkin",WRM:3,HLT:3,REF:3,NS:3,score:3.0,outcome:"follow_up_agreed",well:"Check-in completed. Cards context confirmed.",wrong:"No referral signal. Next step soft."},
+  {title:"Dirk finQuesto W2",rep:"Niels",date:"2026-07-28",dur:"17m",subtype:"checkin",WRM:3,HLT:3,REF:3,NS:3,score:3.0,outcome:"follow_up_agreed",well:"Competitive intel gathered. Product feedback. Check-in completed.",wrong:"Referral signal not probed. Next step not specific."},
+  {title:"awicontax Viktor W2",rep:"Nicola",date:"2026-07-28",dur:"3m",subtype:"checkin",WRM:2,HLT:1,REF:1,NS:1,score:2.0,outcome:"no_next_step",well:"Contact made.",wrong:"No purpose again. No health check. No referral signal. No next step. Second consecutive week."},
+  {title:"Jan Niemeyer W2",rep:"Deniz",date:"2026-07-29",dur:"5m",subtype:"checkin",WRM:3,HLT:3,REF:3,NS:3,score:3.0,outcome:"follow_up_agreed",well:"Cards context confirmed. Check-in completed.",wrong:"No referral signal. Next step soft."},
+  {title:"Nael Jazeh W2",rep:"Deniz",date:"2026-07-28",dur:"6m",subtype:"checkin",WRM:3,HLT:3,REF:3,NS:3,score:3.0,outcome:"follow_up_agreed",well:"Cards area confirmed. Follow-up agreed.",wrong:"Health check minimal. No referral signal."},
+  {title:"Ralf Meisel W2",rep:"Deniz",date:"2026-07-28",dur:"2m",subtype:"checkin",WRM:3,HLT:2,REF:2,NS:2,score:2.5,outcome:"follow_up_agreed",well:"Contact maintained.",wrong:"Very short. No health check depth. No referral signal."},
+  {title:"Daniel Geiss W2",rep:"Deniz",date:"2026-07-28",dur:"4m",subtype:"checkin",WRM:3,HLT:3,REF:2,NS:3,score:2.8,outcome:"follow_up_agreed",well:"Good intro. Follow-up agreed.",wrong:"No referral signal probed."},
+  {title:"Petra Radosztics W2",rep:"Deniz",date:"2026-07-28",dur:"3m",subtype:"checkin",WRM:3,HLT:2,REF:2,NS:2,score:2.3,outcome:"follow_up_agreed",well:"Contact made.",wrong:"Short. No health check depth. No referral signal."},
+  {title:"Sebastian Haidn W2",rep:"Deniz",date:"2026-07-28",dur:"10m",subtype:"checkin",WRM:3,HLT:2,REF:2,NS:2,score:2.5,outcome:"follow_up_agreed",well:"Contact maintained.",wrong:"Gatekeeper dynamic. No referral signal."},
+  {title:"Dirk Seeger W2",rep:"Deniz",date:"2026-07-28",dur:"3m",subtype:"checkin",WRM:2,HLT:1,REF:1,NS:1,score:2.0,outcome:"no_next_step",well:"Contact attempted.",wrong:"Gatekeeper. No substance."},
+  {title:"Darron Enablement",rep:"Niels",date:"2026-07-29",dur:"5m",subtype:"product_enablement",GAP:3,PRD:3,UND:3,RMC:3,NS2:3,score:3.0,outcome:"follow_up_agreed",well:"Cards area relevant. Check-in completed.",wrong:"Short. Referral moment not coached."},
+  {title:"Joeri van Zijp",rep:"Niels",date:"2026-07-29",dur:"5m",subtype:"product_enablement",GAP:3,PRD:3,UND:3,RMC:3,NS2:3,score:3.0,outcome:"follow_up_agreed",well:"Cards area relevant.",wrong:"Short. Knowledge gap not confirmed. Referral moment not coached."},
 ];
 
 /* ══ PIPELINE ══ */
 const PIPELINE = {
   funnel: {
-    DE: { sourced: 12, discovery: 6, demo: 4 },
-    GB: { sourced: 18, discovery: 5, demo: 3 },
-    NL: { sourced: 10, discovery: 7, demo: 4 },
-    AT: { sourced: 4,  discovery: 2, demo: 2 },
+    DE: { sourced: 18, discovery: 9, demo: 6 },
+    GB: { sourced: 28, discovery: 8, demo: 5 },
+    NL: { sourced: 16, discovery: 10, demo: 5 },
+    AT: { sourced: 7,  discovery: 4, demo: 3 },
   },
   q3_targets: {
     DE: { sqls: 18, arr: 45000 },
