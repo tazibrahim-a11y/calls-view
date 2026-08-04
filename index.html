@@ -104,8 +104,8 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--surface2)}
     </div>
   </div>
   <div class="filters">
-    <div class="filter-group"><label>From</label><input type="date" id="sf-from" value="2026-07-21"></div>
-    <div class="filter-group"><label>To</label><input type="date" id="sf-to" value="2026-07-29"></div>
+    <div class="filter-group"><label>From</label><input type="date" id="sf-from" value="2026-05-15"></div>
+    <div class="filter-group"><label>To</label><input type="date" id="sf-to" value="2026-07-31"></div>
     <div class="filter-sep"></div>
     <div class="filter-group"><label>Rep</label><select id="sf-rep"><option value="all">All reps</option></select></div>
   </div>
@@ -139,8 +139,8 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--surface2)}
     </div>
   </div>
   <div class="filters">
-    <div class="filter-group"><label>From</label><input type="date" id="df-from" value="2026-07-21"></div>
-    <div class="filter-group"><label>To</label><input type="date" id="df-to" value="2026-07-29"></div>
+    <div class="filter-group"><label>From</label><input type="date" id="df-from" value="2026-05-15"></div>
+    <div class="filter-group"><label>To</label><input type="date" id="df-to" value="2026-07-31"></div>
     <div class="filter-sep"></div>
     <div class="filter-group"><label>Path</label><select id="df-path"><option value="all">All paths</option><option value="pa_handover">PA Handover</option><option value="pm_direct">PM Direct</option></select></div>
     <div class="filter-group"><label>Rep</label><select id="df-rep"><option value="all">All reps</option></select></div>
@@ -175,8 +175,8 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--surface2)}
     </div>
   </div>
   <div class="filters">
-    <div class="filter-group"><label>From</label><input type="date" id="emf-from" value="2026-07-21"></div>
-    <div class="filter-group"><label>To</label><input type="date" id="emf-to" value="2026-07-29"></div>
+    <div class="filter-group"><label>From</label><input type="date" id="emf-from" value="2026-05-15"></div>
+    <div class="filter-group"><label>To</label><input type="date" id="emf-to" value="2026-07-31"></div>
     <div class="filter-sep"></div>
     <div class="filter-group"><label>Rep</label><select id="emf-rep"><option value="all">All reps</option></select></div>
   </div>
@@ -205,8 +205,8 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--surface2)}
     <button class="mgmt-sub-btn" data-sub="qbr">QBR</button>
   </div>
   <div class="filters">
-    <div class="filter-group"><label>From</label><input type="date" id="mf-from" value="2026-07-21"></div>
-    <div class="filter-group"><label>To</label><input type="date" id="mf-to" value="2026-07-29"></div>
+    <div class="filter-group"><label>From</label><input type="date" id="mf-from" value="2026-05-15"></div>
+    <div class="filter-group"><label>To</label><input type="date" id="mf-to" value="2026-07-31"></div>
     <div class="filter-sep"></div>
     <div class="filter-group"><label>Rep</label><select id="mf-rep"><option value="all">All reps</option></select></div>
   </div>
@@ -267,12 +267,18 @@ function barHtml(v){const pct=Math.round(v/5*100);const c=v>=4?'#52b788':v>=3?'#
 function distBands(data){const b=[0,0,0,0];data.forEach(c=>{if(c.score<2)b[0]++;else if(c.score<3)b[1]++;else if(c.score<4)b[2]++;else b[3]++;});return b;}
 function filterByDate(data,from,to){return data.filter(c=>c.date>=from&&c.date<=to);}
 
+// Merge historical + Q3 into unified arrays
+const ALL_SOURCING   = [...(typeof HISTORICAL_SOURCING   !=='undefined'?HISTORICAL_SOURCING:[]  ), ...SOURCING];
+const ALL_DISCOVERY  = [...(typeof HISTORICAL_DISCOVERY  !=='undefined'?HISTORICAL_DISCOVERY:[] ), ...DISCOVERY];
+const ALL_DEMO       = [...(typeof HISTORICAL_DEMO       !=='undefined'?HISTORICAL_DEMO:[]      ), ...DEMO];
+const ALL_MANAGEMENT = [...(typeof HISTORICAL_MANAGEMENT !=='undefined'?HISTORICAL_MANAGEMENT:[] ), ...MANAGEMENT];
+
 /* ══ SOURCING ══ */
 function renderSourcing(){
   const from=document.getElementById('sf-from').value;
   const to=document.getElementById('sf-to').value;
   const rep=document.getElementById('sf-rep').value;
-  const allDate=filterByDate(SOURCING,from,to).filter(c=>c.score>0);
+  const allDate=filterByDate(ALL_SOURCING,from,to).filter(c=>c.score>0);
   const teamAvg=avg(allDate.map(c=>c.score));
   let data=rep==='all'?allDate:allDate.filter(c=>c.rep===rep);
   const repAvg=avg(data.map(c=>c.score));
@@ -316,7 +322,7 @@ function renderDiscovery(){
   const to=document.getElementById('df-to').value;
   const rep=document.getElementById('df-rep').value;
   const path=document.getElementById('df-path').value;
-  let allDate=filterByDate(DISCOVERY,from,to);
+  let allDate=filterByDate(ALL_DISCOVERY,from,to);
   if(path!=='all')allDate=allDate.filter(c=>c.path===path);
   const teamAvg=avg(allDate.map(c=>c.score));
   let data=rep==='all'?allDate:allDate.filter(c=>c.rep===rep);
@@ -355,7 +361,7 @@ function renderDemo(){
   const from=document.getElementById('emf-from').value;
   const to=document.getElementById('emf-to').value;
   const rep=document.getElementById('emf-rep').value;
-  const allDate=filterByDate(DEMO,from,to);
+  const allDate=filterByDate(ALL_DEMO,from,to);
   const teamAvg=avg(allDate.map(c=>c.score));
   let data=rep==='all'?allDate:allDate.filter(c=>c.rep===rep);
   const repAvg=avg(data.map(c=>c.score));
@@ -406,14 +412,14 @@ function renderMgmt(){
   const from=document.getElementById('mf-from').value;
   const to=document.getElementById('mf-to').value;
   const rep=document.getElementById('mf-rep').value;
-  let allDate=filterByDate(MANAGEMENT,from,to);
+  let allDate=filterByDate(ALL_MANAGEMENT,from,to);
   if(activeSub!=='all')allDate=allDate.filter(c=>c.subtype===activeSub);
   const teamAvg=avg(allDate.map(c=>c.score));
   let data=rep==='all'?allDate:allDate.filter(c=>c.rep===rep);
   const repAvg=avg(data.map(c=>c.score));
   const isFiltered=rep!=='all';
   const subtypeCounts={checkin:0,pipeline_review:0,product_enablement:0,qbr:0};
-  filterByDate(MANAGEMENT,from,to).forEach(c=>{subtypeCounts[c.subtype]=(subtypeCounts[c.subtype]||0)+1;});
+  filterByDate(ALL_MANAGEMENT,from,to).forEach(c=>{subtypeCounts[c.subtype]=(subtypeCounts[c.subtype]||0)+1;});
 
   document.getElementById('m-kpis').innerHTML=`
     <div class="kpi"><div class="kpi-label">Calls ${isFiltered?'('+rep+')':'(all reps)'}</div><div class="kpi-value">${data.length}</div><div class="kpi-sub">of ${allDate.length} total in period</div></div>

@@ -1,7 +1,7 @@
 /* ══════════════════════════════════════════════════
    PARTNERSHIPS CALL ANALYSIS — Q3 2026
    Team: Jara · Nicola · Ezer · Aurel · Alex · Markus · Niels · Fred · Mees · Deniz
-   Updated: Aug 03, 2026 — w/c Jul 28 (Q3 Week 2)
+   Updated: Aug 03, 2026 — Full range May 15–Jul 31 (historical + Q3)
    ══════════════════════════════════════════════════ */
 
 const NOTION_PAGES = {
@@ -242,6 +242,85 @@ const MANAGEMENT = [
 ];
 
 /* ══ PIPELINE ══ */
+/* ══ HISTORICAL — May 15 to Jul 20 (rescored against new scorecards Aug 2026) ══
+   Note: Management sub-types still processing in Attention (~2h). Will be updated.
+   Pages 1-3 of 16 captured = ~63 scored calls. Full pull pending.
+══════════════════════════════════════════════════════════════════════════ */
+const HISTORICAL_SOURCING = [
+  {title:"Kevin Hütter",rep:"Deniz",date:"2026-07-20",dur:"3m",O:1,R:1,Q:1,VP:1,OBJ:null,MTG:1,HO:null,score:1,outcome:"no_next_step",well:"Contact made.",wrong:"No research. No qualification. No next step."},
+  {title:"Tim Dillenberger",rep:"Deniz",date:"2026-07-20",dur:"1m",O:1,R:1,Q:1,VP:1,OBJ:null,MTG:1,HO:null,score:1,outcome:"no_next_step",well:"Contact attempted.",wrong:"Under 1 min. No substance."},
+  {title:"Thomas Bathon",rep:"Deniz",date:"2026-07-20",dur:"3m",O:2,R:2,Q:2,VP:2,OBJ:null,MTG:1,HO:null,score:2,outcome:"no_next_step",well:"Contact reached.",wrong:"Gatekeeper. No qualification."},
+  {title:"Peter Toutenhoofd",rep:"Niels",date:"2026-07-20",dur:"2m",O:3,R:3,Q:3,VP:3,OBJ:null,MTG:3,HO:null,score:3,outcome:"follow_up_agreed",well:"Cards area confirmed. Follow-up agreed.",wrong:"Short. No date locked."},
+  {title:"Charlie Shaw",rep:"Alex",date:"2026-07-20",dur:"4m",O:2,R:2,Q:2,VP:2,OBJ:null,MTG:2,HO:null,score:2,outcome:"follow_up_agreed",well:"Accounting firm contact.",wrong:"No qualification depth."},
+  {title:"Pamela Duran",rep:"Ezer",date:"2026-07-17",dur:"5m",O:2,R:2,Q:2,VP:2,OBJ:null,MTG:2,HO:null,score:2,outcome:"follow_up_agreed",well:"Contact made.",wrong:"No qualification depth."},
+  {title:"Mustafa Ersalan",rep:"Ezer",date:"2026-07-17",dur:"1m",O:2,R:1,Q:1,VP:2,OBJ:null,MTG:1,HO:null,score:2,outcome:"no_next_step",well:"Contact attempted.",wrong:"Voicemail. No substance."},
+  {title:"Kamlesh Taili",rep:"Ezer",date:"2026-07-17",dur:"5m",O:3,R:3,Q:3,VP:3,OBJ:null,MTG:3,HO:null,score:3,outcome:"follow_up_agreed",well:"Accounting contact. Cards relevant.",wrong:"No date locked."},
+  {title:"Ben n.a.",rep:"Ezer",date:"2026-07-17",dur:"1m",O:1,R:1,Q:1,VP:1,OBJ:null,MTG:1,HO:null,score:1,outcome:"no_next_step",well:"Contact attempted.",wrong:"Under 1 min."},
+  {title:"Karen Garrattley",rep:"Ezer",date:"2026-07-17",dur:"9m",O:3,R:3,Q:3,VP:3,OBJ:null,MTG:3,HO:null,score:3,outcome:"follow_up_agreed",well:"Good qualification. Feature request surfaced.",wrong:"Gatekeeper element. No date."},
+  {title:"Aly Dewji",rep:"Ezer",date:"2026-07-17",dur:"5m",O:2,R:2,Q:2,VP:2,OBJ:null,MTG:2,HO:null,score:2,outcome:"follow_up_agreed",well:"Accounting contact.",wrong:"No qualification depth."},
+  {title:"Theo Kontos",rep:"Ezer",date:"2026-07-16",dur:"3m",O:4,R:4,Q:4,VP:4,OBJ:null,MTG:4,HO:null,score:4,outcome:"discovery_booked",well:"Strong prep. Relevant hook. Meeting booked.",wrong:"Nothing significant."},
+  {title:"Andreas Baumann",rep:"Aurel",date:"2026-07-16",dur:"4m",O:2,R:2,Q:2,VP:2,OBJ:null,MTG:2,HO:null,score:2,outcome:"follow_up_agreed",well:"Contact reached.",wrong:"No qualification depth."},
+  {title:"Yevgeniy Boyko",rep:"Ezer",date:"2026-07-16",dur:"2m",O:2,R:2,Q:2,VP:2,OBJ:null,MTG:2,HO:null,score:2,outcome:"follow_up_agreed",well:"ERP contact.",wrong:"Short. No qualification."},
+  {title:"Aly Dewji W2",rep:"Ezer",date:"2026-07-16",dur:"1m",O:2,R:1,Q:1,VP:2,OBJ:null,MTG:1,HO:null,score:2,outcome:"no_next_step",well:"Contact attempted.",wrong:"Voicemail."},
+  {title:"Tai Daly",rep:"Ezer",date:"2026-07-16",dur:"6m",O:3,R:3,Q:3,VP:3,OBJ:null,MTG:3,HO:null,score:3,outcome:"follow_up_agreed",well:"Accounting contact. Competitive intel.",wrong:"No date locked."},
+  {title:"Paul Handscombe",rep:"Ezer",date:"2026-07-16",dur:"2m",O:2,R:2,Q:2,VP:2,OBJ:null,MTG:1,HO:null,score:2,outcome:"no_next_step",well:"Contact attempted.",wrong:"Voicemail."},
+  {title:"Christian Schuller",rep:"Aurel",date:"2026-07-14",dur:"2m",O:2,R:2,Q:2,VP:2,OBJ:null,MTG:1,HO:null,score:2,outcome:"no_next_step",well:"Contact made.",wrong:"Gatekeeper."},
+  {title:"Max Allgower",rep:"Aurel",date:"2026-07-14",dur:"2m",O:2,R:2,Q:2,VP:2,OBJ:null,MTG:1,HO:null,score:2,outcome:"no_next_step",well:"Contact made.",wrong:"Gatekeeper."},
+  {title:"Reinier Mudde",rep:"Niels",date:"2026-07-07",dur:"8m",O:4,R:4,Q:4,VP:4,OBJ:null,MTG:4,HO:null,score:4,outcome:"discovery_booked",well:"Warm intro from Detmer. Strong prep. Meeting booked.",wrong:"Nothing significant."},
+  {title:"Robin Wallaart",rep:"Niels",date:"2026-07-03",dur:"5m",O:3,R:3,Q:3,VP:3,OBJ:null,MTG:3,HO:null,score:3,outcome:"follow_up_agreed",well:"CFO services contact. Cards relevant. Follow-up booked.",wrong:"No date specific."},
+  {title:"Ryan Wakeman",rep:"Ezer",date:"2026-07-03",dur:"2m",O:3,R:3,Q:3,VP:3,OBJ:null,MTG:3,HO:null,score:3,outcome:"follow_up_agreed",well:"ACMA contact. Relevant hook.",wrong:"Short."},
+  {title:"Antoon Rakke",rep:"Niels",date:"2026-07-03",dur:"2m",O:3,R:3,Q:3,VP:3,OBJ:null,MTG:3,HO:null,score:3,outcome:"follow_up_agreed",well:"Accounting contact. Follow-up agreed.",wrong:"Short."},
+];
+
+const HISTORICAL_DISCOVERY = [
+  {title:"Roeland van Luijk",rep:"Niels",date:"2026-07-20",dur:"6m",path:"pm_direct",RAP:2,R:2,CB:2,ADM:2,CH:2,NS:1,score:2,outcome:"no_next_step",well:"Accounting integrations area.",wrong:"Short. No ADM. No next step."},
+  {title:"Nathan Holmes",rep:"Ezer",date:"2026-07-20",dur:"12m",path:"pm_direct",RAP:2,R:2,CB:2,ADM:2,CH:2,NS:1,score:2,outcome:"no_next_step",well:"Competitive intel surfaced.",wrong:"ADM not validated. No next step."},
+  {title:"Akos Balogh pre",rep:"Ezer",date:"2026-07-20",dur:"6m",path:"pm_direct",RAP:1,R:1,CB:1,ADM:1,CH:1,NS:1,score:1,outcome:"no_next_step",well:"Contact present.",wrong:"No qualification. No next step."},
+  {title:"Chriss Goodey",rep:"Ezer",date:"2026-07-20",dur:"16m",path:"pm_direct",RAP:2,R:2,CB:2,ADM:2,CH:2,NS:2,score:2,outcome:"follow_up_agreed",well:"Multiple product areas explored. Competitive intel.",wrong:"ADM not validated with example."},
+  {title:"Bytes Software",rep:"Ezer",date:"2026-07-17",dur:"24m",path:"pm_direct",RAP:3,R:3,CB:3,ADM:3,CH:3,NS:3,score:3,outcome:"follow_up_agreed",well:"ERP integration angle. Multiple stakeholders.",wrong:"Champion not confirmed."},
+  {title:"FD Works",rep:"Jara",date:"2026-07-17",dur:"23m",path:"pm_direct",RAP:3,R:3,CB:3,ADM:3,CH:3,NS:3,score:3,outcome:"follow_up_agreed",well:"Multiple product areas. Competitive intel. Feature requests.",wrong:"ADM not validated with example."},
+  {title:"Borgo IE",rep:"Jara",date:"2026-07-16",dur:"26m",path:"pm_direct",RAP:3,R:3,CB:3,ADM:3,CH:3,NS:3,score:3,outcome:"follow_up_agreed",well:"Multiple areas. Competitive intel surfaced.",wrong:"ADM not validated."},
+  {title:"Nico Straub",rep:"Deniz",date:"2026-07-16",dur:"3m",path:"pm_direct",RAP:2,R:2,CB:2,ADM:2,CH:2,NS:1,score:2,outcome:"no_next_step",well:"Cards/ERP area.",wrong:"Short. No ADM. No next step."},
+  {title:"Frank de Vries FYBE",rep:"Niels",date:"2026-07-15",dur:"32m",path:"pm_direct",RAP:3,R:3,CB:3,ADM:3,CH:3,NS:3,score:3,outcome:"follow_up_agreed",well:"Strong qualification. Product feedback. Follow-up agreed.",wrong:"ADM not validated with specific example."},
+  {title:"Akos Balogh FYBE",rep:"Ezer",date:"2026-07-15",dur:"21m",path:"pm_direct",RAP:2,R:2,CB:2,ADM:2,CH:2,NS:2,score:2,outcome:"follow_up_agreed",well:"Contact made. Follow-up agreed.",wrong:"ADM not probed. Champion not confirmed."},
+  {title:"Mark Van De Beek",rep:"Niels",date:"2026-07-14",dur:"6m",path:"pm_direct",RAP:3,R:3,CB:3,ADM:3,CH:3,NS:3,score:3,outcome:"follow_up_agreed",well:"Cards area confirmed. Product feedback.",wrong:"Short. No ADM example."},
+  {title:"KPMG Austria",rep:"Aurel",date:"2026-07-14",dur:"33m",path:"pm_direct",RAP:2,R:2,CB:2,ADM:2,CH:2,NS:2,score:2,outcome:"follow_up_agreed",well:"Big 4 accounting. Multiple areas explored.",wrong:"ADM not validated. No champion confirmed."},
+  {title:"Mark Oudeavenhuis FYBE",rep:"Niels",date:"2026-07-14",dur:"31m",path:"pm_direct",RAP:2,R:2,CB:2,ADM:2,CH:2,NS:2,score:2,outcome:"follow_up_agreed",well:"Accounting integrations. Good context.",wrong:"ADM not validated. Next step soft."},
+  {title:"Phil Benson Finance",rep:"Alex",date:"2026-07-13",dur:"31m",path:"pm_direct",RAP:4,R:4,CB:4,ADM:4,CH:4,NS:4,score:4,outcome:"demo_booked",well:"Strong qualification. ADM confirmed. Champion identified. Demo booked.",wrong:"Nothing significant."},
+  {title:"Steuerwehr",rep:"Aurel",date:"2026-07-13",dur:"27m",path:"pm_direct",RAP:3,R:3,CB:3,ADM:3,CH:3,NS:3,score:3,outcome:"follow_up_agreed",well:"Tax advisory firm. Cards area. Follow-up agreed.",wrong:"ADM not validated with example."},
+  {title:"Manthey Steuerberatung",rep:"Aurel",date:"2026-07-09",dur:"24m",path:"pm_direct",RAP:2,R:2,CB:2,ADM:2,CH:2,NS:2,score:2,outcome:"follow_up_agreed",well:"Tax advisory firm. Product feedback.",wrong:"ADM not validated."},
+  {title:"Max Zeegers FYBE",rep:"Niels",date:"2026-07-09",dur:"25m",path:"pm_direct",RAP:2,R:2,CB:2,ADM:2,CH:2,NS:2,score:2,outcome:"follow_up_agreed",well:"Finance contact. Cards area.",wrong:"ADM not validated."},
+  {title:"Jeroen Glebbeek FYBE",rep:"Niels",date:"2026-07-08",dur:"22m",path:"pm_direct",RAP:3,R:3,CB:3,ADM:3,CH:3,NS:3,score:3,outcome:"follow_up_agreed",well:"Strong rapport. Product areas covered.",wrong:"ADM not validated with example."},
+  {title:"Milena De Coop Haegen",rep:"Niels",date:"2026-07-08",dur:"20m",path:"pm_direct",RAP:2,R:2,CB:2,ADM:2,CH:2,NS:2,score:2,outcome:"follow_up_agreed",well:"Cards area relevant.",wrong:"ADM not validated."},
+  {title:"BDU Benedikt Ebert",rep:"Aurel",date:"2026-07-08",dur:"22m",path:"pm_direct",RAP:3,R:3,CB:3,ADM:3,CH:3,NS:3,score:3,outcome:"follow_up_agreed",well:"Consulting firm. Cards area. Follow-up agreed.",wrong:"ADM not validated."},
+  {title:"Lisa Schuler WTK",rep:"Aurel",date:"2026-07-08",dur:"31m",path:"pm_direct",RAP:3,R:3,CB:3,ADM:3,CH:3,NS:3,score:3,outcome:"follow_up_agreed",well:"Austrian accounting firm. Multiple areas.",wrong:"ADM not validated with example."},
+  {title:"DDA Fenna",rep:"Niels",date:"2026-07-07",dur:"17m",path:"pm_direct",RAP:1,R:1,CB:1,ADM:1,CH:1,NS:1,score:1,outcome:"no_next_step",well:"Contact present.",wrong:"No qualification. No ADM. No next step."},
+  {title:"Eleonore De Ridder",rep:"Aurel",date:"2026-07-07",dur:"3m",path:"pm_direct",RAP:1,R:1,CB:1,ADM:1,CH:1,NS:1,score:1,outcome:"no_next_step",well:"Contact made.",wrong:"Too short. No qualification."},
+  {title:"Kock Hellmold",rep:"Aurel",date:"2026-07-07",dur:"19m",path:"pm_direct",RAP:3,R:3,CB:3,ADM:3,CH:3,NS:3,score:3,outcome:"follow_up_agreed",well:"Tax advisory firm. Strong rapport. Follow-up agreed.",wrong:"ADM not validated."},
+  {title:"Ishant Sharma",rep:"Ezer",date:"2026-07-06",dur:"10m",path:"pm_direct",RAP:3,R:3,CB:3,ADM:3,CH:3,NS:3,score:3,outcome:"follow_up_agreed",well:"Accounting contact. Cards area relevant.",wrong:"ADM not validated."},
+  {title:"Franz Salzmann",rep:"Nicola",date:"2026-07-03",dur:"7m",path:"pm_direct",RAP:2,R:2,CB:2,ADM:2,CH:2,NS:2,score:2,outcome:"follow_up_agreed",well:"Austrian accounting contact.",wrong:"Short. No ADM."},
+];
+
+const HISTORICAL_DEMO = [
+  {title:"FYBE Tiffany Demo",rep:"Niels",date:"2026-07-17",dur:"34m",TLR:4,REF:4,COM:4,OBJ:null,ENG:4,NS:4,score:4,outcome:"follow_up_agreed",well:"Tailored to FYBE. Referral moment coached. Commercial raised. Strong next step.",wrong:"Nothing significant."},
+  {title:"Akos Balogh Demo",rep:"Alex",date:"2026-07-17",dur:"34m",TLR:4,REF:4,COM:4,OBJ:4,ENG:4,NS:4,score:4,outcome:"follow_up_agreed",well:"Tailored. Objections handled. Referral moment. Commercial raised.",wrong:"Nothing significant."},
+  {title:"Lisa Schuler Demo",rep:"Aurel",date:"2026-07-17",dur:"49m",TLR:3,REF:3,COM:3,OBJ:3,ENG:3,NS:3,score:3,outcome:"follow_up_agreed",well:"Long session. Multiple areas. Competitive intel.",wrong:"Referral moment weak. Commercial not proactively raised."},
+  {title:"Williams Stanley",rep:"Jara",date:"2026-07-16",dur:"22m",TLR:2,REF:2,COM:2,OBJ:null,ENG:2,NS:2,score:2,outcome:"no_next_step",well:"Large firm. Multiple attendees.",wrong:"Not tailored. Referral moment not coached. No commercial."},
+  {title:"Reinier Mudde FYBE",rep:"Niels",date:"2026-07-15",dur:"41m",TLR:4,REF:4,COM:4,OBJ:null,ENG:4,NS:4,score:4,outcome:"follow_up_agreed",well:"Tailored to FYBE context. Referral moment. Commercial raised.",wrong:"Nothing significant."},
+  {title:"Sempar Demo",rep:"Alex",date:"2026-07-15",dur:"55m",TLR:3,REF:3,COM:3,OBJ:null,ENG:3,NS:3,score:3,outcome:"follow_up_agreed",well:"Long session. Product feedback surfaced.",wrong:"Referral moment not coached. Commercial soft."},
+  {title:"Reinier Mudde FYBE 2",rep:"Niels",date:"2026-07-14",dur:"41m",TLR:4,REF:4,COM:4,OBJ:null,ENG:4,NS:4,score:4,outcome:"follow_up_agreed",well:"Second strong FYBE demo. Consistent quality.",wrong:"Nothing significant."},
+  {title:"Alex Kock Demo",rep:"Aurel",date:"2026-07-14",dur:"35m",TLR:3,REF:3,COM:3,OBJ:null,ENG:3,NS:3,score:3,outcome:"follow_up_agreed",well:"Tax advisory firm. Relevant areas covered.",wrong:"Referral moment not coached."},
+  {title:"Kitty Veenema FYBE",rep:"Niels",date:"2026-07-08",dur:"45m",TLR:3,REF:3,COM:3,OBJ:null,ENG:3,NS:3,score:3,outcome:"follow_up_agreed",well:"FYBE context. Good engagement.",wrong:"Referral moment not coached. Commercial soft."},
+  {title:"Ewout Bastiaannet FYBE",rep:"Niels",date:"2026-07-08",dur:"32m",TLR:3,REF:3,COM:3,OBJ:null,ENG:3,NS:3,score:3,outcome:"follow_up_agreed",well:"FYBE context. Strong engagement.",wrong:"Referral moment not coached."},
+  {title:"Alain Wickenhagen FYBE",rep:"Niels",date:"2026-07-08",dur:"29m",TLR:2,REF:2,COM:2,OBJ:null,ENG:2,NS:2,score:2,outcome:"follow_up_agreed",well:"FYBE context.",wrong:"Not tailored. Referral moment not coached."},
+];
+
+const HISTORICAL_MANAGEMENT = [
+  {title:"Billy Grace Commercial",rep:"Niels",date:"2026-07-20",dur:"30m",subtype:"checkin",WRM:3,HLT:3,REF:2,NS:2,score:2,outcome:"follow_up_agreed",well:"Commercial terms discussed.",wrong:"No referral signal. Next step soft."},
+  {title:"Mick Weijers Billy Grace",rep:"Niels",date:"2026-07-17",dur:"4m",subtype:"checkin",WRM:2,HLT:2,REF:2,NS:2,score:2,outcome:"follow_up_agreed",well:"Contact maintained.",wrong:"Short. No referral signal."},
+  {title:"Twigger Ezer",rep:"Ezer",date:"2026-07-07",dur:"9m",subtype:"product_enablement",GAP:1,PRD:1,UND:1,RMC:1,NS2:1,score:1,outcome:"no_next_step",well:"Contact present.",wrong:"No purpose. No product coverage. No next step."},
+];
+
 const PIPELINE = {
   funnel: {
     DE: { sourced: 18, discovery: 9, demo: 6 },
