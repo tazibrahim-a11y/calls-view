@@ -72,12 +72,12 @@ button.send svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2;stro
     </div>
   </div>
   <div style="display:flex;gap:8px;align-items:center">
-    <span style="font-size:11px;font-weight:500;color:var(--text-tertiary);font-family:var(--mono);padding:4px 8px;background:var(--bg);border:1px solid var(--border);border-radius:5px">Q3 · w/c Jul 28</span>
+    <span style="font-size:11px;font-weight:500;color:var(--text-tertiary);font-family:var(--mono);padding:4px 8px;background:var(--bg);border:1px solid var(--border);border-radius:5px">August 2026 · Aug 1–27 (incl. today)</span>
     <a class="dash-link" href="index.html" target="_blank">Dashboard</a>
   </div>
 </header>
 <div class="stats-bar" id="stats-bar"></div>
-<div class="baseline-note">⚠ Q3 Week 2 · w/c Jul 28. New scorecards active — Q3 baseline established W1.</div>
+<div class="baseline-note">⚠ August 2026 full month (Aug 1–27) · 243 calls · Scores reflect overall call quality not individual criteria.</div>
 <div class="chat-area" id="chat-area"></div>
 <div class="suggestions" id="suggestions"></div>
 <div class="input-area">
@@ -93,216 +93,269 @@ button.send svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2;stro
 const REPS = {
   jara: {
     name:"Jara Bockx", initials:"JB", role:"Senior Partnerships Manager", market:"UK / DE",
-    calls:9, avg_score:2.5, notion:"3821de46-2c03-81d0-be79-e9365e85a064",
+    calls:37, avg_score:3.3, notion:"3821de46-2c03-81d0-be79-e9365e85a064",
     sourcing:[],
     discovery:[
-      {t:"AHW Digital",s:3.5,path:"PM Direct",gap:"Access to decision moment stated but not validated with example"},
-      {t:"Deel x Moss",s:3.0,path:"PM Direct",gap:"Co-sell motion explored but ADM not confirmed"},
-      {t:"Blumberger / Nir",s:2.0,path:"PM Direct",gap:"5 min. No qualification. No next step"},
-      {t:"BePe Hamburg",s:1.0,path:"PM Direct",gap:"No qualification, no access to decision moment, no next step"},
+      {t:"4PointZero",s:4.0,path:"PM Direct",gap:"Strong — next step could be more specific on timeline"},
+      {t:"Jara x Stephan",s:4.0,path:"PM Direct",gap:"ADM confirmed. Client base solid."},
+      {t:"Kegler IT",s:4.0,path:"PM Direct",gap:"Multi-stakeholder well managed"},
+      {t:"Finban",s:3.0,path:"PM Direct",gap:"Client base confirmed. ADM not validated with example"},
+      {t:"COGIA",s:2.0,path:"PM Direct",gap:"Short. ERP focus narrow. ADM not explored"},
+      {t:"ETG x Moss",s:3.0,path:"PM Direct",gap:"Cards-only focus — broader ICP not explored"},
+      {t:"Rocks Group RPQ",s:null,path:"PM Direct",gap:"No score — short RPQ call"},
+    ],
+    demo:[
+      {t:"FD Works Demo",s:4.0,gap:"Strong tailoring. Use case aligned. Next step clear"},
+      {t:"Stephan Arndt Demo",s:4.0,gap:"Good referral moment. Commercial discussed"},
+      {t:"Kegler IT Demo (Aug 3)",s:3.0,gap:"Multi-stakeholder managed well. Next step could be tighter"},
+      {t:"Kegler IT Demo (Aug 21)",s:3.0,gap:"Good engagement. Referral moment not fully coached"},
+      {t:"Stephan Arndt Demo (Aug 25)",s:3.0,gap:"Pipeline review discussion strong. Next step confirmed"},
+      {t:"Mika Demo (Aug 27)",s:3.0,gap:"Competitor Pennylane mentioned — handle addressed. Next step needed"},
     ],
     management:[
-      {t:"Royal Holloway",sub:"checkin",s:3.8,gap:"Referral signal not explicitly probed"},
-      {t:"Catalyst x Moss",sub:"checkin",s:3.0,gap:"Next step not fully locked. Commercial deferred"},
-      {t:"Poool x Moss",sub:"product_enablement",s:3.0,gap:"Knowledge gap not confirmed. Referral moment not connected"},
-      {t:"Kathrin Schulz",sub:"product_enablement",s:3.0,gap:"Knowledge gap not confirmed upfront"},
-      {t:"GreenStones",sub:"checkin",s:2.0,gap:"No clear purpose. No referral signal. No next step"},
-      {t:"Mastercard",sub:"checkin",s:1.0,gap:"No purpose. No referral signal. No next step"},
+      {t:"Personio",sub:"checkin",s:4.0,gap:"Strong relationship management. Commercial awareness"},
+      {t:"James Williams Stanley",sub:"checkin",s:4.0,gap:"Referral signal surfaced. Good prep"},
+      {t:"Ryan Harris",sub:"pipeline_review",s:4.0,gap:"Pipeline reviewed. Clear blockers actioned"},
+      {t:"Ron Datavine",sub:"checkin",s:4.0,gap:"Strong — product feedback captured"},
+      {t:"Jara x Stephan check-in",sub:"checkin",s:4.0,gap:"Referral motion discussed"},
+      {t:"Cusp Capital (Aug 27)",sub:"checkin",s:4.0,gap:"Strong check-in. AI intelligence angle discussed"},
+      {t:"Patrick Morrison / Charlie HR (Aug 27)",sub:"checkin",s:4.0,gap:"Competitor Pleo mentioned — handled well"},
+      {t:"Krupa ETC Finance (Aug 27)",sub:"checkin",s:4.0,gap:"Pleo competitor intel captured. Strong engagement"},
+      {t:"UBT Check-in (Aug 27)",sub:"pipeline_review",s:3.0,gap:"Pipeline reviewed. Referral signal not surfaced"},
+      {t:"N&P Commercial Setup (Aug 27)",sub:"checkin",s:null,gap:"No score — commercial terms discussed"},
+      {t:"Poool Pipeline",sub:"pipeline_review",s:3.0,gap:"Pipeline visible but referral cadence not set"},
+      {t:"Gravita (Aug 10)",sub:"product_enablement",s:3.0,gap:"Feedback captured. Referral moment not coached"},
+      {t:"Kegler IT check-in",sub:"product_enablement",s:3.0,gap:"Good follow-through on prior demo"},
     ],
-    highlights:["Alex scored 4.0 on Tech Enable and Heliad Discovery — reference for what strong Discovery looks like"],
-    flags:["Mastercard (1.0) — 34 min with no purpose or next step","BePe (1.0) — 12 min discovery with no qualification"],
+    highlights:["FD Works Demo (4.0) — best tailored demo of the month","Cusp Capital + Patrick Morrison + Krupa all 4.0 today — strong finish to August","4PointZero and Stephan Arndt both advanced from discovery to demo in August"],
+    flags:["No sourcing in August — pipeline needs topping up heading into September","COGIA discovery (2.0) — short call, ADM not explored"],
     coaching:{
-      focus:"Two 1.0 scores this week — Mastercard check-in and BePe discovery. Both show the same pattern: no purpose set before the call. Management calls need a manufactured reason to call (Update / Feedback / Signal / Trigger). Discovery calls need a qualification structure.",
-      strength:"Royal Holloway (3.8) and AHW Digital (3.5) show you can run strong structured calls when prepared. Commercial terms discussed at Royal Holloway was a standout.",
-      key_action:"Before every call this week: write one sentence — what is the specific purpose of this call? For management: which of the 4 purpose types applies? For discovery: what are the 4 must-confirms I need to leave with?"
+      focus:"Strong quality month — 3.2 avg, best on team. The pipeline is advancing (FD Works, 4PZ, Stephan, Kegler IT all in demo stage). Main gap: no sourcing in August at all. 17 management calls is high — need to ensure those are converting to referrals, not just maintaining relationships.",
+      strength:"FD Works Demo (4.0) and 4PointZero continued (4.0) are the standard for demo quality on the team. Discovery quality strong — 4 calls at 3+ with clear next steps.",
+      key_action:"Before September: identify 3 new prospects to source. Management calls are healthy but the referral conversion question needs asking explicitly — 'Which of your clients would benefit from Moss right now?'"
     }
   },
   nicola: {
     name:"Nicola Rohne", initials:"NR", role:"Partnerships Manager", market:"DE",
-    calls:4, avg_score:2.5, notion:"3821de46-2c03-81c6-918e-f7eff9898bee",
-    sourcing:[],
-    discovery:[],
-    demo:[{t:"Pape & Co Advisor Portal",s:3.0,gap:"Referral moment not explicitly coached. Long call but next step soft"}],
-    management:[
-      {t:"Rödl & Partner Monthly",sub:"checkin",s:3.0,gap:"No referral signal. Next step is next monthly — no specific action"},
-      {t:"awicontax Viktor",sub:"checkin",s:1.0,gap:"2.6 min. No purpose. No health check. No referral signal. No next step"},
-      {t:"Pape Monthly",sub:"checkin",s:2.0,gap:"No referral signal. No specific next step"},
+    calls:21, avg_score:2.7, notion:"3821de46-2c03-81c6-918e-f7eff9898bee",
+    sourcing:[{t:"Cold Call DE",s:1.0,gap:"Gatekeeper — no meaningful conversation"}],
+    discovery:[
+      {t:"Skalar",s:3.0,path:"PM Direct",gap:"Good qualification. ADM not validated with example. Demo date not set"},
+      {t:"Aylin",s:2.0,path:"PM Direct",gap:"Short. ADM not explored. Next step soft"},
+      {t:"Aljoscha Torq",s:2.0,path:"PM Direct",gap:"Pipeline review overlap with discovery. Champion not identified"},
     ],
-    highlights:["Niels ran a 74-min product enablement with Kees FYBE (4.0) — reference for product enablement structure"],
-    flags:["awicontax (1.0) — 2.6 min check-in with no purpose"],
+    demo:[{t:"D!F Advisor Portal",s:2.0,gap:"Deep product session — scorecard gap on referral moment and commercial next step"}],
+    management:[
+      {t:"Done!Financials Check-in (Aug 20)",sub:"checkin",s:4.0,gap:"Strong — pipeline visible, referral signal surfaced"},
+      {t:"Summa Consult",sub:"product_enablement",s:4.0,gap:"Thorough enablement. Understanding confirmed"},
+      {t:"Nicola/Katharina",sub:"product_enablement",s:4.0,gap:"Good feedback capture. Next step agreed"},
+      {t:"Wannatax",sub:"product_enablement",s:4.0,gap:"Strong — full product walkthrough, referral moment discussed"},
+      {t:"Pipeline Review (Aug 26)",sub:"pipeline_review",s:4.0,gap:"Systematic review. Blockers identified"},
+      {t:"torq session (Aug 25)",sub:"product_enablement",s:3.0,gap:"Long session — referral coaching moment missed"},
+      {t:"torq Advisor Portal (Aug 24)",sub:"product_enablement",s:2.0,gap:"Product feedback heavy — referral motion not connected"},
+      {t:"D!F Implementation",sub:"product_enablement",s:2.0,gap:"Technical focus — no commercial next step"},
+      {t:"Awicontax",sub:"product_enablement",s:1.0,gap:"Very short — no purpose, no health check"},
+    ],
+    highlights:["Wannatax enablement (4.0) — full product walkthrough, referral moment discussed","D!F relationship is strong — 3 management calls in August, pipeline visible"],
+    flags:["No demos converting — Skalar and Aylin in discovery since Aug 4, no demo dates set","D!F Advisor Portal Demo (2.0) — 65 min session without referral moment coaching","Awicontax (1.0) — short call, no purpose"],
     coaching:{
-      focus:"awicontax scored 1.0 — 2.6 minutes with no purpose. This is the exact pattern Amelia flagged: check-ins need a manufactured purpose. Even a brief call should start with a specific reason for calling.",
-      strength:"Pape & Co Advisor Portal (3.0) — long complex demo, concerns addressed. Good structure for a technical session.",
-      key_action:"For every check-in this week: before dialling, complete the sentence — 'I am calling because ___'. Use one of: Update (client progressed), Feedback (how did the intro go?), Signal (something changed in their market), Trigger (a client of theirs just did Z)."
+      focus:"Strong management quality (D!F, Wannatax, Summa Consult all 4.0) but the pipeline isn't converting — 1 demo in the full month, no demo dates locked for Skalar or Aylin. Discovery avg 2.5 is below team benchmark. The gap is ADM — not validating access to the decision moment with a specific example on either Skalar or Aylin.",
+      strength:"D!F relationship depth and Wannatax enablement quality show you can run excellent structured calls. Management cadence is consistent.",
+      key_action:"Skalar and Aylin: next conversation must end with a demo date in the diary. On both calls: ask explicitly — 'Who would be the person that decides whether to recommend Moss to a client?' That is the ADM validation that will move them to demo booked."
     }
   },
   ezer: {
     name:"Ezer Amanuel", initials:"EA", role:"Partnerships Associate", market:"UK",
-    calls:34, avg_score:2.9, notion:"3821de46-2c03-818c-9f9d-ffba807edd45",
-    sourcing:[
-      {t:"Travus Wynne MAAT",s:4.0,gap:"Best call this week — research could include something personal"},
-      {t:"Alan Purser",s:2.0,gap:"No research. No qualification. Vague follow-up"},
-      {t:"Cerith Williams",s:1.5,gap:"No research. No qualification. No next step"},
-      {t:"Rachael Woosey",s:1.5,gap:"No research. No qualification. No next step"},
-    ],
+    calls:10, avg_score:2.9, notion:"3821de46-2c03-818c-9f9d-ffba807edd45",
+    sourcing:[],
     discovery:[
-      {t:"Datavine",s:3.0,path:"PA Handover",gap:"Access to decision moment not probed with example"},
-      {t:"Priya Raja-Motala",s:2.9,path:"PA Handover",gap:"Champion not fully confirmed"},
-      {t:"Morlai Kargbo",s:2.9,path:"PA Handover",gap:"Short. Champion not identified"},
-      {t:"Rebecca Harvey",s:2.7,path:"PA Handover",gap:"ADM not explored. Champion not identified"},
-      {t:"Ellie Dignam",s:2.0,path:"PA Handover",gap:"No prior context referenced. No clear next step"},
+      {t:"Mark Wilding",s:4.0,path:"PM Direct",gap:"Strong — ADM confirmed, next step clear"},
+      {t:"JHHP",s:3.0,path:"PM Direct",gap:"Good qualification. ADM not validated with example"},
+      {t:"Tech Enable (support)",s:4.0,path:"PM Direct",gap:"Strong co-pilot on Alex's pipeline"},
+      {t:"Henderson Loggie (support)",s:3.0,path:"PM Direct",gap:"Good demo support"},
     ],
-    management:[{t:"Jonathan Carling",sub:"checkin",s:4.0,gap:"Strong call — nothing significant"}],
-    vm_note:"23 of 28 sourcing calls were voicemails this week — connect rate issue, not coaching issue. Scores reflect valid conversations only.",
-    highlights:["Travus Wynne (4.0) — best sourcing call. Referenced client base, all must-confirms, meeting booked verbally","Jonathan Carling check-in (4.0) — clear purpose, referral signal, specific next step"],
-    flags:["Cerith Williams (1.5) and Rachael Woosey (1.5) — no research, no qualification on valid conversations"],
+    management:[{t:"Checkin UK",sub:"checkin",s:4.0,gap:"Good structure — purpose clear, next step agreed"}],
+    highlights:["Mark Wilding Discovery (4.0) — best solo discovery of the month","Strong demo support on Tech Enable and Henderson Loggie"],
+    flags:["Very low volume (10 calls) — should be building more independent pipeline"],
     coaching:{
-      focus:"23 voicemails out of 28 sourcing calls — this is a connect rate issue, not a quality issue. The 5 valid conversations averaged 2.0, which is the coaching focus. The gap on every low-scoring sourcing call is the same: no research before the call and no qualification during it.",
-      strength:"Travus Wynne (4.0) is exactly what a good sourcing call looks like — you referenced their client base, got all the must-confirms, and booked the meeting verbally. That is the template.",
-      key_action:"Before every sourcing call: look up the firm on LinkedIn for 2 minutes. Find one specific thing about their client type, their specialisation, or the contact's background. Open with that. Then qualify before you pitch. Travus Wynne proves you can do it."
+      focus:"Quality is good — Mark Wilding (4.0) and strong demo support on Alex's pipeline. Volume is the gap. As a PA, need to be generating more independent sourcing and discovery conversations, not just supporting PM calls.",
+      strength:"Mark Wilding Discovery (4.0) shows strong independent discovery capability. ADM confirmed with example, next step clear.",
+      key_action:"Target 5+ sourcing calls per week independently. The PA role should be feeding Ezer's own discovery pipeline, not only supporting Alex. Identify 3 new UK firms to approach this week."
     }
   },
   aurel: {
     name:"Aurel Bernhard", initials:"AB", role:"Partnerships Manager", market:"AT / DE",
-    calls:9, avg_score:3.0, notion:"3821de46-2c03-815e-a9b6-ec9c4cc8fbe5",
+    calls:21, avg_score:2.8, notion:"3821de46-2c03-815e-a9b6-ec9c4cc8fbe5",
     sourcing:[
-      {t:"Frank Schmidt",s:3.0,gap:"Client base not fully confirmed. No specific date"},
-      {t:"Martin Huber",s:2.6,gap:"Too short. No qualification. No meeting booked"},
-      {t:"Flora Scholz",s:2.6,gap:"Too short. No qualification"},
+      {t:"Michaela Schmidt (x3)",s:2.0,gap:"Chased 3 times — gatekeeper each time. Decision needed: continue or drop"},
+      {t:"c4431943300",s:3.0,gap:"Valid conversation. No date locked"},
     ],
     discovery:[
-      {t:"Fabian Klett",s:4.0,path:"PM Direct",gap:"Nothing significant — strong call"},
-      {t:"Ali Nada GBC",s:4.0,path:"PM Direct",gap:"Long (51 min) — some demo overlap with discovery"},
-      {t:"Voo Berlin",s:3.0,path:"PM Direct",gap:"Client base not fully confirmed. ADM claimed but no example"},
+      {t:"Lea Partners",s:4.0,path:"PM Direct",gap:"Strong — ADM confirmed, commercial discussed"},
+      {t:"Hamburger Software",s:4.0,path:"PM Direct",gap:"Good qualification. Multiple stakeholders"},
+      {t:"Divotsna",s:3.0,path:"PM Direct",gap:"ADM not validated. Next step agreed"},
+      {t:"Michael Schneider",s:3.0,path:"PM Direct",gap:"Cards focus only. Broader ICP not explored"},
+      {t:"Philipp Feierabend KTH (Aug 27)",s:3.0,path:"PM Direct",gap:"50min full exploration — ADM not validated. Broad product area discussed. No explicit next step"},
+      {t:"Jennifer Vetter GWA",s:3.0,path:"PM Direct",gap:"Good opener. ADM not validated with example"},
     ],
     demo:[
-      {t:"Ali Nada GBC",s:3.8,gap:"Next step soft. Objection partially resolved"},
-      {t:"Steuerwehr.at",s:3.0,gap:"Tailoring surface-level. Referral moment not coached. Next step vague"},
+      {t:"PwC Demo (Aug 5)",s:3.0,gap:"Long session — next step could be more specific"},
+      {t:"PwC Demo (Aug 12)",s:3.0,gap:"Ongoing engagement — referral motion not yet coached"},
+      {t:"Gewald Demo",s:3.0,gap:"Good tailoring. Referral moment not explicit"},
+      {t:"Reibold/Holger Demo",s:4.0,gap:"Strong — use case confirmed, referral moment discussed, next step clear"},
     ],
     management:[
-      {t:"Leandro Binder",sub:"checkin",s:3.0,gap:"No referral signal surfaced"},
-      {t:"BT Consulting",sub:"checkin",s:2.0,gap:"No purpose. No specific next step. Ended vaguely"},
-      {t:"Dr Manthey",sub:"checkin",s:1.0,gap:"No purpose. No health check. No next step"},
+      {t:"Mark Appun",sub:"checkin",s:5.0,gap:"Nothing — exemplary call"},
+      {t:"Leandro Binder",sub:"checkin",s:2.0,gap:"Short. No health check. No referral signal"},
     ],
-    highlights:["Fabian Klett (4.0) and Ali Nada (4.0) — two strong discoveries back to back. All must-confirms, ADM validated, demo booked"],
-    flags:["Dr Manthey (1.0) — 6 min check-in with no purpose","BT Consulting (2.0) — 24 min with no specific next step"],
+    highlights:["Mark Appun check-in (5.0) — perfect call structure","Best discovery quality on team (3.5 avg)","Reibold Demo (4.0) — referral moment discussed"],
+    flags:["Michaela Schmidt chased 3 times without progress — needs a decision","PwC x2 demos at 3.0 — not yet coaching the referral motion"],
     coaching:{
-      focus:"Strong on Discovery (two 4.0s) but Management check-ins need work. Dr Manthey and BT Consulting both scored below 2.0 — no purpose, no next step. The enablement deck now has a 'Always have a purpose' framework: Update / Feedback / Signal / Trigger. Use it before every management call.",
-      strength:"Fabian Klett and Ali Nada are two of the best Discovery calls this week. You confirmed access to the decision moment with specific examples on both — that is the hardest criterion and you nailed it.",
-      key_action:"Management calls: before you dial, pick your purpose. Dr Manthey — what was the trigger? Write it down. BT Consulting — you had pilot customers discussed but left without a specific name or date. One sentence before the call, one specific commitment at the end."
+      focus:"Best discovery quality on the team (3.5 avg) — Lea Partners and Hamburger Software are the standard. Demo quality is slightly below what discovery quality predicts (3.2 demo avg). The gap on demos is referral moment coaching — you're running good demos but not explicitly coaching 'when and how would you bring Moss up with a client?'. PwC is now 2 demos deep without that conversation.",
+      strength:"Mark Appun (5.0) is the best check-in scored this month across the whole team. Discovery quality is the team's best.",
+      key_action:"PwC next call: before any product content, ask — 'Given what you've seen, which client profile would you recommend Moss to first?' That is the referral moment. Michaela Schmidt: after 3 gatekeepers, either find a direct contact or move on."
     }
   },
   alex: {
     name:"Alex Schlee", initials:"AS", role:"Partnerships Manager", market:"UK",
-    calls:15, avg_score:3.2, notion:"3821de46-2c03-81f6-aafa-dcae38d605da",
+    calls:41, avg_score:2.5, notion:"3821de46-2c03-81f6-aafa-dcae38d605da",
     sourcing:[
-      {t:"John Hegney",s:2.5,gap:"Wrong company referenced at start. Date confusion at close"},
-      {t:"Graham Cantlay",s:2.0,gap:"Objection not handled. No next step"},
-      {t:"Sarfraz Khan",s:2.0,gap:"Generic opener. No qualification. No next step"},
+      {t:"Rebecca Gaynor",s:4.0,gap:"Strong sourcing call — meeting booked"},
+      {t:"Shaun Pullan",s:2.0,gap:"Valid conversation but no qualification depth"},
+      {t:"Gordon Carmichael",s:3.0,gap:"Good — client base confirmed, follow-up agreed"},
+      {t:"Various cold calls (25+)",s:1.5,gap:"Gatekeeper/voicemail heavy — dragging avg"},
     ],
     discovery:[
-      {t:"Tech Enable",s:4.0,path:"PM Direct",gap:"Next step could have been a demo — stayed exploratory"},
-      {t:"Heliad",s:4.0,path:"PM Direct",gap:"ADM could have been probed with a specific example"},
+      {t:"Mark Wilding",s:4.0,path:"PM Direct",gap:"Strong — ADM confirmed with example"},
+      {t:"Weatherbys",s:3.0,path:"PM Direct",gap:"Good structure. ADM not validated"},
+      {t:"JHHP",s:3.0,path:"PM Direct",gap:"Good qualification. Champion not identified"},
+      {t:"Work2gether",s:3.0,path:"PM Direct",gap:"Cards/AP confirmed. ADM not validated"},
+      {t:"Sanay BPO",s:3.0,path:"PM Direct",gap:"Good opener. Next step could be tighter"},
+      {t:"Daniel Neal",s:3.0,path:"PM Direct",gap:"Good call. ADM not probed"},
+      {t:"Blink",s:3.0,path:"PM Direct",gap:"Solid qualification. No clear demo date"},
     ],
-    demo:[{t:"FinAdvice Partner Demo",s:4.0,gap:"Next step could have been a specific client intro, not just a follow-up"}],
-    management:[],
-    highlights:["Tech Enable (4.0) and Heliad (4.0) — both strong PM Direct discoveries. Best Discovery scores on the team this week","FinAdvice Demo (4.0) — well tailored, referral moment discussed, commercial covered"],
-    flags:["John Hegney — wrong company referenced, date confusion at close. Always verify before calling"],
+    demo:[
+      {t:"Henderson Loggie Demo",s:3.0,gap:"Good structure. Referral moment coaching soft"},
+      {t:"Tech Enable Demo",s:4.0,gap:"Strong — tailored, referral motion, next step clear"},
+    ],
+    management:[{t:"Simon Watkins",sub:"checkin",s:2.0,gap:"No clear purpose. No referral signal surfaced"}],
+    highlights:["Tech Enable Demo (4.0) — best demo of August for Alex","Mark Wilding Discovery (4.0) — strong independent discovery"],
+    flags:["29 sourcing calls at avg 1.8 — cold-call volume not converting","Simon Watkins management (2.0) — no purpose or referral signal"],
     coaching:{
-      focus:"Your Discovery and Demo calls are the best on the team this week — 4.0 across Tech Enable, Heliad, and FinAdvice. The gap is Sourcing: John Hegney showed the wrong-company prep issue, Graham Cantlay had an objection that wasn't handled. Research before every sourcing call.",
-      strength:"Best Discovery average on the team (4.0). You referenced prior context on both Tech Enable and Heliad, confirmed ADM, and left with clear next steps. That is the standard.",
-      key_action:"Sourcing: before every call, look up the company and contact on LinkedIn. One specific thing about them. John Hegney's call could have been a 4.0 with 2 minutes of prep — you had the right company but wrong details. That is fixable."
+      focus:"Discovery quality is solid (2.9 avg, 7 calls) and demos are strong when they happen (4.0 Tech Enable). The problem is sourcing: 29 calls at 1.8 avg — mostly cold calls and gatekeepers dragging the score. The volume is not converting to discovery at a meaningful rate. Rebecca Gaynor (4.0) and Gordon Carmichael (3.0) show what good sourcing looks like — research-led, qualification included.",
+      strength:"Tech Enable Demo (4.0) and Mark Wilding Discovery (4.0) are the best UK calls this month. Strong when conversations are substantive.",
+      key_action:"Cut cold-call volume by 30% and spend that time on better-targeted sourcing. Before every sourcing call: 2 minutes on LinkedIn — one specific thing about the firm. Rebecca Gaynor's 4.0 started with her client base referenced. That is the template."
     }
   },
   niels: {
     name:"Niels Dalenoord", initials:"ND", role:"Partnerships Manager", market:"NL",
-    calls:27, avg_score:2.7, notion:"3821de46-2c03-818f-9da0-d6829aad5338",
+    calls:90, avg_score:3.2, notion:"3821de46-2c03-818f-9da0-d6829aad5338",
     sourcing:[
-      {t:"Gerwin Koning",s:3.0,gap:"No personal research. Very short"},
-      {t:"Ali Ayoz",s:2.8,gap:"Very short. No qualification depth"},
-      {t:"Dirk van den Bosch",s:1.0,gap:"Under 2 min. No meaningful conversation"},
+      {t:"Nils Dupre H2EP",s:4.0,gap:"Strong — client base confirmed, meeting booked"},
+      {t:"Moshe Sijben",s:4.0,gap:"Clear qualification. Next step agreed"},
+      {t:"Bart Molmans",s:2.0,gap:"Short. No qualification depth"},
+      {t:"Robin Hendrickx (Aug 27)",s:2.0,gap:"Short sourcing call — no qualification depth"},
+      {t:"Various",s:2.0,gap:"Gatekeeper/short calls dragging sourcing avg"},
     ],
     discovery:[
-      {t:"Gerwin Koning",s:2.7,path:"PM Direct",gap:"Too short for full qualification. ADM not explored"},
-      {t:"finQuesto Dirk",s:2.0,path:"PM Direct",gap:"Opening did not reference prior context. ADM not confirmed"},
-      {t:"Kees FYBE",s:2.4,path:"PM Direct",gap:"Rapport opening weak. ADM not validated. Next step vague"},
-      {t:"Odoo Experts",s:2.0,path:"PM Direct",gap:"Incomplete qualification. No clear next step"},
+      {t:"Accountics Group",s:4.0,path:"PM Direct",gap:"Strong — ADM confirmed, ERP + Cards use case"},
+      {t:"Jeroen Holtkamp",s:3.0,path:"PM Direct",gap:"Good structure. Champion not fully confirmed"},
+      {t:"Verkenners (Aug 27)",s:2.0,path:"PM Direct",gap:"Short discovery — Cards focus only. ADM not explored. Mike Komor present"},
+      {t:"Guy Schepers",s:2.0,path:"PM Direct",gap:"Short. ADM not explored. Competitive intel only"},
+      {t:"Sander Moen",s:3.0,path:"PM Direct",gap:"Good opener. ADM not validated"},
     ],
     demo:[
-      {t:"Frank FYBE Demo",s:3.5,gap:"Referral moment not fully coached. Next step vague"},
-      {t:"finQuesto Demo",s:3.9,gap:"Commercial not proactively led — answered but didn't initiate"},
-      {t:"Martijn FYBE Demo",s:3.0,gap:"Short. Referral moment not coached. Commercial not covered"},
+      {t:"FYBE Sytse Demo",s:4.0,gap:"Strong enablement — referral motion discussed"},
+      {t:"BonsenReuling Demo",s:4.0,gap:"Multi-stakeholder managed well. Commercial discussed"},
+      {t:"Parcom Demo",s:4.0,gap:"Strong — use case confirmed, next step clear"},
+      {t:"Hef Associates Demo (Aug 14)",s:4.0,gap:"Thorough — full product walk, referral moment"},
+      {t:"Hef Associates Demo (Aug 7)",s:4.0,gap:"Strong — use case aligned"},
+      {t:"BGH Demo (Aug 27)",s:4.0,gap:"Multi-stakeholder 50min. Full product. Pleo competitive intel captured"},
+      {t:"Greyt Tjeerd Demo (Aug 27)",s:3.0,gap:"Good — referral moment coaching could be more explicit"},
+      {t:"H2EP Demo",s:3.0,gap:"Good structure. Commercial not proactively led"},
+      {t:"aCFO Demo",s:3.0,gap:"Long session — referral coaching soft"},
+      {t:"FYBE Walco Demo",s:3.0,gap:"Strong enablement. Referral moment not coached"},
     ],
     management:[
-      {t:"Kees FYBE Enablement",sub:"product_enablement",s:4.0,gap:"Nothing significant — thorough 74-min session"},
-      {t:"Peter FYBE Enablement",sub:"product_enablement",s:3.4,gap:"Knowledge gap not confirmed upfront. Understanding check surface-level"},
-      {t:"Mathijs Bakker Pipeline",sub:"pipeline_review",s:3.8,gap:"Stale referrals reactive not proactive"},
-      {t:"Mick Billy Grace",sub:"product_enablement",s:3.0,gap:"Generic elements. Referral moment not coached"},
-      {t:"Wencke Mazars",sub:"checkin",s:2.0,gap:"No clear purpose. No referral signal. No next step"},
-      {t:"Rob Droppers",sub:"checkin",s:1.0,gap:"Preparation gap — contact details wrong. No purpose. No next step"},
-      {t:"Ted Jansen",sub:"checkin",s:2.0,gap:"Too short. No purpose. No next step"},
-      {t:"Henk Dijkhuizen",sub:"checkin",s:2.0,gap:"No purpose. No referral signal. No next step"},
-      {t:"Yori May",sub:"checkin",s:2.0,gap:"No purpose stated. No referral signal. No next step"},
+      {t:"Eelco Houwert (Aug 27)",sub:"product_enablement",s:4.0,gap:"Thorough 41-min session. Full product walk"},
+      {t:"BonsenReuling (Aug 25)",sub:"product_enablement",s:4.0,gap:"Deep product session. Feedback captured"},
+      {t:"FYBE series (6 advisors)",sub:"product_enablement",s:3.5,gap:"Consistent quality. Referral motion varies by advisor"},
+      {t:"Denzel Vlootman",sub:"checkin",s:4.0,gap:"Strong. Purpose clear, next step agreed"},
+      {t:"Daniel Nazier",sub:"checkin",s:4.0,gap:"Good structure. Referral signal surfaced"},
+      {t:"Michel FYBE Kennismaking (Aug 27)",sub:"product_enablement",s:4.0,gap:"FYBE deepening — 33min, full product, Payhawk competitive intel. Strong"},
+      {t:"Eelco Houwert (Aug 27)",sub:"product_enablement",s:4.0,gap:"41min thorough enablement — AMEX competitive context"},
+      {t:"Vera Van Es (Aug 27)",sub:"pipeline_review",s:3.0,gap:"Pipeline review — referral signal not explicitly surfaced"},
+      {t:"Martin Hoogerbrugge",sub:"checkin",s:4.0,gap:"Short but purposeful"},
     ],
-    highlights:["Kees FYBE Enablement (4.0) — 74-min thorough session. All product areas, understanding confirmed, referral moment connected","finQuesto Demo (3.9) — best demo score on the team this week","Mathijs Bakker Pipeline Review (3.8) — systematic, blockers actioned"],
-    flags:["Rob Droppers (1.0) — preparation gap flagged (wrong contact name). Used as live example in enablement deck","Wencke Mazars, Yori May, Ted Jansen all scored 2.0 — no purpose on any check-in"],
+    highlights:["FYBE activation — 6 advisor-level onboarding calls in one partner. Best-practice partner deepening on the team","5 demos scored 4.0 in August","BonsenReuling product enablement (4.0) — multi-stakeholder, deep product, commercial discussed","Accountics Group Discovery (4.0) — new NL prospect with strong ERP fit"],
+    flags:["42 management calls in August — need to track referral output vs volume","Guy Schepers Discovery (2.0) — competitive intel only, no qualification"],
     coaching:{
-      focus:"Check-in calls are dragging the overall average down — 5 check-ins scoring 2.0 or below, all with the same gap: no purpose. Rob Droppers (1.0) is literally the live example in the new enablement deck. The good news: Kees FYBE Enablement (4.0) and finQuesto Demo (3.9) show you can run excellent structured calls.",
-      strength:"Best management volume on the team (12 calls). Kees FYBE product enablement was the team's most thorough management call. finQuesto Demo is strong — commercial awareness is improving.",
-      key_action:"Check-ins: before every call, complete the sentence 'I am calling because ___'. Use one of: Update (client progressed), Feedback (how did the intro go?), Signal (something in their market changed), Trigger (a client of theirs just did Z). Rob Droppers would have been a 3.0+ with a prepared purpose and the right contact name."
+      focus:"Best overall month on the team (3.2 avg, 83 calls). FYBE activation is the standout — multiple advisor-level onboarding calls in one partner is exactly the right depth-over-breadth approach. The main question heading into September: with 42 management calls, what is the referral output? Volume without conversion becomes maintenance.",
+      strength:"Demo quality is exceptional — 5 calls at 4.0. Product enablement depth (Eelco Houwert, BonsenReuling) is the team benchmark. FYBE is a model partnership activation.",
+      key_action:"For each active management partner: track explicitly — how many referrals have they made this month? If a partner has had 3+ management calls and 0 referrals, that is the conversation to have. 'What would need to happen for you to make the first intro?' One pipeline review call per week with that specific question."
     }
   },
   fred: {
     name:"Frederik Gail", initials:"FG", role:"Partnerships Manager", market:"UK",
-    calls:9, avg_score:2.7, notion:"3961de46-2c03-81ef-837b-f47f84ff9f61",
+    calls:13, avg_score:3.0, notion:"3961de46-2c03-81ef-837b-f47f84ff9f61",
     sourcing:[
-      {t:"Fred Sourcing (2a61812a)",s:2.8,gap:"No specific date. No qualification depth"},
-      {t:"Hannah Roome",s:1.0,gap:"Under 2 min. No substance"},
+      {t:"Various cold calls",s:1.5,gap:"Low connect rate. Gatekeeper heavy"},
     ],
-    demo:[{t:"Happy Days MK",s:2.0,gap:"Not tailored. Referral moment not discussed. No commercial. No next step"}],
-    management:[{t:"RSM Q&A",sub:"checkin",s:4.0,gap:"Nothing significant — strong structured call"}],
-    highlights:["RSM Q&A (4.0) — clear purpose, team engaged, questions well handled, next meeting agreed"],
-    flags:["Happy Days MK Demo (2.0) — 45 min with no tailoring, no referral moment, no commercial"],
+    discovery:[
+      {t:"Xledger",s:4.0,path:"PM Direct",gap:"Strong — ERP angle clear, competitive intel captured, next step agreed"},
+      {t:"Charlie/ScaleUp",s:3.0,path:"PM Direct",gap:"Good qualification. ADM not validated. No demo date"},
+      {t:"Iplicit",s:2.0,path:"PM Direct",gap:"Short. Product feedback heavy. ADM not explored"},
+    ],
+    demo:[
+      {t:"Blue Fox Demo",s:3.0,gap:"Good structure. Referral moment not coached"},
+      {t:"Finance Box Demo (Aug 27)",s:3.0,gap:"Full product walkthrough with Ezer. Pleo mentioned — handled. Next step needed"},
+      {t:"Revis Demo",s:3.0,gap:"Good tailoring. Commercial discussed"},
+    ],
+    management:[
+      {t:"Praevo Partners",sub:"checkin",s:5.0,gap:"Nothing — exemplary call. Referral motion natural"},
+      {t:"Accountability Fred",sub:"product_enablement",s:3.0,gap:"Good session. Referral moment not coached"},
+    ],
+    highlights:["Praevo Partners (5.0) — best check-in on the team in August","Xledger Discovery (4.0) this week — ERP angle strong"],
+    flags:["Iplicit Discovery (2.0) — short, ADM not explored. Needs re-engaging","Low volume (12 calls) — need to scale outbound"],
     coaching:{
-      focus:"RSM (4.0) shows you can run a strong structured management call — that is the template. Happy Days MK Demo (2.0) is the flip side: 45 minutes without tailoring the demo to the partner's clients, no referral moment coaching, no commercial discussion. The demo scorecard has 6 criteria — REF (referral moment) is the most important.",
-      strength:"RSM Q&A is the best check-in on the team this week. You had a purpose, the team engaged, you answered questions well, and left with a specific next step. Replicate that structure on every management call.",
-      key_action:"Demo calls: before joining, confirm one thing about the partner's client base and reference it in the first 2 minutes. Then for every feature: 'Your clients would use this when...'. End with: 'So when would you bring up Moss to a client?' That is the referral moment coaching the scorecard requires."
+      focus:"Quality is good when conversations happen — Praevo (5.0) and Xledger (4.0) are the best calls. Volume is the constraint (12 calls all month). Sourcing is low-quality cold calling at 1.5 avg. Iplicit and Charlie/ScaleUp both need demo dates — neither has one yet.",
+      strength:"Praevo (5.0) is the best check-in of the whole month. Natural referral motion, purpose clear, team engaged. Xledger (4.0) is the strongest discovery of W4.",
+      key_action:"Xledger: what is the next step agreed? Lock a demo date this week. Charlie/ScaleUp: same — discovery done, demo date needed. Iplicit: re-engage with a specific reason — product update, use case relevant to their clients. Don't let open discoveries go cold."
     }
   },
   deniz: {
     name:"Deniz Karabulut", initials:"DK", role:"Partnerships Associate", market:"DE",
-    calls:8, avg_score:2.8, notion:null,
+    calls:34, avg_score:2.0, notion:null,
     sourcing:[
-      {t:"Svetlana Ryzhenko",s:2.8,gap:"Client base not confirmed. No date locked"},
-      {t:"Thomas Buhl",s:2.0,gap:"Generic. No research. No qualification"},
-      {t:"Holger Walter",s:3.0,gap:"No specific date. No deep qualification"},
+      {t:"Marvin Cvetkovic",s:4.0,gap:"Best sourcing call — qualification depth, meeting agreed"},
+      {t:"Dominik Herzog",s:4.0,gap:"Good check-in quality — referral signal surfaced"},
+      {t:"Tatjana Stauber",s:2.0,gap:"Gatekeeper twice — wrong entry point"},
+      {t:"Various (15 calls)",s:1.8,gap:"Heavy gatekeeper/cold-call volume at low quality"},
     ],
-    discovery:[{t:"Falko Klamt",s:2.9,path:"PM Direct",gap:"Champion not identified. ADM not validated"}],
+    discovery:[{t:"Falko Klamt",s:3.0,path:"PM Direct",gap:"Good structure. Champion not identified. ADM not validated"}],
     management:[
-      {t:"Nael Jazeh",sub:"checkin",s:2.8,gap:"Health check minimal. No referral signal"},
-      {t:"Daniel Geiss",sub:"checkin",s:2.8,gap:"No referral signal probed"},
-      {t:"Petra Radosztics",sub:"checkin",s:2.3,gap:"Short. No health check. No referral signal"},
-      {t:"Ralf Meisel",sub:"checkin",s:2.3,gap:"Very short. No health check. No referral signal"},
-      {t:"Julie Christiani",sub:"checkin",s:1.0,gap:"No purpose. No health check. No next step"},
-      {t:"Dirk Seeger",sub:"checkin",s:1.3,gap:"Gatekeeper. No meaningful conversation"},
+      {t:"D!F Side Event",sub:"checkin",s:3.0,gap:"Good engagement. Next step agreed"},
+      {t:"S. Schmidtchen",sub:"checkin",s:3.0,gap:"Short but purposeful"},
+      {t:"Heidi Porth",sub:"pipeline_review",s:2.0,gap:"Pipeline visible but no referral signal"},
+      {t:"SKN partners",sub:"checkin",s:1.0,gap:"Very short. No purpose. No health check"},
     ],
-    highlights:["Holger Walter Sourcing (3.0) — best call this week. Cards/invoicing confirmed. Follow-up agreed"],
-    flags:["Julie Christiani (1.0) and Dirk Seeger (1.3) — no purpose, no substance"],
+    highlights:["Marvin Cvetkovic Sourcing (4.0) — best call of the month. Research evident, qualification depth","Falko Klamt Discovery (3.0) — first real discovery of August"],
+    flags:["20 sourcing calls in August, only 1 discovery — conversion rate is the main issue","SKN (1.0) — no purpose, 3 min check-in","Sourcing avg 1.8 — cold-call targeting needs review"],
     coaching:{
-      focus:"6 check-in management calls, averaging 2.2. Julie Christiani (1.0) is the critical flag — no purpose, no health check, no next step. The pattern is consistent: referral signal is not being surfaced on any check-in. This is the single most important thing to fix.",
-      strength:"Falko Klamt Discovery (2.9) shows good foundational structure — qualification questions asked, follow-up agreed. Build on that.",
-      key_action:"Before every check-in: write one reason for calling. Even 'I wanted to check in on [specific client/situation]' is better than no purpose. Then ask one specific question: 'Has anything come up recently where Moss might fit?' Low pressure. Natural. That is how referral signals emerge."
+      focus:"The numbers tell the story — 20 sourcing calls, 1 discovery. The gap is not effort (20 calls is high volume) — it's targeting and qualification. Marvin Cvetkovic (4.0) proves you can run a great sourcing call when you research first and qualify deeply. The other 19 calls averaged 1.5. The difference is preparation.",
+      strength:"Falko Klamt Discovery (3.0) is a solid first discovery — qualification structure clear, follow-up agreed. Marvin Cvetkovic (4.0) is the sourcing benchmark.",
+      key_action:"Before every sourcing call this week: check the firm on LinkedIn — what do they do, who are their clients, what tools do they use? Open with that. One specific thing. Then qualify before you pitch. Marvin Cvetkovic is the template. Target: 2 discovery calls from sourcing in September W1."
     }
   },
   markus: {
     name:"Markus Kretschmer", initials:"MK", role:"Partnerships Manager", market:"AT / DE",
     calls:0, avg_score:null, notion:"3821de46-2c03-8126-9ad6-cafb79363f80",
     sourcing:[], discovery:[], demo:[], management:[],
-    highlights:[], flags:["Calls still not appearing in Attention — multi-week escalation needed"],
+    highlights:[], flags:["No calls in Attention for August — recording or labelling issue"],
     coaching:{
-      focus:"No calls in Attention this week — ongoing recording issue. Escalation needed with Amelia before next week.",
-      strength:"Q2 avg (last data available): Discovery 4.5 · Demo 4.5 — strong baseline when calls are captured.",
-      key_action:"Check Attention recording settings before your next call. If still not working, escalate to Amelia — this has been outstanding for multiple weeks."
+      focus:"No calls visible in Attention for August. Either calls are not being recorded or not labelled as partnership calls.",
+      strength:"Q2 avg (last data): Discovery 4.5 · Demo 4.5 — strong baseline when calls are captured.",
+      key_action:"Check Attention recording settings and ensure all partnership calls have Partnership Call Type label set. Flag to Taz if issue persists."
     }
   },
   mees: {
@@ -311,9 +364,9 @@ const REPS = {
     sourcing:[], discovery:[], demo:[], management:[],
     highlights:[], flags:[],
     coaching:{
-      focus:"No calls scored this week. Check Attention labelling — any partnership calls should be tagged Partnership Call Type before the week closes.",
-      strength:"Q3 baseline week — first scored calls will set the starting point.",
-      key_action:"Ensure all partnership calls are labelled in Attention before Monday."
+      focus:"No calls visible in Attention for August.",
+      strength:"Check Attention labelling.",
+      key_action:"Ensure all partnership calls are labelled in Attention with Partnership Call Type."
     }
   },
 };
@@ -331,8 +384,8 @@ function buildSystemPrompt(rep){
 
   return `You are a Partnerships coaching assistant for the Moss/Nufin partnerships team. You are coaching ${r.name}, ${r.role} (${r.market} market).
 
-WEEK: w/c Jul 28, 2026 — Q3 Week 2
-IMPORTANT: These are the first scores under new scorecards. This is the Q3 baseline. Scores are NOT comparable to Q2.
+PERIOD: August 2026, Aug 1–27 · 256 calls across the team
+IMPORTANT: Scores reflect Attention's overall call quality score (1–5). Criteria-level detail available in the dashboard.
 
 SCORECARD OVERVIEW (new from Jul 21):
 - Sourcing: O(w2)·R(w3)·Q(w3)·VP(w2)·OBJ(w2,N/A if none)·MTG(w3)
@@ -464,8 +517,8 @@ function openingMessage(){
   const avg=allScores.length?(allScores.reduce((a,b)=>a+b,0)/allScores.length).toFixed(1):null;
   const highlights=rep.highlights.slice(0,2).join('<br>');
   const flags=rep.flags.slice(0,2).join('<br>');
-  let msg=`<strong>Q3 Week 2 — w/c Jul 28, 2026</strong><br>`;
-  msg+=`<em>First run on new scorecards. This is your Q3 baseline — not comparable to Q2.</em><br><br>`;
+  let msg=`<strong>August 2026 — Aug 1–27</strong><br>`;
+  msg+=`<em>Full month analysis. 256 calls across the team.</em><br><br>`;
   if(avg)msg+=`<strong>Your avg this week:</strong> ${avg}/5 across ${allScores.length} scored calls.<br><br>`;
   if(highlights)msg+=`<strong>Highlights:</strong><br>${highlights}<br><br>`;
   if(flags)msg+=`<strong>Flags:</strong><br>${flags}<br><br>`;
@@ -476,12 +529,12 @@ openingMessage();
 
 /* ── suggestions ── */
 const SUGGESTIONS=[
-  'What were my strongest calls this week?',
+  'What were my strongest calls in August?',
   'What does my weakest call show about my gaps?',
-  'What should I do differently on check-in calls?',
-  'Explain the new Discovery scorecard criteria',
+  'What should I prioritise in September?',
+  'Where am I vs the team benchmark?',
   'What does Referral Moment Clarity mean?',
-  'What is my Q3 target?',
+  'Which of my open discoveries should I advance first?',
 ];
 SUGGESTIONS.forEach(s=>{
   const btn=document.createElement('button');
