@@ -336,6 +336,16 @@ const SOURCING = [
   {id:"a82cdd79",title:"Jörg Eckstädt",rep:"Deniz",date:"2026-08-24",score:2,outcome:"scored"},
 
   {id:"30f63a5d",title:"Robin Hendrickx",rep:"Niels",date:"2026-08-27",score:2,outcome:"scored"},
+
+  {id:"0ccd4899",title:"Eric Prins",rep:"Niels",date:"2026-09-01",score:2,outcome:"scored"},
+  {id:"3a06bbbf",title:"Gerwin Koning Src",rep:"Niels",date:"2026-09-01",score:2,outcome:"scored"},
+  {id:"30b59450",title:"Stefan Hilgefort",rep:"Deniz",date:"2026-09-02",score:2,outcome:"scored"},
+  {id:"dca8662a",title:"Dan Burnell",rep:"Fred",date:"2026-09-03",score:1,outcome:"scored"},
+  {id:"dcadb004",title:"Lukasz Mehl",rep:"Deniz",date:"2026-09-04",score:3,outcome:"scored"},
+  {id:"8516ddde",title:"Jaqueline Sourcing",rep:"Jara",date:"2026-09-04",score:1,outcome:"scored"},
+  {id:"8ac0f628",title:"Stephan Daehnicke",rep:"Deniz",date:"2026-09-04",score:2,outcome:"scored"},
+  {id:"65b327b9",title:"Anne-Katrin Fischer",rep:"Deniz",date:"2026-09-04",score:1,outcome:"scored"},
+  {id:"04771ec8",title:"Loui Aylward",rep:"Alex",date:"2026-09-04",score:1,outcome:"scored"},
 ];
 
 /* ══ DISCOVERY — new criteria: RAP·R·CB·ADM·CH·NS ══
@@ -414,6 +424,14 @@ const DISCOVERY = [
 
   {id:"7609255c",title:"Verkenners Discovery",rep:"Niels",date:"2026-08-27",path:"pm_direct",score:2,outcome:"scored"},
   {id:"6ad883a6",title:"Philipp Feierabend",rep:"Aurel",date:"2026-08-27",path:"pm_direct",score:3,outcome:"scored"},
+
+  {id:"9675a224",title:"Hines Accountancy",rep:"Alex",date:"2026-09-01",path:"pm_direct",score:3,outcome:"scored"},
+  {id:"eb84e27b",title:"Gerwin Koning Disc",rep:"Niels",date:"2026-09-01",path:"pm_direct",score:2,outcome:"scored"},
+  {id:"31b82f50",title:"Stefan Nuijten",rep:"Niels",date:"2026-09-01",path:"pm_direct",score:3,outcome:"scored"},
+  {id:"33f15954",title:"Birmingham FA",rep:"Alex",date:"2026-09-01",path:"pm_direct",score:3,outcome:"scored"},
+  {id:"dafdcdd1",title:"Haus & Gross",rep:"Deniz",date:"2026-09-02",path:"pm_direct",score:3,outcome:"scored"},
+  {id:"46a4f6fe",title:"Divotsna",rep:"Jara",date:"2026-09-03",path:"pm_direct",score:3,outcome:"scored"},
+  {id:"c5fe639b",title:"AAB Discovery",rep:"Fred",date:"2026-09-04",path:"pm_direct",score:4,outcome:"scored"},
 ];
 
 /* ══ DEMO — new criteria: TLR·REF·COM·OBJ·ENG·NS ══
@@ -470,6 +488,9 @@ const DEMO = [
   {id:"cc9fe823",title:"Mika Demo",rep:"Jara",date:"2026-08-27",score:3,outcome:"scored"},
   {id:"99d80742",title:"Finance Box Demo",rep:"Fred",date:"2026-08-27",score:3,outcome:"scored"},
   {id:"7a7f3f15",title:"BGH Demo",rep:"Niels",date:"2026-08-27",score:4,outcome:"scored"},
+
+  {id:"f6c9be62",title:"Azets Demo",rep:"Fred",date:"2026-09-01",score:3,outcome:"scored"},
+  {id:"ff97731a",title:"GCO Global Demo",rep:"Niels",date:"2026-09-02",score:0,outcome:"scored"},
 ];
 
 /* ══ MANAGEMENT — sub-typed ══
@@ -654,6 +675,38 @@ const MANAGEMENT = [
   {id:"1b6772ad",title:"Patrick Morrison",rep:"Jara",date:"2026-08-27",subtype:"check-in",score:4,outcome:"scored"},
   {id:"154475d6",title:"UBT Check-in",rep:"Jara",date:"2026-08-27",subtype:"pipeline_review",score:3,outcome:"scored"},
   {id:"fe53383f",title:"Cusp Capital",rep:"Jara",date:"2026-08-27",subtype:"check-in",score:4,outcome:"scored"},
+
+  {id:"8e1d2079",title:"David Keyzer",rep:"Niels",date:"2026-09-01",subtype:"pipeline_review",score:4,outcome:"scored"},
+  {id:"63b73119",title:"Leandro Binder EY",rep:"Nicola",date:"2026-09-01",subtype:"check-in",score:2,outcome:"scored"},
+  {id:"6afb9d68",title:"Tristan Leloup",rep:"Deniz",date:"2026-09-01",subtype:"check-in",score:2,outcome:"scored"},
+  {id:"910f3c10",title:"Rozanne Johnson",rep:"Niels",date:"2026-09-01",subtype:"check-in",score:3,outcome:"scored"},
+  {id:"763fbf37",title:"Jimmy Callwise",rep:"Niels",date:"2026-09-01",subtype:"check-in",score:4,outcome:"scored"},
+  {id:"28f8b17a",title:"Maaike Greyt",rep:"Niels",date:"2026-09-01",subtype:"product_enablement",score:4,outcome:"scored"},
+  {id:"c8a68d5d",title:"Dennis Grobecker",rep:"Jara",date:"2026-09-01",subtype:"pipeline_review",score:3,outcome:"scored"},
+  {id:"d2aec068",title:"Katharina Wunderlich",rep:"Nicola",date:"2026-09-01",subtype:"check-in",score:3,outcome:"scored"},
+  {id:"6c2ef906",title:"Sebastiaan Baas",rep:"Niels",date:"2026-09-01",subtype:"pipeline_review",score:4,outcome:"scored"},
+  {id:"0ecc7213",title:"Nabalo",rep:"Jara",date:"2026-09-02",subtype:"pipeline_review",score:3,outcome:"scored"},
+  {id:"adb801c7",title:"Maria Kruber",rep:"Nicola",date:"2026-09-02",subtype:"pipeline_review",score:3,outcome:"scored"},
+  {id:"f8689cdd",title:"Paperchase",rep:"Jara",date:"2026-09-02",subtype:"product_enablement",score:3,outcome:"scored"},
+  {id:"a849cc64",title:"Jheronimus Laurens",rep:"Niels",date:"2026-09-02",subtype:"product_enablement",score:4,outcome:"scored"},
+  {id:"a4e765c8",title:"Dedmer Taekema",rep:"Niels",date:"2026-09-02",subtype:"check-in",score:3,outcome:"scored"},
+  {id:"10512d3c",title:"Mastercard",rep:"Jara",date:"2026-09-02",subtype:"check-in",score:3,outcome:"scored"},
+  {id:"c6338192",title:"Vera van Es",rep:"Niels",date:"2026-09-02",subtype:"pipeline_review",score:3,outcome:"scored"},
+  {id:"a8d8f3d6",title:"Naust IT",rep:"Deniz",date:"2026-09-02",subtype:"product_enablement",score:1,outcome:"scored"},
+  {id:"fdb9645e",title:"Jaqueline check-in",rep:"Jara",date:"2026-09-02",subtype:"check-in",score:3,outcome:"scored"},
+  {id:"8bc5ed5b",title:"Praevo Event",rep:"Fred",date:"2026-09-02",subtype:"pipeline_review",score:3,outcome:"scored"},
+  {id:"e6239fad",title:"Accountics Group",rep:"Niels",date:"2026-09-03",subtype:"check-in",score:5,outcome:"scored"},
+  {id:"034c1bbe",title:"Eelco Storre",rep:"Niels",date:"2026-09-03",subtype:"pipeline_review",score:3,outcome:"scored"},
+  {id:"c96b233d",title:"Marjolein BonsenReuling",rep:"Niels",date:"2026-09-03",subtype:"pipeline_review",score:3,outcome:"scored"},
+  {id:"86378938",title:"Rutger AAFF",rep:"Niels",date:"2026-09-03",subtype:"pipeline_review",score:4,outcome:"scored"},
+  {id:"6e7d1540",title:"Aljoscha Torq",rep:"Nicola",date:"2026-09-03",subtype:"pipeline_review",score:3,outcome:"scored"},
+  {id:"8b7d2442",title:"Tobias Enge",rep:"Nicola",date:"2026-09-03",subtype:"pipeline_review",score:4,outcome:"scored"},
+  {id:"f8e7841e",title:"Michael Hertle",rep:"Nicola",date:"2026-09-03",subtype:"check-in",score:2,outcome:"scored"},
+  {id:"29380519",title:"Carpenter Box",rep:"Jara",date:"2026-09-03",subtype:"product_enablement",score:2,outcome:"scored"},
+  {id:"40bacf42",title:"Nico Straub",rep:"Deniz",date:"2026-09-03",subtype:"check-in",score:3,outcome:"scored"},
+  {id:"7dd80946",title:"EY Check-in",rep:"Nicola",date:"2026-09-04",subtype:"check-in",score:5,outcome:"scored"},
+  {id:"68239466",title:"Katrin Huhle-Thomas",rep:"Nicola",date:"2026-09-04",subtype:"check-in",score:3,outcome:"scored"},
+  {id:"dc743a33",title:"Matthijs AAFF",rep:"Niels",date:"2026-09-04",subtype:"pipeline_review",score:2,outcome:"scored"},
 ];
 
 /* ══ PIPELINE ══ */
