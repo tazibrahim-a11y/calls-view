@@ -105,7 +105,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--surface2)}
   </div>
   <div class="filters">
     <div class="filter-group"><label>From</label><input type="date" id="sf-from" value="2026-05-15"></div>
-    <div class="filter-group"><label>To</label><input type="date" id="sf-to" value="2026-09-05"></div>
+    <div class="filter-group"><label>To</label><input type="date" id="sf-to" value="2026-09-12"></div>
     <div class="filter-sep"></div>
     <div class="filter-group"><label>Rep</label><select id="sf-rep"><option value="all">All reps</option></select></div>
   </div>
@@ -140,7 +140,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--surface2)}
   </div>
   <div class="filters">
     <div class="filter-group"><label>From</label><input type="date" id="df-from" value="2026-05-15"></div>
-    <div class="filter-group"><label>To</label><input type="date" id="df-to" value="2026-09-05"></div>
+    <div class="filter-group"><label>To</label><input type="date" id="df-to" value="2026-09-12"></div>
     <div class="filter-sep"></div>
     <div class="filter-group"><label>Path</label><select id="df-path"><option value="all">All paths</option><option value="pa_handover">PA Handover</option><option value="pm_direct">PM Direct</option></select></div>
     <div class="filter-group"><label>Rep</label><select id="df-rep"><option value="all">All reps</option></select></div>
@@ -176,7 +176,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--surface2)}
   </div>
   <div class="filters">
     <div class="filter-group"><label>From</label><input type="date" id="emf-from" value="2026-05-15"></div>
-    <div class="filter-group"><label>To</label><input type="date" id="emf-to" value="2026-09-05"></div>
+    <div class="filter-group"><label>To</label><input type="date" id="emf-to" value="2026-09-12"></div>
     <div class="filter-sep"></div>
     <div class="filter-group"><label>Rep</label><select id="emf-rep"><option value="all">All reps</option></select></div>
   </div>
@@ -206,7 +206,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--surface2)}
   </div>
   <div class="filters">
     <div class="filter-group"><label>From</label><input type="date" id="mf-from" value="2026-05-15"></div>
-    <div class="filter-group"><label>To</label><input type="date" id="mf-to" value="2026-09-05"></div>
+    <div class="filter-group"><label>To</label><input type="date" id="mf-to" value="2026-09-12"></div>
     <div class="filter-sep"></div>
     <div class="filter-group"><label>Rep</label><select id="mf-rep"><option value="all">All reps</option></select></div>
   </div>
@@ -594,6 +594,18 @@ const SOURCING = [
   {id:"8ac0f628",title:"Stephan Daehnicke",rep:"Deniz",date:"2026-09-04",score:2,outcome:"scored"},
   {id:"65b327b9",title:"Anne-Katrin Fischer",rep:"Deniz",date:"2026-09-04",score:1,outcome:"scored"},
   {id:"04771ec8",title:"Loui Aylward",rep:"Alex",date:"2026-09-04",score:1,outcome:"scored"},
+
+  {id:"05850f81",title:"Emma Corbett",rep:"Alex",date:"2026-09-08",score:2,outcome:"scored"},
+  {id:"42d16c23",title:"Renee Shepherd",rep:"Alex",date:"2026-09-08",score:1,outcome:"scored"},
+  {id:"1fd361d4",title:"Stefanie Bork",rep:"Nicola",date:"2026-09-08",score:1,outcome:"scored"},
+  {id:"1f73906e",title:"Felix Bockmann",rep:"Deniz",date:"2026-09-09",score:2,outcome:"scored"},
+  {id:"efc66103",title:"Henry Robinson",rep:"Alex",date:"2026-09-10",score:3,outcome:"scored"},
+  {id:"857c9295",title:"Matthew Jones FCCA",rep:"Alex",date:"2026-09-10",score:3,outcome:"scored"},
+  {id:"f94fdcf3",title:"Nigel Holland",rep:"Alex",date:"2026-09-10",score:1,outcome:"scored"},
+  {id:"9dd2c833",title:"Calum Dickinson",rep:"Fred",date:"2026-09-10",score:2,outcome:"scored"},
+  {id:"c39759d9",title:"Robin Thatcher",rep:"Fred",date:"2026-09-10",score:2,outcome:"scored"},
+  {id:"e6c7fb9d",title:"James Ellis",rep:"Alex",date:"2026-09-11",score:2,outcome:"scored"},
+  {id:"bf7144b2",title:"Tobias Terworth",rep:"Deniz",date:"2026-09-11",score:2,outcome:"scored"},
 ];
 
 /* ══ DISCOVERY — new criteria: RAP·R·CB·ADM·CH·NS ══
@@ -680,6 +692,18 @@ const DISCOVERY = [
   {id:"dafdcdd1",title:"Haus & Gross",rep:"Deniz",date:"2026-09-02",path:"pm_direct",score:3,outcome:"scored"},
   {id:"46a4f6fe",title:"Divotsna",rep:"Jara",date:"2026-09-03",path:"pm_direct",score:3,outcome:"scored"},
   {id:"c5fe639b",title:"AAB Discovery",rep:"Fred",date:"2026-09-04",path:"pm_direct",score:4,outcome:"scored"},
+
+  {id:"d18adbc8",title:"Kapas AT Discovery",rep:"Deniz",date:"2026-09-08",path:"pm_direct",score:2,outcome:"scored"},
+  {id:"3b018b84",title:"Kok Finance Discovery",rep:"Niels",date:"2026-09-08",path:"pm_direct",score:4,outcome:"scored"},
+  {id:"84cf4b89",title:"ETG Discovery",rep:"Jara",date:"2026-09-08",path:"pm_direct",score:2,outcome:"scored"},
+  {id:"6c710479",title:"Arta 360 Finance",rep:"Fred",date:"2026-09-09",path:"pm_direct",score:3,outcome:"scored"},
+  {id:"e3a724ba",title:"NAS Nico Straub",rep:"Deniz",date:"2026-09-10",path:"pm_direct",score:3,outcome:"scored"},
+  {id:"236325aa",title:"David Cartwright",rep:"Alex",date:"2026-09-10",path:"pm_direct",score:2,outcome:"scored"},
+  {id:"8681503f",title:"Flor de Madre",rep:"Alex",date:"2026-09-10",path:"pm_direct",score:0,outcome:"scored"},
+  {id:"5fe89f40",title:"FYBE Patrick Discovery",rep:"Niels",date:"2026-09-11",path:"pm_direct",score:0,outcome:"scored"},
+  {id:"99f7dc3e",title:"Shaun Pullan",rep:"Alex",date:"2026-09-11",path:"pm_direct",score:3,outcome:"scored"},
+  {id:"b424bf54",title:"AAB Payroll Discovery",rep:"Fred",date:"2026-09-11",path:"pm_direct",score:3,outcome:"scored"},
+  {id:"c7f1cc9d",title:"Corgi Discovery",rep:"Fred",date:"2026-09-11",path:"pm_direct",score:2,outcome:"scored"},
 ];
 
 /* ══ DEMO — new criteria: TLR·REF·COM·OBJ·ENG·NS ══
@@ -739,6 +763,9 @@ const DEMO = [
 
   {id:"f6c9be62",title:"Azets Demo",rep:"Fred",date:"2026-09-01",score:3,outcome:"scored"},
   {id:"ff97731a",title:"GCO Global Demo",rep:"Niels",date:"2026-09-02",score:0,outcome:"scored"},
+
+  {id:"24830870",title:"BPS2 Gerrit Held Demo",rep:"Deniz",date:"2026-09-09",score:2,outcome:"scored"},
+  {id:"cbbcc65c",title:"Kreston Reeves Demo",rep:"Alex",date:"2026-09-11",score:3,outcome:"scored"},
 ];
 
 /* ══ MANAGEMENT — sub-typed ══
@@ -955,6 +982,38 @@ const MANAGEMENT = [
   {id:"7dd80946",title:"EY Check-in",rep:"Nicola",date:"2026-09-04",subtype:"check-in",score:5,outcome:"scored"},
   {id:"68239466",title:"Katrin Huhle-Thomas",rep:"Nicola",date:"2026-09-04",subtype:"check-in",score:3,outcome:"scored"},
   {id:"dc743a33",title:"Matthijs AAFF",rep:"Niels",date:"2026-09-04",subtype:"pipeline_review",score:2,outcome:"scored"},
+
+  {id:"4d5d0630",title:"Tim Hines Check-in",rep:"Alex",date:"2026-09-08",subtype:"check-in",score:4,outcome:"scored"},
+  {id:"17852339",title:"Kevin West",rep:"Nicola",date:"2026-09-08",subtype:"pipeline_review",score:3,outcome:"scored"},
+  {id:"dcfe075a",title:"Accounting Pipeline",rep:"Nicola",date:"2026-09-08",subtype:"pipeline_review",score:2,outcome:"scored"},
+  {id:"bca9553d",title:"Cards Pipeline",rep:"Nicola",date:"2026-09-08",subtype:"pipeline_review",score:2,outcome:"scored"},
+  {id:"88f9b41e",title:"Fleur Greyt",rep:"Niels",date:"2026-09-08",subtype:"product_enablement",score:4,outcome:"scored"},
+  {id:"0d3e37c1",title:"Cindy IBB Ventures",rep:"Jara",date:"2026-09-08",subtype:"check-in",score:3,outcome:"scored"},
+  {id:"6c0f9842",title:"Florian Schorpp",rep:"Jara",date:"2026-09-08",subtype:"check-in",score:2,outcome:"scored"},
+  {id:"1e0cbc2e",title:"Tom Stanley",rep:"Jara",date:"2026-09-08",subtype:"check-in",score:1,outcome:"scored"},
+  {id:"6f93dde8",title:"Eggesiecker Platform",rep:"Nicola",date:"2026-09-09",subtype:"product_enablement",score:4,outcome:"scored"},
+  {id:"71ae21fb",title:"Patrick Boel Bruno",rep:"Nicola",date:"2026-09-09",subtype:"product_enablement",score:2,outcome:"scored"},
+  {id:"0f54377d",title:"Elvaston",rep:"Nicola",date:"2026-09-09",subtype:"pipeline_review",score:2,outcome:"scored"},
+  {id:"ed62ff12",title:"Busra Karadag",rep:"Nicola",date:"2026-09-09",subtype:"check-in",score:4,outcome:"scored"},
+  {id:"d90e5abb",title:"Caroline Richter",rep:"Nicola",date:"2026-09-09",subtype:"check-in",score:2,outcome:"scored"},
+  {id:"69dafcbd",title:"Stable Payments",rep:"Jara",date:"2026-09-09",subtype:"pipeline_review",score:3,outcome:"scored"},
+  {id:"e5fade4b",title:"Dennis Grobecker",rep:"Jara",date:"2026-09-09",subtype:"check-in",score:2,outcome:"scored"},
+  {id:"ec773415",title:"Mastercard Whitepaper",rep:"Jara",date:"2026-09-09",subtype:"check-in",score:2,outcome:"scored"},
+  {id:"796a45ab",title:"Done!Financials",rep:"Nicola",date:"2026-09-10",subtype:"pipeline_review",score:4,outcome:"scored"},
+  {id:"b1743d18",title:"Robert Sittig",rep:"Nicola",date:"2026-09-10",subtype:"pipeline_review",score:2,outcome:"scored"},
+  {id:"95620655",title:"Jan Eversmann",rep:"Nicola",date:"2026-09-10",subtype:"check-in",score:2,outcome:"scored"},
+  {id:"c48d0da8",title:"Deel x Moss",rep:"Jara",date:"2026-09-10",subtype:"product_enablement",score:3,outcome:"scored"},
+  {id:"e764e03c",title:"John Hegney",rep:"Alex",date:"2026-09-10",subtype:"check-in",score:4,outcome:"scored"},
+  {id:"319727fb",title:"James Wetherall",rep:"Fred",date:"2026-09-10",subtype:"check-in",score:1,outcome:"scored"},
+  {id:"b70ce017",title:"Azets Olly voicemail",rep:"Fred",date:"2026-09-10",subtype:"product_enablement",score:1,outcome:"scored"},
+  {id:"1cd7ba9d",title:"Willem Godschalk",rep:"Niels",date:"2026-09-11",subtype:"pipeline_review",score:4,outcome:"scored"},
+  {id:"73dd2516",title:"Eelco Storre",rep:"Niels",date:"2026-09-11",subtype:"pipeline_review",score:4,outcome:"scored"},
+  {id:"87c0d9f1",title:"Ioana Jianu",rep:"Niels",date:"2026-09-11",subtype:"check-in",score:3,outcome:"scored"},
+  {id:"a69ca66c",title:"4-vision Henk",rep:"Niels",date:"2026-09-11",subtype:"pipeline_review",score:3,outcome:"scored"},
+  {id:"95aaf58b",title:"Hines Accountancy",rep:"Alex",date:"2026-09-11",subtype:"product_enablement",score:4,outcome:"scored"},
+  {id:"5e4a1ca3",title:"Petra McMillan",rep:"Alex",date:"2026-09-11",subtype:"check-in",score:4,outcome:"scored"},
+  {id:"ad3b9588",title:"ETV Hamburg",rep:"Jara",date:"2026-09-11",subtype:"check-in",score:1,outcome:"scored"},
+  {id:"24645d3a",title:"Robert Rubic",rep:"Nicola",date:"2026-09-11",subtype:"check-in",score:2,outcome:"scored"},
 ];
 
 /* ══ PIPELINE ══ */
